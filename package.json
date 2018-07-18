@@ -1,0 +1,97 @@
+{
+  "name": "jsGame",
+  "description": "A competitive maze builder/solver",
+  "version": "0.1.0",
+  "author": "Nathan Douglas <nd9600@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nd9600/jsGame.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nd9600/jsGame/issues"
+  },
+  "homepage": "https://github.com/nd9600/jsGame#readme",
+  "main": "main.ts",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/ramda": "file:types-ramda-0.25.0.tgz",
+    "folktale": "file:folktale-2.1.0.tgz",
+    "ramda": "file:ramda-0.25.0.tgz"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.1.1",
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.1.6",
+    "fork-ts-checker-webpack-plugin": "^0.4.2",
+    "jest": "^23.1.0",
+    "ts-jest": "^22.4.6",
+    "ts-loader": "^4.4.1",
+    "typescript": "^2.9.2",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "modules": false
+        }
+      ],
+      "stage-3"
+    ],
+    "env": {
+      "test": {
+        "presets": [
+          [
+            "env",
+            {
+              "targets": {
+                "node": "current"
+              }
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "jest": {
+    "verbose": true,
+    "globals": {
+      "NODE_ENV": "test"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest"
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "-ignore"
+    ]
+  }
+}
