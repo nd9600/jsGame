@@ -4,6 +4,7 @@ dependencies:
   folktale: 2.1.0
   ramda: 0.25.0
 devDependencies:
+  '@types/jest': 23.3.0
   babel-core: 6.26.3
   babel-jest: 23.4.0
   babel-loader: 7.1.5
@@ -38,6 +39,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-FV1Qc1gym45waJcAF8P9dKmwhYQ=
+  /@types/jest/23.3.0:
+    dev: true
+    resolution:
+      integrity: sha512-wjOtCEZ9z5ZamhrapT1ew9g1O0aJk6dkd2SwhUJMmySz7upVgC+7xft8joxGJA+/Q8HOcx3sG/T/+tCAA1oHPA==
   /@types/node/10.5.2:
     resolution:
       integrity: sha512-m9zXmifkZsMHZBOyxZWilMwmTlpC8x5Ty360JKTiXvlXZfBWYpsg9ZZvP/Ye+iZUh+Q+MxDLjItVTWIsfwz+8Q==
@@ -6987,6 +6992,7 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
 specifiers:
+  '@types/jest': ^23.3.0
   '@types/node': ^10.5.2
   '@types/ramda': ^0.25.35
   babel-core: ^6.26.3

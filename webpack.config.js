@@ -4,11 +4,11 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
-  entry: './src/main.ts',
+  entry: './src/game.ts',
   output: {
     path: path.resolve(__dirname, './static/js/'),
     publicPath: 'static/js/',
-    filename: 'build.js'
+    filename: 'game.js'
   },
   mode: process.env.NODE_ENV || 'development',
   module: {
@@ -19,7 +19,7 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      }, {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -28,20 +28,31 @@ module.exports = {
           // other vue-loader options go here
         }
       },
-      //no need to use babel-loader too - https://stackoverflow.com/a/49081970
       {
         test: /\.tsx?$/,
         use: [
-          'ts-loader',
-          'babel-loader'
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              appendTsSuffixTo: [/\.vue$/],
+
+              // disable type checker - we will use it in fork plugin
+              transpileOnly: true
+            }
+          }
         ],
         exclude: /node_modules/,
-        options: {
-          appendTsSuffixTo: [/\.vue$/],
-
-          // disable type checker - we will use it in fork plugin
-          transpileOnly: true 
-        }
+      },
+      {
+        // The loader that handles any js files presented alone.
+        // It passes these to the babel-loader which (again) uses the es2015
+        // and react presets.
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
