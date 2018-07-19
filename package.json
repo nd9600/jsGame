@@ -20,13 +20,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "@types/node": "^10.5.2",
-    "@types/ramda": "^0.25.35",
     "folktale": "^2.1.0",
     "ramda": "^0.25.0"
   },
   "devDependencies": {
     "@types/jest": "^23.3.0",
+    "@types/node": "^10.5.2",
+    "@types/ramda": "github:types/npm-ramda#dist",
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.0",
     "babel-loader": "^7.1.5",

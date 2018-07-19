@@ -1,10 +1,10 @@
 dependencies:
-  '@types/node': 10.5.2
-  '@types/ramda': 0.25.35
   folktale: 2.1.0
   ramda: 0.25.0
 devDependencies:
   '@types/jest': 23.3.0
+  '@types/node': 10.5.2
+  '@types/ramda': github.com/types/npm-ramda/6df524d388d183d9ce79fe58a50152eff4663a74
   babel-core: 6.26.3
   babel-jest: 23.4.0
   babel-loader: 7.1.5
@@ -44,12 +44,9 @@ packages:
     resolution:
       integrity: sha512-wjOtCEZ9z5ZamhrapT1ew9g1O0aJk6dkd2SwhUJMmySz7upVgC+7xft8joxGJA+/Q8HOcx3sG/T/+tCAA1oHPA==
   /@types/node/10.5.2:
+    dev: true
     resolution:
       integrity: sha512-m9zXmifkZsMHZBOyxZWilMwmTlpC8x5Ty360JKTiXvlXZfBWYpsg9ZZvP/Ye+iZUh+Q+MxDLjItVTWIsfwz+8Q==
-  /@types/ramda/0.25.35:
-    dev: false
-    resolution:
-      integrity: sha512-C7qXWhVEuFlH+X4n1BI1cowAhc1dUoHiRPl+dEUwNAcTwrQDE0N53FIVcnHhNwt7/lZxTHFoHOyLcwjHJuCByg==
   /@vue/component-compiler-utils/2.1.0:
     dependencies:
       consolidate: 0.15.1
@@ -6988,13 +6985,19 @@ packages:
     optional: true
     resolution:
       integrity: sha1-9+572FfdfB0tOMDnTvvWgdFDH9E=
+  github.com/types/npm-ramda/6df524d388d183d9ce79fe58a50152eff4663a74:
+    dev: true
+    name: '@types/ramda'
+    resolution:
+      tarball: 'https://codeload.github.com/types/npm-ramda/tar.gz/6df524d388d183d9ce79fe58a50152eff4663a74'
+    version: 0.25.0
 registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
 specifiers:
   '@types/jest': ^23.3.0
   '@types/node': ^10.5.2
-  '@types/ramda': ^0.25.35
+  '@types/ramda': 'github:types/npm-ramda#dist'
   babel-core: ^6.26.3
   babel-jest: ^23.4.0
   babel-loader: ^7.1.5
