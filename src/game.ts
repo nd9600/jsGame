@@ -1,9 +1,4 @@
-import * as R from 'ramda';
+import core from "@/game/core";
 
 let gameDiv = document.getElementById("game");
-console.log(gameDiv);
-
-let a = Array(10);
-let b = R.map(R.always(" "), a);
-console.log(a);
-console.log(b);
+console.debug(gameDiv);

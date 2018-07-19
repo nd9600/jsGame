@@ -1,7 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: './src/game.ts',
@@ -40,7 +39,7 @@ module.exports = {
               appendTsSuffixTo: [/\.vue$/],
 
               // disable type checker - we will use it in fork plugin
-              transpileOnly: true
+              //transpileOnly: true
             }
           }
         ],
@@ -64,8 +63,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new VueLoaderPlugin(),
-    new ForkTsCheckerWebpackPlugin()
+    new VueLoaderPlugin()
   ],
   resolve: {
     extensions: ['.ts', '.js', '.vue', '.json'],
