@@ -8,6 +8,7 @@
     "ordered-imports": false,
     "quotemark": [true, "double", "avoid-escape", "avoid-template"],
     "trailing-comma": false,
-    "interface-name": false
+    "interface-name": false,
+    "prefer-template": true
   }
 }

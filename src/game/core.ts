@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { Board, Character, Empty, End, Place, Position, twoNumbers, Wall } from "./myTypes";
+import { Board, Character, Empty, End, Place, Position, twoNumbers, Wall } from "@/game/myTypes";
 
 function yInputToPos(boardHeight: number, y: number): number {
     return (boardHeight - 1) - y;
@@ -32,10 +32,16 @@ function setInitialPositions(startPoint: Position, endPoint: Position, board: Bo
     )(board);
 }
 
+function boardAsString(board: Board, separator: string = "\n"): string {
+    const rowsJoined: Place[] = R.map(R.join(" ", ), board);
+    return R.join(separator, rowsJoined);
+}
+
 export default {
     getPosition: curriedGetPosition,
     setPosition: curriedSetPosition,
 
     makeInitialBoard,
-    setInitialPositions
+    setInitialPositions,
+    boardAsString
 };
