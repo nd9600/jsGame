@@ -5,30 +5,30 @@ function yInputToPos(boardHeight: number, y: number): number {
     return (boardHeight - 1) - y;
 }
 
-function getPosition(position: Position, board: Board): Place {
+function uncurriedGetPosition(position: Position, board: Board): Place {
     const row = board[position.y];
     return row[position.x];
 }
-const curriedGetPosition = R.curry(getPosition);
+const getPosition = R.curry(uncurriedGetPosition);
 
-function setPosition(position: Position, newValue: Place, board: Board): Board {
+function uncurriedSetPosition(position: Position, newValue: Place, board: Board): Board {
     const row = board[position.y];
     const newRow = R.update(position.y, newValue, row);
     const newBoard = R.update(position.x, newRow, board);
     return newBoard;
 }
-const curriedSetPosition = R.curry(setPosition);
+const setPosition = R.curry(uncurriedSetPosition);
 
 function makeInitialBoard(size: twoNumbers): Board {
-    const row = Array(size[0]).fill(" ");
-    const board = Array(size[1]).fill(row);
+    const row = R.map(R.always(" "), [... Array(size[0])] );
+    const board = R.map(R.always(row), [... Array(size[1])] );
     return board;
 }
 
 function setInitialPositions(startPoint: Position, endPoint: Position, board: Board): Board {
     return R.compose(
-        curriedSetPosition(endPoint, "end"),
-        curriedSetPosition(startPoint, "c"),
+        setPosition(endPoint, "end"),
+        setPosition(startPoint, "c"),
     )(board);
 }
 
@@ -38,8 +38,8 @@ function boardAsString(board: Board, separator: string = "\n"): string {
 }
 
 export default {
-    getPosition: curriedGetPosition,
-    setPosition: curriedSetPosition,
+    getPosition,
+    setPosition,
 
     makeInitialBoard,
     setInitialPositions,
