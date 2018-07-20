@@ -12,11 +12,9 @@ let endPoint: Position;
 
 let board = core.setInitialPositions(startPoint, endPoint, core.makeInitialBoard(size));
 
-const gameDiv = document.getElementById("game")!;
-console.log(gameDiv);
+const boardDiv = document.getElementById("board")!;
 console.log(board);
 
-gameDiv.innerHTML = `
-<h1>Board</h1>
+boardDiv.innerHTML = `
 <pre>${core.boardAsString(board)}</pre>
 `;
