@@ -1,6 +1,6 @@
 import boardFunctions from "@/game/board/board";
 import TestSetup from "@/game/interaction/TestSetup";
-import {Position, twoNumbers} from "@/game/myTypes";
+import {Position, twoNumbers, Direction} from "@/game/myTypes";
 
 const setup = new TestSetup();
 let size: twoNumbers;
@@ -16,12 +16,8 @@ boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
 
 const fromPosition: Position = {
     x: 0,
-    y: 0
+    y: 9
 };
-const toPosition: Position = {
-    x: 2,
-    y: 0
-};
-board = boardFunctions.move(fromPosition, toPosition, board);
-
-boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
+board = boardFunctions.move(fromPosition, Direction.Up, board);
+console.log(board);
+// boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
