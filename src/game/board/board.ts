@@ -1,10 +1,11 @@
 import * as R from "ramda";
 import { Board, Character, Empty, End, Place, Position, twoNumbers, Wall } from "@/game/myTypes";
+import movementFunctions from "./movement";
 
 const isPositionOnBoard = (position: Position, board: Board): void => {
     const yIsOnBoard = (0 <= position.y) && (position.y <= board.length);
     const xIsOnBoard = (0 <= position.x) && (position.x <= R.nth(0, board)!.length);
-    if (! (yIsOnBoard && xIsOnBoard)) {
+    if (!(yIsOnBoard && xIsOnBoard)) {
         throw new Error(`position ${position} is off the board`);
     }
 };
@@ -29,8 +30,8 @@ const setPosition = R.curry(uncurriedSetPosition);
 
 function makeInitialBoard(size: twoNumbers): Board {
     const empty: Place = " ";
-    const row = R.map(R.always(empty), [... Array(size[0])] );
-    const board: Board = R.map(R.always(row), [... Array(size[1])] );
+    const row = R.map(R.always(empty), [...Array(size[0])]);
+    const board: Board = R.map(R.always(row), [...Array(size[1])]);
     return board;
 }
 
@@ -46,11 +47,12 @@ function boardAsString(board: Board, separator: string = "\n"): string {
     return R.join(separator, rowsJoined);
 }
 
-export default {
+const exportedFunctions = {
+    isPositionOnBoard,
     getPosition,
     setPosition,
-
     makeInitialBoard,
     setInitialPositions,
     boardAsString
 };
+export default R.merge(exportedFunctions, movementFunctions);

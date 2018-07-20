@@ -7,9 +7,11 @@ type Place = Character | Wall | Empty | End;
 type Board = Place[][];
 type twoNumbers = [number, number];
 
+enum Direction {Up, Down, Left, Right}
+
 interface Position {
     x: number;
     y: number;
 }
 
-export {Wall, Character, Empty, End, Place, Board, twoNumbers, Position};
+export {Wall, Character, Empty, End, Place, Board, twoNumbers, Direction, Position};
