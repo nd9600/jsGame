@@ -12,9 +12,10 @@ function uncurriedGetPosition(position: Position, board: Board): Place {
 const getPosition = R.curry(uncurriedGetPosition);
 
 function uncurriedSetPosition(position: Position, newValue: Place, board: Board): Board {
-    const row = board[position.y];
+    const row = R.nth(position.y, board)!;
     const newRow = R.update(position.y, newValue, row);
     const newBoard = R.update(position.x, newRow, board);
+    console.log(newBoard);
     return newBoard;
 }
 const setPosition = R.curry(uncurriedSetPosition);
