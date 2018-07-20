@@ -9,19 +9,24 @@ import usefulFunctions from "@/game/usefulFunctions";
  * @param direction Direction
  * @param fromPosition Position
  */
-function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: Position): Position {
+function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: Position): Position | undefined {
     const squareIsEmpty = (position: Position): boolean => {
         return boardFunctions.getPosition(position, board) === " ";
     };
     switch (direction) {
         case Direction.Up:
             const yRange = usefulFunctions.range(fromPosition.y, 0);
-            const rangeOfSquares = R.map((y): Position => R.assoc("y", y, fromPosition), yRange);
+            const rangeOfSquares = R.map(
+                (y): Position => R.assoc("y", y, fromPosition), 
+                yRange
+            );
+            const squareToMoveInto = R.findLast(squareIsEmpty, rangeOfSquares);
             console.log(fromPosition);
             console.log(yRange);
             console.log(rangeOfSquares);
+            console.log(squareToMoveInto);
 
-            return R.findLast(squareIsEmpty, rangeOfSquares);
+            return squareToMoveInto;
         case Direction.Down:
             break;
         case Direction.Left:
@@ -37,12 +42,15 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
 const move = (fromPosition: Position, direction: Direction, board: Board): Board => {
     boardFunctions.isPositionOnBoard(fromPosition, board);
 
+    // use Maybe monad from Folktale
     const squareToMoveInto = getSquareToMoveInto(board, direction, fromPosition);
-
-    return R.compose(
-        boardFunctions.setPosition(fromPosition, " "),
-        boardFunctions.setPosition(squareToMoveInto, "c")
-    )(board);
+    if (squareToMoveInto) {
+        return R.compose(
+            boardFunctions.setPosition(fromPosition, " "),
+            boardFunctions.setPosition(squareToMoveInto, "c")
+        )(board);
+    }
+    return board;
 };
 
 export default {
