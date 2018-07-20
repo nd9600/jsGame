@@ -3,21 +3,22 @@ import {Wall, Character, Empty, End, Place, Board, twoNumbers, Position} from ".
 
 console.log(core);
 
-/** 
- * height x width 
+/**
+ * height x width
  * #rows x #columns
- * */
-let size: twoNumbers = [10, 10];
-let startPoint: Position = {
+ *
+ */
+const size: twoNumbers = [10, 10];
+const startPoint: Position = {
     x: 0,
     y: 0
 };
-let endPoint: Position = {
+const endPoint: Position = {
     x: 9,
     y: 9
 };
 
-let board = core.makeInitialBoard(size, startPoint, endPoint);
+let board = core.setInitialPositions(startPoint, endPoint, core.makeInitialBoard(size));
 
 let gameDiv = document.getElementById("game");
 console.log(gameDiv);

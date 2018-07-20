@@ -1,43 +1,41 @@
 import * as R from "ramda";
-import { Wall, Character, Empty, End, Place, Board, twoNumbers, Position } from "./myTypes";
+import { Board, Character, Empty, End, Place, Position, twoNumbers, Wall } from "./myTypes";
 
 function yInputToPos(boardHeight: number, y: number): number {
     return (boardHeight - 1) - y;
 }
 
 function getPosition(position: Position, board: Board): Place {
-    const actualYPos = yInputToPos(board.length, position.y);
     const row = board[position.y];
     return row[position.x];
 }
-let curriedGetPosition = R.curry(getPosition);
+const curriedGetPosition = R.curry(getPosition);
 
 function setPosition(position: Position, newValue: Place, board: Board): Board {
-    position
-    const actualYPos = yInputToPos(board.length, position.y);
-    console.log(board.length);
-    console.log(position.y);
-    console.log(actualYPos);
-    // console.log(board[actualYPos]);
-    let row = board[position.y];
-    let newRow = R.update(actualYPos, newValue, row);
-    let newBoard = R.update(position.x, newRow, board);
+    const row = board[position.y];
+    const newRow = R.update(position.y, newValue, row);
+    const newBoard = R.update(position.x, newRow, board);
     return newBoard;
 }
-let curriedSetPosition = R.curry(setPosition);
+const curriedSetPosition = R.curry(setPosition);
 
-function makeInitialBoard(size: twoNumbers, startPoint: Position, endPoint: Position): Board {
-    let row = Array(size[0]).fill(" ");
-    let board = Array(size[1]).fill(row);
+function makeInitialBoard(size: twoNumbers): Board {
+    const row = Array(size[0]).fill(" ");
+    const board = Array(size[1]).fill(row);
+    return board;
+}
 
+function setInitialPositions(startPoint: Position, endPoint: Position, board: Board): Board {
     return R.compose(
         curriedSetPosition(endPoint, "end"),
-        curriedSetPosition(startPoint, "c")
+        curriedSetPosition(startPoint, "c"),
     )(board);
 }
 
 export default {
-    makeInitialBoard,
     getPosition: curriedGetPosition,
-    setPosition: curriedSetPosition
-}
+    setPosition: curriedSetPosition,
+
+    makeInitialBoard,
+    setInitialPositions
+};
