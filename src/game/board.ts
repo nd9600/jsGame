@@ -1,17 +1,25 @@
 import * as R from "ramda";
 import { Board, Character, Empty, End, Place, Position, twoNumbers, Wall } from "@/game/myTypes";
 
-function yInputToPos(boardHeight: number, y: number): number {
-    return (boardHeight - 1) - y;
-}
+const isPositionOnBoard = (position: Position, board: Board): void => {
+    const yIsOnBoard = (0 <= position.y) && (position.y <= board.length);
+    const xIsOnBoard = (0 <= position.x) && (position.x <= R.nth(0, board)!.length);
+    if (! (yIsOnBoard && xIsOnBoard)) {
+        throw new Error(`position ${position} is off the board`);
+    }
+};
 
 function uncurriedGetPosition(position: Position, board: Board): Place {
-    const row = board[position.y];
-    return row[position.x];
+    isPositionOnBoard(position, board);
+
+    const row = R.nth(position.y, board)!;
+    return R.nth(position.x, row)!;
 }
 const getPosition = R.curry(uncurriedGetPosition);
 
 function uncurriedSetPosition(position: Position, newValue: Place, board: Board): Board {
+    isPositionOnBoard(position, board);
+
     const row = R.nth(position.y, board)!;
     const newRow = R.update(position.y, newValue, row);
     const newBoard = R.update(position.x, newRow, board);

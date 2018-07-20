@@ -1,4 +1,4 @@
-import core from "@/game/core";
+import boardFunctions from "@/game/board";
 import {Wall, Character, Empty, End, Place, Board, twoNumbers, Position} from "@/game/myTypes";
 
 describe("BoardSetup", () => {
@@ -8,7 +8,7 @@ describe("BoardSetup", () => {
     it("creates_empty_board", () => {
         const size: twoNumbers = [10, 10];
 
-        const board = core.makeInitialBoard(size);
+        const board = boardFunctions.makeInitialBoard(size);
         const wantedBoard = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
         ];
         expect(board).toEqual(wantedBoard);
@@ -26,7 +26,7 @@ describe("BoardSetup", () => {
 
         const emptyBoard = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
         ];
-        const board = core.setInitialPositions(startPoint, endPoint, emptyBoard);
+        const board = boardFunctions.setInitialPositions(startPoint, endPoint, emptyBoard);
         const wantedBoard = [["c", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", "end"]
         ];
         expect(board).toEqual(wantedBoard);

@@ -9,6 +9,7 @@
     "quotemark": [true, "double", "avoid-escape", "avoid-template"],
     "trailing-comma": false,
     "interface-name": false,
-    "prefer-template": true
+    "prefer-template": true,
+    "max-line-length": false
   }
 }
