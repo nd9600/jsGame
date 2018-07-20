@@ -21,16 +21,16 @@ function uncurriedSetPosition(position: Position, newValue: Place, board: Board)
     isPositionOnBoard(position, board);
 
     const row = R.nth(position.y, board)!;
-    const newRow = R.update(position.y, newValue, row);
-    const newBoard = R.update(position.x, newRow, board);
-    console.log(newBoard);
+    const newRow = R.update(position.x, newValue, row);
+    const newBoard = R.update(position.y, newRow, board);
     return newBoard;
 }
 const setPosition = R.curry(uncurriedSetPosition);
 
 function makeInitialBoard(size: twoNumbers): Board {
-    const row = R.map(R.always(" "), [... Array(size[0])] );
-    const board = R.map(R.always(row), [... Array(size[1])] );
+    const empty: Place = " ";
+    const row = R.map(R.always(empty), [... Array(size[0])] );
+    const board: Board = R.map(R.always(row), [... Array(size[1])] );
     return board;
 }
 
@@ -42,7 +42,7 @@ function setInitialPositions(startPoint: Position, endPoint: Position, board: Bo
 }
 
 function boardAsString(board: Board, separator: string = "\n"): string {
-    const rowsJoined: Place[] = R.map(R.join(" ", ), board);
+    const rowsJoined = R.map(R.join(" ", ), board);
     return R.join(separator, rowsJoined);
 }
 

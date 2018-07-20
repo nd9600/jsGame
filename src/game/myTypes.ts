@@ -2,7 +2,7 @@ type Wall = "x";
 type Character = "c";
 type Empty = " ";
 type End = "end";
-type Place = Character | Wall | Empty | End | string;
+type Place = Character | Wall | Empty | End;
 
 type Board = Place[][];
 type twoNumbers = [number, number];
