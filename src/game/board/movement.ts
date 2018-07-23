@@ -39,12 +39,9 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
             break;
         case Direction.Left:
             break;
-        case Direction.Right:
-            break;
+        default:
+            return Result.Error("a");
     }
-    return {
-        x: 0, y: 0
-    };
 }
 
 const move = (errorHandler: (error: string) => void, fromPosition: Position, direction: Direction, board: Board): Board => {

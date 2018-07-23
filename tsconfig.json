@@ -5,6 +5,7 @@
         "allowJs": true,
         "strict": true,
         "noImplicitReturns": true,
+        "allowSyntheticDefaultImports": true,
         "module": "es2015",
         "moduleResolution": "node",
         "target": "es6",
@@ -19,14 +20,12 @@
             "jest"
         ],
         "typeRoots": [
-            "./node_modules/@types",
-            "./typings"
+            "./node_modules/@types"
         ]        
     },
     "include": [
         "./src/**/*",
-        "./__tests__/**/*",
-        "./typings/**/*"
+        "./__tests__/**/*"
     ],
     "exclude": [
       "node_modules"

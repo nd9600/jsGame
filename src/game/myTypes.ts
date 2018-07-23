@@ -3,6 +3,12 @@ type Character = "c";
 type Empty = " ";
 type End = "end";
 type Place = Character | Wall | Empty | End;
+enum Place2 {
+    Character,
+    Wall,
+    Empty,
+    End
+}
 
 type Board = Place[][];
 type twoNumbers = [number, number];
@@ -14,4 +20,4 @@ interface Position {
     y: number;
 }
 
-export {Wall, Character, Empty, End, Place, Board, twoNumbers, Direction, Position};
+export {Wall, Character, Empty, End, Place, Place2, Board, twoNumbers, Direction, Position};
