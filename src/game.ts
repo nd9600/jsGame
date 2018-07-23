@@ -18,6 +18,7 @@ const fromPosition: Position = {
     x: 0,
     y: 9
 };
-board = boardFunctions.move(fromPosition, Direction.Up, board);
+const errorHandler = (error: string): void => console.log(error);
+board = boardFunctions.move(errorHandler, fromPosition, Direction.Up, board);
 console.log(board);
 // boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
