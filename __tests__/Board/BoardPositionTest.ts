@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import boardFunctions from "@/game/board";
+import boardFunctions from "@/game/board/board";
 import { Wall, Character, Empty, End, Place, Board, twoNumbers, Position } from "@/game/myTypes";
 
 describe("BoardSetup", () => {

@@ -1,4 +1,5 @@
 import * as R from "ramda";
+import Maybe from "folktale/maybe";
 import { Wall, Character, Empty, End, Place, Board, twoNumbers, Direction, Position } from "@/game/myTypes";
 import boardFunctions from "./board";
 import usefulFunctions from "@/game/usefulFunctions";
@@ -21,6 +22,7 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
                 yRange
             );
             const squareToMoveInto = R.findLast(squareIsEmpty, rangeOfSquares);
+            // return Maybe.Just();
             console.log(fromPosition);
             console.log(yRange);
             console.log(rangeOfSquares);
