@@ -1,5 +1,6 @@
 dependencies:
   folktale: 2.1.0
+  fp-ts: 1.7.1
   ramda: 0.25.0
 devDependencies:
   '@types/jest': 23.3.0
@@ -2671,6 +2672,10 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
+  /fp-ts/1.7.1:
+    dev: false
+    resolution:
+      integrity: sha512-7jAWAdc+TQ6qEm89VvwsHBliF93VxCzYXKr8Zr99hdVJ/eB+/fjNwWT3qkKI4i4PS89H8tRTe4h9/sFvHrf65Q==
   /fragment-cache/0.2.1:
     dependencies:
       map-cache: 0.2.2
@@ -6990,6 +6995,7 @@ packages:
     dev: true
     name: '@types/ramda'
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/types/npm-ramda/tar.gz/6df524d388d183d9ce79fe58a50152eff4663a74'
     version: 0.25.0
 registry: 'https://registry.npmjs.org/'
@@ -7009,6 +7015,7 @@ specifiers:
   file-loader: ^1.1.11
   folktale: ^2.1.0
   fork-ts-checker-webpack-plugin: ^0.4.3
+  fp-ts: ^1.7.1
   jest: ^23.4.1
   jest-environment-jsdom: ^23.4.0
   ramda: ^0.25.0
