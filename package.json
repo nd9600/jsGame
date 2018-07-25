@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "folktale": "^2.1.0",
+    "fp-ts": "^1.7.1",
     "ramda": "^0.25.0"
   },
   "devDependencies": {
