@@ -1,6 +1,6 @@
 import * as R from "ramda";
-import Result from "folktale/result";
-import { Wall, Character, Empty, End, Place, Board, twoNumbers, Direction, Position } from "@/game/myTypes";
+import {Either, left, right} from "fp-ts/lib/Either";
+import {Board, Direction, IError, Position} from "@/game/myTypes";
 import boardFunctions from "./board";
 import usefulFunctions from "@/game/usefulFunctions";
 
@@ -10,18 +10,18 @@ import usefulFunctions from "@/game/usefulFunctions";
  * @param direction Direction
  * @param fromPosition Position
  */
-function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: Position): Result {
+function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: Position): Either<IError, Position> {
     const squareIsEmpty = (position: Position): boolean => {
         return boardFunctions.getPosition(position, board) === " ";
     };
     switch (direction) {
         case Direction.Up:
             if (fromPosition.y === 0) {
-                return Result.Error("at top of board");
+                return left(usefulFunctions.makeError("MovementError", "at top of board"));
             }
             const yRange = usefulFunctions.range(fromPosition.y, 0);
             const squaresToTopOfBoard = R.map(
-                (y): Position => R.assoc("y", y, fromPosition), 
+                (y): Position => R.assoc("y", y, fromPosition),
                 yRange
             );
             const squareToMoveInto = R.findLast(squareIsEmpty, squaresToTopOfBoard);
@@ -32,34 +32,35 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
             console.log(squareToMoveInto);
 
             if (squareToMoveInto == null) {
-                return Result.Error("no empty squares");
+                return left(usefulFunctions.makeError("MovementError", "no empty squares"));
             }
-            return Result.Ok(squareToMoveInto);
+            return right(squareToMoveInto);
         case Direction.Down:
             break;
-        case Direction.Left:
-            break;
+        // Direction.Left
         default:
-            return Result.Error("a");
+            break;
     }
+    return left(usefulFunctions.makeError("ImpossibleError", "should never be returned"));
 }
 
-const move = (errorHandler: (error: string) => void, fromPosition: Position, direction: Direction, board: Board): Board => {
+const move = (errorHandler: (error: IError) => void, fromPosition: Position, direction: Direction, board: Board): Board => {
     boardFunctions.isPositionOnBoard(fromPosition, board);
 
     // use Maybe monad from Folktale
     const squareToMoveIntoResult = getSquareToMoveInto(board, direction, fromPosition);
-    return squareToMoveIntoResult.matchWith({
-        Ok: ({squareToMoveInto}: {squareToMoveInto: Position}) => 
-            R.compose(
-                boardFunctions.setPosition(fromPosition, " "),
-                boardFunctions.setPosition(squareToMoveInto, "c")
-            )(board),
-        Error: ({error}: {error: string}) => {
+    return squareToMoveIntoResult.fold(
+        (error) => {
             errorHandler(error);
             return board;
+        },
+        (squareToMoveInto) => {
+            return R.compose(
+                boardFunctions.setPosition(fromPosition, " "),
+                boardFunctions.setPosition(squareToMoveInto, "c")
+            )(board);
         }
-    });
+    );
 };
 
 export default {

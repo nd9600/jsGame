@@ -1,3 +1,5 @@
+import {IError} from "@/game/myTypes";
+
 const range = (start: number, end: number): number[] => {
     const rangeStart = Math.min(start, end);
     const rangeEnd = Math.max(start, end);
@@ -11,6 +13,8 @@ const range = (start: number, end: number): number[] => {
         : normalRange;
 };
 
+const makeError = (name: string, message: string): IError => ({name, message});
+
 export default {
-    range
+    range, makeError
 };

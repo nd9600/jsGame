@@ -20,4 +20,9 @@ interface Position {
     y: number;
 }
 
-export {Wall, Character, Empty, End, Place, Place2, Board, twoNumbers, Direction, Position};
+interface IError {
+    name: string;
+    message: string;
+}
+
+export {Wall, Character, Empty, End, Place, Place2, Board, twoNumbers, Direction, Position, IError};

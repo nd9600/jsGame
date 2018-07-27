@@ -1,6 +1,6 @@
 import boardFunctions from "@/game/board/board";
 import TestSetup from "@/game/interaction/TestSetup";
-import {Position, twoNumbers, Direction} from "@/game/myTypes";
+import {Position, twoNumbers, Direction, IError} from "@/game/myTypes";
 
 const setup = new TestSetup();
 let size: twoNumbers;
@@ -18,7 +18,7 @@ const fromPosition: Position = {
     x: 0,
     y: 9
 };
-const errorHandler = (error: string): void => console.log(error);
+const errorHandler = (error: IError): void => console.log(error);
 board = boardFunctions.move(errorHandler, fromPosition, Direction.Up, board);
 console.log(board);
 // boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
