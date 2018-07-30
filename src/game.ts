@@ -14,10 +14,7 @@ const boardDiv = document.getElementById("board")!;
 
 boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
 
-const fromPosition: Position = {
-    x: 0,
-    y: 9
-};
+const fromPosition = startPoint;
 const errorHandler = (error: IError): void => console.log(error);
 board = boardFunctions.move(errorHandler, fromPosition, Direction.Up, board);
 console.log(board);

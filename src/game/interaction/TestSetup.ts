@@ -9,7 +9,7 @@ export default class TestSetup implements SetupInterface {
     public getStartPoint(): Position {
         return {
             x: 0,
-            y: 0
+            y: 9
         };
     }
 

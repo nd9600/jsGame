@@ -8,7 +8,7 @@ const range = (start: number, end: number): number[] => {
         },
         (v, k) => k + rangeStart
     );
-    return start < end 
+    return end < start
         ? normalRange.reverse()
         : normalRange;
 };
