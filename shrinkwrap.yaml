@@ -1,4 +1,6 @@
 dependencies:
+  '@tweenjs/tween.js': 17.2.0
+  '@types/tweenjs': 1.0.0
   folktale: 2.1.0
   fp-ts: 1.7.1
   ramda: 0.25.0
@@ -41,6 +43,14 @@ packages:
     dev: true
     resolution:
       integrity: sha1-FV1Qc1gym45waJcAF8P9dKmwhYQ=
+  /@tweenjs/tween.js/17.2.0:
+    dev: false
+    resolution:
+      integrity: sha1-IfibcJuvxLMDra56g7TzWg2eR5Y=
+  /@types/createjs-lib/0.0.29:
+    dev: false
+    resolution:
+      integrity: sha1-+uguO6hgZmOxkOeJzsfZxyj8Qdc=
   /@types/jest/23.3.0:
     dev: true
     resolution:
@@ -49,6 +59,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-m9zXmifkZsMHZBOyxZWilMwmTlpC8x5Ty360JKTiXvlXZfBWYpsg9ZZvP/Ye+iZUh+Q+MxDLjItVTWIsfwz+8Q==
+  /@types/tweenjs/1.0.0:
+    dependencies:
+      '@types/createjs-lib': 0.0.29
+    dev: false
+    resolution:
+      integrity: sha512-qn0yChkBM0uCDdovXCyZT+HREWP5PaPWrGBuQZ0GIANHZ4E4PZ35vrczagmTyewRwTFJ82/TcYQAvozjNmfcTw==
   /@vue/component-compiler-utils/2.1.0:
     dependencies:
       consolidate: 0.15.1
@@ -7002,9 +7018,11 @@ registry: 'https://registry.npmjs.org/'
 shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
 specifiers:
+  '@tweenjs/tween.js': ^17.2.0
   '@types/jest': ^23.3.0
   '@types/node': ^10.5.2
   '@types/ramda': 'github:types/npm-ramda#dist'
+  '@types/tweenjs': ^1.0.0
   babel-core: ^6.26.3
   babel-jest: ^23.4.0
   babel-loader: ^7.1.5
