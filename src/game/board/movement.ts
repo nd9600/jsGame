@@ -55,6 +55,8 @@ const move = (errorHandler: (error: IError) => void, fromPosition: Position, dir
             return board;
         },
         (squareToMoveInto) => {
+            console.log(fromPosition);
+            console.log(squareToMoveInto);
             return R.compose(
                 boardFunctions.setPosition(fromPosition, " "),
                 boardFunctions.setPosition(squareToMoveInto, "c")

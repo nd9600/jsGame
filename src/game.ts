@@ -21,4 +21,7 @@ const fromPosition: Position = {
 const errorHandler = (error: IError): void => console.log(error);
 board = boardFunctions.move(errorHandler, fromPosition, Direction.Up, board);
 console.log(board);
+boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
+// board = boardFunctions.move(errorHandler, fromPosition, Direction.Up, board);
+// console.log(board);
 // boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
