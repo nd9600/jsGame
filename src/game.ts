@@ -1,24 +1,26 @@
 import boardFunctions from "@/game/board/board";
 import TestSetup from "@/game/interaction/TestSetup";
-import {Position, twoNumbers, Direction, IError} from "@/game/myTypes";
+import {Position, twoNumbers, Direction, GameState, IError} from "@/game/myTypes";
+import usefulFunctions from "@/game/usefulFunctions";
 
 const setup = new TestSetup();
 let size: twoNumbers;
-let startPoint: Position;
+let characterPosition: Position;
 let endPoint: Position;
-[size, startPoint, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
+[size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
-let board = boardFunctions.setInitialPositions(startPoint, endPoint, boardFunctions.makeInitialBoard(size));
+const board = boardFunctions.setInitialPositions(characterPosition, endPoint, boardFunctions.makeInitialBoard(size));
+
+let gameState: GameState = {
+    characterPosition,
+    board
+};
 
 const boardDiv = document.getElementById("board")!;
 
-boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
+boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
 
-const fromPosition = startPoint;
-const errorHandler = (error: IError): void => console.log(error);
-board = boardFunctions.move(errorHandler, fromPosition, Direction.Up, board);
-console.log(board);
-boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
-// board = boardFunctions.move(errorHandler, fromPosition, Direction.Up, board);
-// console.log(board);
-// boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(board)}</pre>`;
+gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
+gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
+console.log(gameState.board);
+boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;

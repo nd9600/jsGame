@@ -14,7 +14,8 @@ const range = (start: number, end: number): number[] => {
 };
 
 const makeError = (name: string, message: string): IError => ({name, message});
+const errorHandler = (error: IError): void => console.log(error);
 
 export default {
-    range, makeError
+    range, makeError, errorHandler
 };

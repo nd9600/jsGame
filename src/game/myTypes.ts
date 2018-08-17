@@ -20,9 +20,14 @@ interface Position {
     y: number;
 }
 
+interface GameState {
+    board: Board;
+    characterPosition: Position;
+}
+
 interface IError {
     name: string;
     message: string;
 }
 
-export {Wall, Character, Empty, End, Place, Place2, Board, twoNumbers, Direction, Position, IError};
+export {Wall, Character, Empty, End, Place, Place2, Board, twoNumbers, Direction, Position, GameState, IError};

@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import {Either, left, right} from "fp-ts/lib/Either";
-import {Board, Direction, IError, Position} from "@/game/myTypes";
+import {Board, Direction, IError, Position, GameState} from "@/game/myTypes";
 import boardFunctions from "./board";
 import usefulFunctions from "@/game/usefulFunctions";
 
@@ -44,23 +44,29 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
     return left(usefulFunctions.makeError("ImpossibleError", "should never be returned"));
 }
 
-const move = (errorHandler: (error: IError) => void, fromPosition: Position, direction: Direction, board: Board): Board => {
-    boardFunctions.isPositionOnBoard(fromPosition, board);
+const move = (errorHandler: (error: IError) => void, direction: Direction, {characterPosition, board}: GameState): GameState => {
+    
+    boardFunctions.isPositionOnBoard(characterPosition, board);
 
-    // use Maybe monad from Folktale
-    const squareToMoveIntoResult = getSquareToMoveInto(board, direction, fromPosition);
+    const squareToMoveIntoResult = getSquareToMoveInto(board, direction, characterPosition);
     return squareToMoveIntoResult.fold(
         (error) => {
             errorHandler(error);
-            return board;
+            return {characterPosition, board};
         },
         (squareToMoveInto) => {
-            console.log(fromPosition);
+            console.log(characterPosition);
             console.log(squareToMoveInto);
-            return R.compose(
-                boardFunctions.setPosition(fromPosition, " "),
+            const newCharacterPosition = squareToMoveInto;
+            const newBoard = R.compose(
+                boardFunctions.setPosition(characterPosition, " "),
                 boardFunctions.setPosition(squareToMoveInto, "c")
             )(board);
+
+            return {
+                characterPosition: newCharacterPosition, 
+                board: newBoard
+            };
         }
     );
 };
