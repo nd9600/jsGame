@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { Board, Character, Empty, End, Place, Position, twoNumbers, Wall } from "@/game/myTypes";
+import { Board, Place, Position, twoNumbers } from "@/game/myTypes";
 import movementFunctions from "./movement";
 
 const isPositionOnBoard = (position: Position, board: Board): void => {
@@ -29,16 +29,15 @@ function uncurriedSetPosition(position: Position, newValue: Place, board: Board)
 const setPosition = R.curry(uncurriedSetPosition);
 
 function makeInitialBoard(size: twoNumbers): Board {
-    const empty: Place = " ";
-    const row = R.map(R.always(empty), [...Array(size[0])]);
+    const row = R.map(R.always(Place.Empty), [...Array(size[0])]);
     const board: Board = R.map(R.always(row), [...Array(size[1])]);
     return board;
 }
 
 function setInitialPositions(startPoint: Position, endPoint: Position, board: Board): Board {
     return R.compose(
-        setPosition(endPoint, "end"),
-        setPosition(startPoint, "c"),
+        setPosition(endPoint, Place.End),
+        setPosition(startPoint, Place.Character),
     )(board);
 }
 

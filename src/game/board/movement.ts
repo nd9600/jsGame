@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import {Either, left, right} from "fp-ts/lib/Either";
-import {Board, Direction, IError, Position, GameState} from "@/game/myTypes";
+import {Board, Direction, IError, Position, GameState, Place} from "@/game/myTypes";
 import boardFunctions from "./board";
 import usefulFunctions from "@/game/usefulFunctions";
 
@@ -14,6 +14,9 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
     const squareIsEmpty = (position: Position): boolean => {
         return boardFunctions.getPosition(position, board) === " ";
     };
+
+    console.log("#####\nstarting move");
+
     switch (direction) {
         case Direction.Up:
             if (fromPosition.y === 0) {
@@ -24,6 +27,8 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
                 (y): Position => R.assoc("y", y, fromPosition),
                 yRange
             );
+
+            // this is wrong - doesn't work for e.g. empty squares [1,2,3,  7,8,9]
             const squareToMoveInto = R.findLast(squareIsEmpty, squaresToTopOfBoard);
 
             console.log(fromPosition);
@@ -44,7 +49,9 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
     return left(usefulFunctions.makeError("ImpossibleError", "should never be returned"));
 }
 
-const move = (errorHandler: (error: IError) => void, direction: Direction, {characterPosition, board}: GameState): GameState => {
+const move = (errorHandler: (error: IError) => void, direction: Direction, gameState: GameState): GameState => {
+
+    const {characterPosition, board} = gameState;
     
     boardFunctions.isPositionOnBoard(characterPosition, board);
 
@@ -59,8 +66,8 @@ const move = (errorHandler: (error: IError) => void, direction: Direction, {char
             console.log(squareToMoveInto);
             const newCharacterPosition = squareToMoveInto;
             const newBoard = R.compose(
-                boardFunctions.setPosition(characterPosition, " "),
-                boardFunctions.setPosition(squareToMoveInto, "c")
+                boardFunctions.setPosition(characterPosition, Place.Empty),
+                boardFunctions.setPosition(squareToMoveInto, Place.Character)
             )(board);
 
             return {

@@ -1,13 +1,8 @@
-type Wall = "x";
-type Character = "c";
-type Empty = " ";
-type End = "end";
-type Place = Character | Wall | Empty | End;
-enum Place2 {
-    Character,
-    Wall,
-    Empty,
-    End
+enum Place {
+    Character = "c",
+    Wall = "x",
+    Empty = " ",
+    End = "end"
 }
 
 type Board = Place[][];
@@ -30,4 +25,4 @@ interface IError {
     message: string;
 }
 
-export {Wall, Character, Empty, End, Place, Place2, Board, twoNumbers, Direction, Position, GameState, IError};
+export {Place, Board, twoNumbers, Direction, Position, GameState, IError};

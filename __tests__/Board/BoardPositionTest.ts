@@ -1,8 +1,8 @@
 import * as R from "ramda";
 import boardFunctions from "@/game/board/board";
-import { Wall, Character, Empty, End, Place, Board, twoNumbers, Position } from "@/game/myTypes";
+import { Place, Board, twoNumbers, Position } from "@/game/myTypes";
 
-describe("BoardSetup", () => {
+describe("BoardPositionGettingAndSetting", () => {
     // beforeEach(() => {
     // });
 
@@ -16,86 +16,86 @@ describe("BoardSetup", () => {
     };
 
     it("gets_positions", () => {
-        const board: Board = [["c", "x", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", "x"], [" ", " ", " ", " ", " ", " ", " ", " ", " ", "end"]];
+        const board: Board = [[Place.Character, Place.Wall, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Wall], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.End]];
         let p: Position = {
             x: 0,
             y: 0
         };
-        expect(boardFunctions.getPosition(p, board)).toEqual("c");
+        expect(boardFunctions.getPosition(p, board)).toEqual(Place.Character);
 
         p = {
             x: 1,
             y: 0
         };
-        expect(boardFunctions.getPosition(p, board)).toEqual("x");
+        expect(boardFunctions.getPosition(p, board)).toEqual(Place.Wall);
 
         p = {
             x: 0,
             y: 1
         };
-        expect(boardFunctions.getPosition(p, board)).toEqual(" ");
+        expect(boardFunctions.getPosition(p, board)).toEqual(Place.Empty);
 
         p = {
             x: 9,
             y: 9
         };
-        expect(boardFunctions.getPosition(p, board)).toEqual("end");
+        expect(boardFunctions.getPosition(p, board)).toEqual(Place.End);
 
         p = {
             x: 9,
             y: 8
         };
-        expect(boardFunctions.getPosition(p, board)).toEqual("x");
+        expect(boardFunctions.getPosition(p, board)).toEqual(Place.Wall);
 
         p = {
             x: 8,
             y: 9
         };
-        expect(boardFunctions.getPosition(p, board)).toEqual(" ");
+        expect(boardFunctions.getPosition(p, board)).toEqual(Place.Empty);
     });
 
     it("sets_positions", () => {
-        const board: Board = [[" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]];
+        const board: Board = [[Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty], [Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty, Place.Empty]];
         let p: Position = {
             x: 0,
             y: 0
         };
-        let newValue: Place = "c";
+        let newValue: Place = Place.Character;
         assertPositionIsChanged(p, newValue, board);
 
         p = {
             x: 1,
             y: 0
         };
-        newValue = "x";
+        newValue = Place.Wall;
         assertPositionIsChanged(p, newValue, board);
 
         p = {
             x: 0,
             y: 1
         };
-        newValue = "x";
+        newValue = Place.Wall;
         assertPositionIsChanged(p, newValue, board);
 
         p = {
             x: 9,
             y: 9
         };
-        newValue = "end";
+        newValue = Place.End;
         assertPositionIsChanged(p, newValue, board);
 
         p = {
             x: 9,
             y: 8
         };
-        newValue = "x";
+        newValue = Place.Wall;
         assertPositionIsChanged(p, newValue, board);
 
         p = {
             x: 8,
             y: 9
         };
-        newValue = " ";
+        newValue = Place.Empty;
         assertPositionIsChanged(p, newValue, board);
     });
 });
