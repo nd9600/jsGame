@@ -1,13 +1,12 @@
 dependencies:
   '@tweenjs/tween.js': 17.2.0
-  '@types/tweenjs': 1.0.0
-  folktale: 2.1.0
   fp-ts: 1.7.1
   ramda: 0.25.0
 devDependencies:
   '@types/jest': 23.3.0
   '@types/node': 10.5.2
   '@types/ramda': github.com/types/npm-ramda/6df524d388d183d9ce79fe58a50152eff4663a74
+  '@types/tweenjs': 1.0.0
   babel-core: 6.26.3
   babel-jest: 23.4.0
   babel-loader: 7.1.5
@@ -48,7 +47,7 @@ packages:
     resolution:
       integrity: sha1-IfibcJuvxLMDra56g7TzWg2eR5Y=
   /@types/createjs-lib/0.0.29:
-    dev: false
+    dev: true
     resolution:
       integrity: sha1-+uguO6hgZmOxkOeJzsfZxyj8Qdc=
   /@types/jest/23.3.0:
@@ -62,7 +61,7 @@ packages:
   /@types/tweenjs/1.0.0:
     dependencies:
       '@types/createjs-lib': 0.0.29
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-qn0yChkBM0uCDdovXCyZT+HREWP5PaPWrGBuQZ0GIANHZ4E4PZ35vrczagmTyewRwTFJ82/TcYQAvozjNmfcTw==
   /@vue/component-compiler-utils/2.1.0:
@@ -247,9 +246,14 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-d+nbxBUGKg7Arpsvbnlq61mc12ek3EY8EQldM3GPAhWJ1UVxC6TDGbIvUMNU6obBX3i1+ptCIzV4vq0gFPEGVQ==
+  /ajv-keywords/3.2.0:
+    dev: true
+    peerDependencies:
+      ajv: ^6.0.0
+    resolution:
+      integrity: sha1-6GuBnGAs+IIa1jdBNpjx3sAhhHo=
   /ajv-keywords/3.2.0/ajv@6.5.2:
-    dependencies:
-      ajv: 6.5.2
+    dependencies: {}
     dev: true
     id: registry.npmjs.org/ajv-keywords/3.2.0
     peerDependencies:
@@ -2616,10 +2620,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-calZMC10u0FMUqoiunI2AiGIIUtUIvifNwkHhNupZH4cbNnW1Itkoh/Nf5HFYmDrwWPjrUxpkZT0KhuCq0jmGw==
-  /folktale/2.1.0:
-    dev: false
-    resolution:
-      integrity: sha512-eG9lWx/MAOPoFllqASH7d1+QMl6qCd+E+rOPSWgulFPKG55506kXKQZLnMg3fMHFZUWY/2POZUPc/MH7048nIg==
   /follow-redirects/1.5.1:
     dependencies:
       debug: 3.1.0
@@ -2743,6 +2743,8 @@ packages:
     engines:
       node: '>=0.8.0'
     optional: true
+    os:
+      - darwin
     requiresBuild: true
     resolution:
       integrity: sha512-z8H8/diyk76B7q5wg+Ud0+CqzcAF3mBBI/bA5ne5zrRUUIvNkJY//D3BqyH571KuAC4Nr7Rw7CjWX4r0y9DvNg==
@@ -5640,7 +5642,7 @@ packages:
   /schema-utils/0.4.5:
     dependencies:
       ajv: 6.5.2
-      ajv-keywords: /ajv-keywords/3.2.0/ajv@6.5.2
+      ajv-keywords: 3.2.0
     dev: true
     engines:
       node: '>= 4.8.0 || >= 6.9.0 || >= 8.9.0'
@@ -7015,7 +7017,7 @@ packages:
       tarball: 'https://codeload.github.com/types/npm-ramda/tar.gz/6df524d388d183d9ce79fe58a50152eff4663a74'
     version: 0.25.0
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 8
+shrinkwrapMinorVersion: 9
 shrinkwrapVersion: 3
 specifiers:
   '@tweenjs/tween.js': ^17.2.0
@@ -7031,7 +7033,6 @@ specifiers:
   cross-env: ^5.2.0
   css-loader: ^1.0.0
   file-loader: ^1.1.11
-  folktale: ^2.1.0
   fork-ts-checker-webpack-plugin: ^0.4.3
   fp-ts: ^1.7.1
   jest: ^23.4.1

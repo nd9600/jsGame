@@ -12,7 +12,7 @@ import usefulFunctions from "@/game/usefulFunctions";
  */
 function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: Position): Either<IError, Position> {
     const squareIsEmpty = (position: Position): boolean => {
-        return boardFunctions.getPosition(position, board) === " ";
+        return boardFunctions.getPosition(position, board) === Place.Empty;
     };
 
     console.log("#####\nstarting move");
@@ -28,12 +28,28 @@ function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: P
                 yRange
             );
 
-            // this is wrong - doesn't work for e.g. empty squares [1,2,3,  7,8,9]
-            const squareToMoveInto = R.findLast(squareIsEmpty, squaresToTopOfBoard);
+            // this is wrong - doesn't work for e.g. empty squares [1,2,3, 4x,5x,6x, 7,8,9]
+            //as 
+            // const squareToMoveInto = R.findLast(squareIsEmpty, squaresToTopOfBoard);
+
+            let squareToMoveInto: Position | null = null;
+            for (let i = 1; i < squaresToTopOfBoard.length + 1; i++) {
+                const position = squaresToTopOfBoard[i];
+                const thingAtPosition = boardFunctions.getPosition(position, board);
+                if (thingAtPosition === Place.Wall) {
+                    squareToMoveInto = squaresToTopOfBoard[i - 1];
+                    break;
+                }
+            }
 
             console.log(fromPosition);
             console.log(yRange);
             console.log(squaresToTopOfBoard);
+            console.log(R.map(
+                (pos) => boardFunctions.getPosition(pos, board),
+                squaresToTopOfBoard
+            ));
+            // console.log(possibleSquareToMoveInto);
             console.log(squareToMoveInto);
 
             if (squareToMoveInto == null) {
