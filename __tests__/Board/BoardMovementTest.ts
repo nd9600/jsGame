@@ -1,9 +1,9 @@
 import * as R from "ramda";
 import boardFunctions from "@/game/board/board";
-import { Place, Board, twoNumbers, Position, Direction, GameState } from "@/game/myTypes";
+import { Place, Board, Position, Direction, GameState } from "@/game/myTypes";
 import usefulFunctions from "@/game/usefulFunctions";
 
-describe("BoardMovement", () => {
+describe("BoardMovementUp", () => {
     // beforeEach(() => {
     // });
 
