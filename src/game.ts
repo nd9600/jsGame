@@ -18,26 +18,33 @@ const boardDiv = document.getElementById("board")!;
 boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
 
 gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
-gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
 console.log(gameState.board);
 boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
 
+
+const KEYS = {
+    up: "ArrowUp",
+    down: "ArrowDown",
+    left: "ArrowLeft",
+    right: "ArrowRight"
+};
 window.addEventListener("keyup", (event) => {
-    switch (event.keyCode) {
-        case 38: {
+    switch (event.code) {
+        case KEYS.up: {
             gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
             break;
-        } case 40: {
+        } case KEYS.down: {
             gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Down, gameState);
             break;
-        } case 37: {
+        } case KEYS.left: {
             gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Left, gameState);
             break;
-        } case 39: {
+        } case KEYS.right: {
             gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Right, gameState);
             break;
         }
     }
+    console.log(event.code);
     console.log(gameState.board);
     boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
 });
