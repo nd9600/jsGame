@@ -4,10 +4,7 @@ import {Position, twoNumbers, Direction, GameState, IError} from "@/game/myTypes
 import usefulFunctions from "@/game/usefulFunctions";
 
 const setup = new TestSetup();
-let size: twoNumbers;
-let characterPosition: Position;
-let endPoint: Position;
-[size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
+const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
 const board = boardFunctions.setInitialPositions(characterPosition, endPoint, boardFunctions.makeInitialBoard(size));
 
