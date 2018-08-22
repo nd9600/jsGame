@@ -11,57 +11,42 @@ import usefulFunctions from "@/game/usefulFunctions";
  * @param fromPosition Position
  */
 function getSquareToMoveInto(board: Board, direction: Direction, fromPosition: Position): Either<IError, Position> {
-    const squareIsEmpty = (position: Position): boolean => {
-        return boardFunctions.getPosition(position, board) === Place.Empty;
-    };
-
-    console.log("#####\nstarting move");
-
     switch (direction) {
         case Direction.Up:
             if (fromPosition.y === 0) {
                 return left(usefulFunctions.makeError("MovementError", "at top of board"));
             }
             const yRange = usefulFunctions.range(fromPosition.y, 0);
-            const squaresToTopOfBoard = R.map(
+            const squaresCouldMoveInto = R.map(
                 (y): Position => R.assoc("y", y, fromPosition),
                 yRange
             );
 
-            // this is wrong - doesn't work for e.g. empty squares [1,2,3, 4x,5x,6x, 7,8,9]
-            //as 
-            // const squareToMoveInto = R.findLast(squareIsEmpty, squaresToTopOfBoard);
-
-            let squareToMoveInto: Position | null = null;
-            for (let i = 1; i < squaresToTopOfBoard.length + 1; i++) {
-                const position = squaresToTopOfBoard[i];
+            const wallInWayOfMovementIndex = R.findIndex((position) => {
                 const thingAtPosition = boardFunctions.getPosition(position, board);
-                if (thingAtPosition === Place.Wall) {
-                    squareToMoveInto = squaresToTopOfBoard[i - 1];
-                    break;
-                }
+                return thingAtPosition === Place.Wall;
+            }, squaresCouldMoveInto);
+            
+            let squareToMoveInto: Position;
+            if (wallInWayOfMovementIndex === 0) {
+                return left(usefulFunctions.makeError("MovementError", "wall immediately above"));
+
+            // no wall was found, so we can move to the top of the board
+            } else if (wallInWayOfMovementIndex === -1) {
+                squareToMoveInto = squaresCouldMoveInto[squaresCouldMoveInto.length - 1];
+            } else {
+                squareToMoveInto = squaresCouldMoveInto[wallInWayOfMovementIndex - 1];
             }
 
-            console.log(fromPosition);
-            console.log(yRange);
-            console.log(squaresToTopOfBoard);
-            console.log(R.map(
-                (pos) => boardFunctions.getPosition(pos, board),
-                squaresToTopOfBoard
-            ));
-            // console.log(possibleSquareToMoveInto);
-            console.log(squareToMoveInto);
-
-            if (squareToMoveInto == null) {
-                return left(usefulFunctions.makeError("MovementError", "no empty squares"));
-            }
             return right(squareToMoveInto);
         case Direction.Down:
             break;
-        // Direction.Left
-        default:
+        case Direction.Left:
+            break;
+        case Direction.Right:
             break;
     }
+    // return usefulFunctions.assertUnreachable(direction);
     return left(usefulFunctions.makeError("ImpossibleError", "should never be returned"));
 }
 

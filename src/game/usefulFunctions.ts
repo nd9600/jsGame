@@ -16,6 +16,10 @@ const range = (start: number, end: number): number[] => {
 const makeError = (name: string, message: string): IError => ({name, message});
 const errorHandler = (error: IError): void => console.log(error);
 
+const assertUnreachable = (x: never): never => {
+    throw new Error("Didn't expect to get here");
+};
+
 export default {
-    range, makeError, errorHandler
+    range, makeError, errorHandler, assertUnreachable
 };
