@@ -88,9 +88,7 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
 }
 
 const move = (errorHandler: (error: IError) => void, direction: Direction, gameState: GameState): GameState => {
-
     const {characterPosition, board} = gameState;
-    
     boardFunctions.isPositionOnBoard(characterPosition, board);
 
     const squareToMoveIntoResult = getPositionToMoveInto(board, direction, characterPosition);
@@ -99,13 +97,10 @@ const move = (errorHandler: (error: IError) => void, direction: Direction, gameS
             errorHandler(error);
             return {characterPosition, board};
         },
-        (squareToMoveInto) => {
-            console.log(characterPosition);
-            console.log(squareToMoveInto);
-            const newCharacterPosition = squareToMoveInto;
+        (newCharacterPosition) => {
             const newBoard = R.compose(
                 boardFunctions.setPosition(characterPosition, Place.Empty),
-                boardFunctions.setPosition(squareToMoveInto, Place.Character)
+                boardFunctions.setPosition(newCharacterPosition, Place.Character)
             )(board);
 
             return {

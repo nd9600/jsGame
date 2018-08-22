@@ -24,3 +24,23 @@ gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, game
 gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
 console.log(gameState.board);
 boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
+
+window.addEventListener("keyup", (event) => {
+    switch (event.keyCode) {
+        case 38: {
+            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
+            break;
+        } case 40: {
+            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Down, gameState);
+            break;
+        } case 37: {
+            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Left, gameState);
+            break;
+        } case 39: {
+            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Right, gameState);
+            break;
+        }
+    }
+    console.log(gameState.board);
+    boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
+});
