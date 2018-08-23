@@ -246,14 +246,9 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-d+nbxBUGKg7Arpsvbnlq61mc12ek3EY8EQldM3GPAhWJ1UVxC6TDGbIvUMNU6obBX3i1+ptCIzV4vq0gFPEGVQ==
-  /ajv-keywords/3.2.0:
-    dev: true
-    peerDependencies:
-      ajv: ^6.0.0
-    resolution:
-      integrity: sha1-6GuBnGAs+IIa1jdBNpjx3sAhhHo=
   /ajv-keywords/3.2.0/ajv@6.5.2:
-    dependencies: {}
+    dependencies:
+      ajv: 6.5.2
     dev: true
     id: registry.npmjs.org/ajv-keywords/3.2.0
     peerDependencies:
@@ -5642,7 +5637,7 @@ packages:
   /schema-utils/0.4.5:
     dependencies:
       ajv: 6.5.2
-      ajv-keywords: 3.2.0
+      ajv-keywords: /ajv-keywords/3.2.0/ajv@6.5.2
     dev: true
     engines:
       node: '>= 4.8.0 || >= 6.9.0 || >= 8.9.0'
@@ -7017,7 +7012,7 @@ packages:
       tarball: 'https://codeload.github.com/types/npm-ramda/tar.gz/6df524d388d183d9ce79fe58a50152eff4663a74'
     version: 0.25.0
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 9
+shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
 specifiers:
   '@tweenjs/tween.js': ^17.2.0
