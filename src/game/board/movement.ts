@@ -10,10 +10,14 @@ import usefulFunctions from "@/game/usefulFunctions";
  * @param board Board
  */
 function getPositionToMoveIntoFromPossibleList(squaresCouldMoveInto: Position[], board: Board): Either<IError, Position> {
-    const wallInWayOfMovementIndex = R.findIndex((possibleWallPosition) => {
-        const thingAtPosition = boardFunctions.getPosition(possibleWallPosition, board);
-        return thingAtPosition === Place.Wall;
-    }, squaresCouldMoveInto);
+    const wallInWayOfMovementIndex = R.findIndex((possibleWallPosition) => R.equals(
+        Place.Wall,
+        boardFunctions.getPosition(possibleWallPosition, board)), 
+    squaresCouldMoveInto);
+    // const wallInWayOfMovementIndex = R.findIndex(R.equals(
+    //     Place.Wall,
+    //     R.flip(boardFunctions.getPosition)(board)), 
+    // squaresCouldMoveInto);
     
     let squareToMoveInto: Position;
     if (wallInWayOfMovementIndex === 0) {
