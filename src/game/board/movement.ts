@@ -11,13 +11,30 @@ import usefulFunctions from "@/game/usefulFunctions";
  */
 function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[], board: Board): Either<IError, Position> {
     const wallInWayOfMovementIndex = R.findIndex((possibleWallPosition) => R.equals(
-        Place.Wall,
-        boardFunctions.getPosition(possibleWallPosition, board)), 
+        boardFunctions.getPosition(possibleWallPosition, board),
+        Place.Wall),
     positionsCouldMoveInto);
-    // const wallInWayOfMovementIndex = R.findIndex(R.equals(
+    //
+    // const wallInWayOfMovementIndex = R.findIndex((possibleWallPosition) => R.equals(
     //     Place.Wall,
-    //     R.flip(boardFunctions.getPosition)(board)), 
-    // positionsCouldMoveInto);
+    //     R.flip(boardFunctions.getPosition)(board, possibleWallPosition)),
+    //     positionsCouldMoveInto);
+    //
+    // const wallInWayOfMovementIndex = R.findIndex(
+    //     (possibleWallPosition: Position) => R.equals(
+    //         Place.Wall,
+    //         (R.flip(boardFunctions.getPosition)(board)(possibleWallPosition))
+    //     ),
+    //     positionsCouldMoveInto
+    // );
+
+    // const wallInWayOfMovementIndex = R.findIndex(
+    //     R.equals(
+    //         Place.Wall,
+    //         R.flip(boardFunctions.getPosition)(board)
+    //     ),
+    //     positionsCouldMoveInto
+    // );
     
     let positionToMoveInto: Position;
     if (wallInWayOfMovementIndex === 0) {
