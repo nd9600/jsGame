@@ -14,27 +14,6 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
         boardFunctions.getPosition(possibleWallPosition, board),
         Place.Wall),
     positionsCouldMoveInto);
-    //
-    // const wallInWayOfMovementIndex = R.findIndex((possibleWallPosition) => R.equals(
-    //     Place.Wall,
-    //     R.flip(boardFunctions.getPosition)(board, possibleWallPosition)),
-    //     positionsCouldMoveInto);
-    //
-    // const wallInWayOfMovementIndex = R.findIndex(
-    //     (possibleWallPosition: Position) => R.equals(
-    //         Place.Wall,
-    //         (R.flip(boardFunctions.getPosition)(board)(possibleWallPosition))
-    //     ),
-    //     positionsCouldMoveInto
-    // );
-
-    // const wallInWayOfMovementIndex = R.findIndex(
-    //     R.equals(
-    //         Place.Wall,
-    //         R.flip(boardFunctions.getPosition)(board)
-    //     ),
-    //     positionsCouldMoveInto
-    // );
     
     let positionToMoveInto: Position;
     if (wallInWayOfMovementIndex === 0) {
