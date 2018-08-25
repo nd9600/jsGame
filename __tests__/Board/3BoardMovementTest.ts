@@ -1,4 +1,3 @@
-import * as R from "ramda";
 import boardFunctions from "@/game/board/board";
 import { Place, Board, Position, Direction, GameState } from "@/game/myTypes";
 import usefulFunctions from "@/game/usefulFunctions";
