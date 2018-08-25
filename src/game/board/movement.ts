@@ -48,7 +48,7 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
             if (fromPosition.y === 0) {
                 return left(usefulFunctions.makeError("MovementError", "at top of board"));
             }
-            const yRange = usefulFunctions.range(fromPosition.y, 0);
+            const yRange = usefulFunctions.range(fromPosition.y - 1, 0);
             const squaresCouldMoveInto = R.map(
                 (y): Position => R.assoc("y", y, fromPosition),
                 yRange
@@ -56,10 +56,10 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
 
             return getPositionToMoveIntoFromPossibleList(squaresCouldMoveInto, board);
         } case Direction.Down: {
-            if (fromPosition.y === board.length - 1) {
+            if (fromPosition.y + 1 === board.length) {
                 return left(usefulFunctions.makeError("MovementError", "at bottom of board"));
             }
-            const yRange = usefulFunctions.range(fromPosition.y, board.length);
+            const yRange = usefulFunctions.range(fromPosition.y + 1, board.length);
             const positionsCouldMoveInto = R.map(
                 (y): Position => R.assoc("y", y, fromPosition),
                 yRange
@@ -70,7 +70,7 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
             if (fromPosition.x === 0) {
                 return left(usefulFunctions.makeError("MovementError", "at left of board"));
             }
-            const xRange = usefulFunctions.range(fromPosition.x, 0);
+            const xRange = usefulFunctions.range(fromPosition.x - 1, 0);
             const positionsCouldMoveInto = R.map(
                 (x): Position => R.assoc("x", x, fromPosition),
                 xRange
@@ -79,10 +79,10 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
             return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board);
         }
         case Direction.Right: {
-            if (fromPosition.x === board[0].length - 1) {
+            if (fromPosition.x + 1 === board[0].length) {
                 return left(usefulFunctions.makeError("MovementError", "at right of board"));
             }
-            const xRange = usefulFunctions.range(fromPosition.x, board[0].length);
+            const xRange = usefulFunctions.range(fromPosition.x + 1, board[0].length);
             const positionsCouldMoveInto = R.map(
                 (x): Position => R.assoc("x", x, fromPosition),
                 xRange
