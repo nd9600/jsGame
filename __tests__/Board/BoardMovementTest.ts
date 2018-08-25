@@ -13,11 +13,6 @@ describe("BoardMovementUp", () => {
             [Place.Character],
             [Place.Empty],
             [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
             [Place.Empty]
         ];
         const characterPosition: Position = {
@@ -47,16 +42,11 @@ describe("BoardMovementUp", () => {
             [Place.Empty],
             [Place.Empty],
             [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
             [Place.Character]
         ];
         const characterPosition: Position = {
             x: 0,
-            y: 9
+            y: 4
         };
 
         let gameState: GameState = {
@@ -71,19 +61,12 @@ describe("BoardMovementUp", () => {
             y: 0
         };
         expect(newCharacterPosition).toEqual(expectedCharacterPosition);
-        expect(boardFunctions.getPosition(expectedCharacterPosition, newBoard)).toEqual(Place.Character);
-        expect(boardFunctions.getPosition(characterPosition, newBoard)).toEqual(Place.Empty); 
     });
 
     it("doesnt_move_up_from_one_below_top_when_blocked", () => {
         const board: Board = [
             [Place.Wall],
             [Place.Character],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
             [Place.Empty],
             [Place.Empty],
             [Place.Empty]
@@ -103,18 +86,12 @@ describe("BoardMovementUp", () => {
         const expectedCharacterPosition = characterPosition;
 
         expect(newCharacterPosition).toEqual(expectedCharacterPosition);
-        expect(boardFunctions.getPosition(expectedCharacterPosition, newBoard)).toEqual(Place.Character);
-        expect(boardFunctions.getPosition({x: 0, y: 0}, newBoard)).toEqual(Place.Wall); 
     });
 
     it("moves_up_to_below_wall", () => {
         const board: Board = [
             [Place.Empty],
-            [Place.Empty],
-            [Place.Empty],
             [Place.Wall],
-            [Place.Empty],
-            [Place.Empty],
             [Place.Empty],
             [Place.Empty],
             [Place.Character],
@@ -122,7 +99,7 @@ describe("BoardMovementUp", () => {
         ];
         const characterPosition: Position = {
             x: 0,
-            y: 8
+            y: 4
         };
 
         let gameState: GameState = {
@@ -134,11 +111,9 @@ describe("BoardMovementUp", () => {
         const {characterPosition: newCharacterPosition, board: newBoard} = gameState;
         const expectedCharacterPosition = {
             x: 0,
-            y: 4
+            y: 2
         };
 
         expect(newCharacterPosition).toEqual(expectedCharacterPosition);
-        expect(boardFunctions.getPosition(expectedCharacterPosition, newBoard)).toEqual(Place.Character);
-        expect(boardFunctions.getPosition(characterPosition, newBoard)).toEqual(Place.Empty); 
     });
 });

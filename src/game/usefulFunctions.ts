@@ -20,6 +20,8 @@ const assertUnreachable = (x: never): never => {
     throw new Error("Didn't expect to get here");
 };
 
+const abyss = (...args : any[]) => { return; };
+
 export default {
-    range, makeError, errorHandler, assertUnreachable
+    range, makeError, errorHandler, assertUnreachable, abyss
 };
