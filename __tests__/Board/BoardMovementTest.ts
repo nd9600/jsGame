@@ -88,7 +88,7 @@ describe("BoardMovementUp", () => {
         ];
         const characterPosition: Position = {
             x: 0,
-            y: 1
+            y: 2
         };
 
         const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
@@ -205,7 +205,7 @@ describe("BoardMovementDown", () => {
         ];
         const characterPosition: Position = {
             x: 0,
-            y: 3
+            y: 2
         };
 
         const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).value;
