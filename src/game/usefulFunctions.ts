@@ -1,3 +1,4 @@
+import * as R from "ramda";
 import {IError} from "@/game/myTypes";
 
 const range = (start: number, end: number): number[] => {
@@ -9,7 +10,8 @@ const range = (start: number, end: number): number[] => {
         (v, k) => k + rangeStart
     );
     return end < start
-        ? normalRange.reverse()
+        // ? normalRange.map(R.add(0)).reverse()
+        ? normalRange.map(R.add(1)).reverse() // range(0,4) = [0,1,2,3] reversed is [3,2,1,0], but we want range(4,0) = [4,3,2,1]
         : normalRange;
 };
 
