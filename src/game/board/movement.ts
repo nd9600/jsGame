@@ -14,13 +14,6 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
         boardFunctions.getPosition(possibleWallPosition, board),
         Place.Wall),
     positionsCouldMoveInto);
-
-    console.log({positionsCouldMoveInto});
-    console.log("1a");
-    console.log({board});
-    console.log("1b");
-    console.log({wallInWayOfMovementIndex});
-    console.log("1c");
     
     let positionToMoveInto: Position;
     if (wallInWayOfMovementIndex === 0) {
@@ -48,7 +41,9 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
             if (fromPosition.y === 0) {
                 return left(usefulFunctions.makeError("MovementError", "at top of board"));
             }
-            const yRange = usefulFunctions.range(fromPosition.y - 1, 0);
+
+            // range that decrements doesn't include the starting number i.e. the position, which is what we want
+            const yRange = usefulFunctions.range(fromPosition.y, 0);
             const squaresCouldMoveInto = R.map(
                 (y): Position => R.assoc("y", y, fromPosition),
                 yRange
@@ -59,6 +54,8 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
             if (fromPosition.y + 1 === board.length) {
                 return left(usefulFunctions.makeError("MovementError", "at bottom of board"));
             }
+
+            // range that increments does include the starting number i.e. the position, which isn't what we want, so we have to increment by 1 to get rid of it
             const yRange = usefulFunctions.range(fromPosition.y + 1, board.length);
             const positionsCouldMoveInto = R.map(
                 (y): Position => R.assoc("y", y, fromPosition),
@@ -70,7 +67,7 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
             if (fromPosition.x === 0) {
                 return left(usefulFunctions.makeError("MovementError", "at left of board"));
             }
-            const xRange = usefulFunctions.range(fromPosition.x - 1, 0);
+            const xRange = usefulFunctions.range(fromPosition.x, 0);
             const positionsCouldMoveInto = R.map(
                 (x): Position => R.assoc("x", x, fromPosition),
                 xRange
