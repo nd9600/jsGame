@@ -1,12 +1,14 @@
 import boardFunctions from "@/game/board/board";
 import { Place, Board, Position, Direction, GameState } from "@/game/myTypes";
 import usefulFunctions from "@/game/usefulFunctions";
+import MovementEvent from "@/game/events/MovementEvent";
+import SuccessfulMovementEvent from "@/game/events/SuccessfulMovementEvent";
 
 describe("BoardMovementUp", () => {
     // beforeEach(() => {
     // });
 
-    it("moves_up_from_one_below_top", () => {
+    it("applies_succesful_movement_event", () => {
         const board: Board = [
             [Place.Empty],
             [Place.Character],
@@ -24,15 +26,38 @@ describe("BoardMovementUp", () => {
             board
         };
 
-        gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
+        const expectedCharacterPosition = {
+            x: 0,
+            y: 0
+        };
+        const movementEvent = new SuccessfulMovementEvent(expectedCharacterPosition);
+        gameState = movementEvent.handle(gameState);
         const {characterPosition: newCharacterPosition, board: newBoard} = gameState;
+        
+        expect(newCharacterPosition).toEqual(expectedCharacterPosition);
+        expect(boardFunctions.getPosition(expectedCharacterPosition, newBoard)).toEqual(Place.Character);
+        expect(boardFunctions.getPosition(characterPosition, newBoard)).toEqual(Place.Empty); 
+    });
+
+    it("moves_up_from_one_below_top", () => {
+        const board: Board = [
+            [Place.Empty],
+            [Place.Character],
+            [Place.Empty],
+            [Place.Empty],
+            [Place.Empty]
+        ];
+        const characterPosition: Position = {
+            x: 0,
+            y: 1
+        };
+
+        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).data;
         const expectedCharacterPosition = {
             x: 0,
             y: 0
         };
         expect(newCharacterPosition).toEqual(expectedCharacterPosition);
-        expect(boardFunctions.getPosition(expectedCharacterPosition, newBoard)).toEqual(Place.Character);
-        expect(boardFunctions.getPosition(characterPosition, newBoard)).toEqual(Place.Empty); 
     });
 
     it("moves_up_from_bottom", () => {
@@ -48,7 +73,7 @@ describe("BoardMovementUp", () => {
             y: 4
         };
 
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
+        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).data;
         const expectedCharacterPosition = {
             x: 0,
             y: 0
@@ -69,7 +94,7 @@ describe("BoardMovementUp", () => {
             y: 1
         };
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
+        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -90,7 +115,7 @@ describe("BoardMovementUp", () => {
             y: 2
         };
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
+        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -112,7 +137,7 @@ describe("BoardMovementUp", () => {
             y: 4
         };
 
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
+        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).data;
         const expectedCharacterPosition = {
             x: 0,
             y: 2
@@ -165,7 +190,7 @@ describe("BoardMovementDown", () => {
             y: 0
         };
 
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).value;
+        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).data;
         const expectedCharacterPosition = {
             x: 0,
             y: 4
@@ -186,7 +211,7 @@ describe("BoardMovementDown", () => {
             y: 3
         };
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).value;
+        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -207,7 +232,7 @@ describe("BoardMovementDown", () => {
             y: 2
         };
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).value;
+        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -229,7 +254,7 @@ describe("BoardMovementDown", () => {
             y: 1
         };
 
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).value;
+        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Down, characterPosition).data;
         const expectedCharacterPosition = {
             x: 0,
             y: 3
