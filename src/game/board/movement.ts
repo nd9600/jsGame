@@ -91,8 +91,8 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
     return usefulFunctions.assertUnreachable(direction);
 }
 
-const move = (errorHandler: (error: IError) => void, direction: Direction, gameState: GameState): GameState => {
-    const {characterPosition, board} = gameState;
+const move = (errorHandler: (error: IError) => void, direction: Direction, state: GameState): GameState => {
+    const {characterPosition, board} = state;
     boardFunctions.isPositionOnBoard(characterPosition, board);
 
     const positionToMoveIntoEither = getPositionToMoveInto(board, direction, characterPosition);
@@ -107,10 +107,10 @@ const move = (errorHandler: (error: IError) => void, direction: Direction, gameS
                 boardFunctions.setPosition(newCharacterPosition, Place.Character)
             )(board);
 
-            return {
+            return R.merge(state, {
                 characterPosition: newCharacterPosition, 
                 board: newBoard
-            };
+            });
         }
     );
 };
