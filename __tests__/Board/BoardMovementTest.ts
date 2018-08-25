@@ -49,13 +49,7 @@ describe("BoardMovementUp", () => {
             y: 4
         };
 
-        let gameState: GameState = {
-            characterPosition,
-            board
-        };
-
-        gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
-        const {characterPosition: newCharacterPosition, board: newBoard} = gameState;
+        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
         const expectedCharacterPosition = {
             x: 0,
             y: 0
@@ -76,16 +70,12 @@ describe("BoardMovementUp", () => {
             y: 1
         };
 
-        let gameState: GameState = {
-            characterPosition,
-            board
+        const errorReturned = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
+        const expectedError = {
+            message: "wall immediately above",
+            name: "MovementError",
         };
-
-        gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
-        const {characterPosition: newCharacterPosition, board: newBoard} = gameState;
-        const expectedCharacterPosition = characterPosition;
-
-        expect(newCharacterPosition).toEqual(expectedCharacterPosition);
+        expect(errorReturned).toEqual(expectedError);
     });
 
     it("moves_up_to_below_wall", () => {
@@ -102,18 +92,11 @@ describe("BoardMovementUp", () => {
             y: 4
         };
 
-        let gameState: GameState = {
-            characterPosition,
-            board
-        };
-
-        gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
-        const {characterPosition: newCharacterPosition, board: newBoard} = gameState;
+        const newCharacterPosition = boardFunctions.getPositionToMoveInto(board, Direction.Up, characterPosition).value;
         const expectedCharacterPosition = {
             x: 0,
             y: 2
         };
-
         expect(newCharacterPosition).toEqual(expectedCharacterPosition);
     });
 });

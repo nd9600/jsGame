@@ -112,5 +112,5 @@ const move = (errorHandler: (error: IError) => void, direction: Direction, gameS
 };
 
 export default {
-    move
+    move, getPositionToMoveInto
 };
