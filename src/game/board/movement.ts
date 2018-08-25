@@ -1,5 +1,4 @@
 import * as R from "ramda";
-import {Either, left, right} from "fp-ts/lib/Either";
 import {Board, Direction, IError, Position, GameState, Place} from "@/game/myTypes";
 import boardFunctions from "./board";
 import usefulFunctions from "@/game/usefulFunctions";

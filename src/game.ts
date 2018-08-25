@@ -1,6 +1,6 @@
 import boardFunctions from "@/game/board/board";
 import TestSetup from "@/game/interaction/TestSetup";
-import {Position, twoNumbers, Direction, GameState, IError} from "@/game/myTypes";
+import {Direction, GameState} from "@/game/myTypes";
 import usefulFunctions from "@/game/usefulFunctions";
 
 const setup = new TestSetup();
@@ -21,30 +21,20 @@ gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, game
 console.log(gameState.board);
 boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
 
-
 const KEYS = {
     up: "ArrowUp",
     down: "ArrowDown",
     left: "ArrowLeft",
     right: "ArrowRight"
 };
-window.addEventListener("keyup", (event) => {
-    switch (event.code) {
-        case KEYS.up: {
-            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
-            break;
-        } case KEYS.down: {
-            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Down, gameState);
-            break;
-        } case KEYS.left: {
-            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Left, gameState);
-            break;
-        } case KEYS.right: {
-            gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Right, gameState);
-            break;
-        }
-    }
-    console.log(event.code);
+window.addEventListener("keyup", ({code}) => {
+    const KEYS_TO_DIRECTIONS: any = {};
+    KEYS_TO_DIRECTIONS[KEYS.up] = Direction.Up;
+    KEYS_TO_DIRECTIONS[KEYS.down] = Direction.Down;
+    KEYS_TO_DIRECTIONS[KEYS.left] = Direction.Left;
+    KEYS_TO_DIRECTIONS[KEYS.right] = Direction.Right;
+    gameState = boardFunctions.move(usefulFunctions.errorHandler, KEYS_TO_DIRECTIONS[code], gameState);
+    console.log(code);
     console.log(gameState.board);
     boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
 });
