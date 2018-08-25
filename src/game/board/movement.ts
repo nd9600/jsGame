@@ -14,10 +14,17 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
         boardFunctions.getPosition(possibleWallPosition, board),
         Place.Wall),
     positionsCouldMoveInto);
+
+    console.log({positionsCouldMoveInto});
+    console.log("1a");
+    console.log({board});
+    console.log("1b");
+    console.log({wallInWayOfMovementIndex});
+    console.log("1c");
     
     let positionToMoveInto: Position;
     if (wallInWayOfMovementIndex === 0) {
-        return left(usefulFunctions.makeError("MovementError", "wall immediately above"));
+        return left(usefulFunctions.makeError("MovementError", "wall immediately beside"));
 
     // no wall was found, so we can move to the top of the board
     } else if (wallInWayOfMovementIndex === -1) {
