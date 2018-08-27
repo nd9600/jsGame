@@ -5,6 +5,13 @@ import usefulFunctions from "@/core/usefulFunctions";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 
+const KEYS = {
+    up: "ArrowUp",
+    down: "ArrowDown",
+    left: "ArrowLeft",
+    right: "ArrowRight"
+};
+
 const setup = new TestSetup();
 const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
@@ -19,16 +26,6 @@ const boardDiv = document.getElementById("board")!;
 
 boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 
-gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
-console.log(gameState.board);
-boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
-
-const KEYS = {
-    up: "ArrowUp",
-    down: "ArrowDown",
-    left: "ArrowLeft",
-    right: "ArrowRight"
-};
 window.addEventListener("keyup", ({code}) => {
     const KEYS_TO_DIRECTIONS: any = {};
     KEYS_TO_DIRECTIONS[KEYS.up] = Direction.Up;

@@ -243,7 +243,7 @@ describe("BoardMovementDown", () => {
         const board = new Board(boardData, characterPosition, endPoint);
         const gameState = new GameState(characterPosition, board);
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
+        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -267,7 +267,7 @@ describe("BoardMovementDown", () => {
         const board = new Board(boardData, characterPosition, endPoint);
         const gameState = new GameState(characterPosition, board);
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
+        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
