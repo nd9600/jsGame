@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 module.exports = {
     entry: './src/game.ts',
@@ -71,7 +72,20 @@ module.exports = {
             '@': path.resolve(__dirname, 'src'),
         }
     },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new UglifyJsPlugin({ 
+                uglifyOptions: { 
+                    compress: false, 
+                    mangle: true 
+                }
+            })
+        ],
+        splitChunks: false
+    },
     devServer: {
+        compress: false,
         historyApiFallback: true,
         noInfo: false,
         overlay: true
