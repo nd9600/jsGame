@@ -4,7 +4,9 @@ import GameState from "@/core/GameState";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
 
+    public type = "SuccessfulMovementEvent";
     public data: Position;
+    
     constructor(newCharacterPosition: Position) {
         super();
         this.data = newCharacterPosition;

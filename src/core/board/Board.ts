@@ -1,5 +1,5 @@
-import { Place, Position, BoardType } from "@/core/myTypes";
 import * as R from "ramda";
+import { Place, Position, BoardType } from "@/core/myTypes";
 
 export default class Board {
     public startPoint: Position;

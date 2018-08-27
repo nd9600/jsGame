@@ -5,7 +5,9 @@ import GameState from "@/core/GameState";
 
 export default class FailedMovementEvent extends MovementEvent {
 
+    public type = "FailedMovementEvent";
     public data: IError;
+
     constructor(error: IError) {
         super();
         this.data = error;

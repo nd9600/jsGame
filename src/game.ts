@@ -37,6 +37,6 @@ window.addEventListener("keyup", ({code}) => {
     gameState = inputEvent.handle(gameState);
 
     console.log(code);
-    console.log(gameState.board);
+    console.log(gameState.board.getBoard());
     boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 });

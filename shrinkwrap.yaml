@@ -1,6 +1,5 @@
 dependencies:
   '@tweenjs/tween.js': 17.2.0
-  fp-ts: 1.7.1
   ramda: 0.25.0
 devDependencies:
   '@types/jest': 23.3.0
@@ -15,13 +14,13 @@ devDependencies:
   cross-env: 5.2.0
   css-loader: 1.0.0
   file-loader: 1.1.11
-  fork-ts-checker-webpack-plugin: 0.4.3
   jest: 23.4.1
   jest-environment-jsdom: 23.4.0
   ts-jest: 23.0.1
   ts-loader: 4.4.2
   tslint: 5.11.0
   typescript: 2.9.2
+  uglifyjs-webpack-plugin: 1.3.0
   vue-loader: 15.2.6
   vue-template-compiler: 2.5.16
   webpack: 4.16.1
@@ -255,6 +254,15 @@ packages:
       ajv: ^6.0.0
     resolution:
       integrity: sha1-6GuBnGAs+IIa1jdBNpjx3sAhhHo=
+  /ajv-keywords/3.2.0/ajv@6.5.3:
+    dependencies:
+      ajv: 6.5.3
+    dev: true
+    id: registry.npmjs.org/ajv-keywords/3.2.0
+    peerDependencies:
+      ajv: ^6.0.0
+    resolution:
+      integrity: sha1-6GuBnGAs+IIa1jdBNpjx3sAhhHo=
   /ajv/5.5.2:
     dependencies:
       co: 4.6.0
@@ -273,6 +281,15 @@ packages:
     dev: true
     resolution:
       integrity: sha512-hOs7GfvI6tUI1LfZddH82ky6mOMyTuY0mk7kE2pWpmhhUSkumzaTO5vbVwij39MdwPQWCV4Zv57Eo06NtL/GVA==
+  /ajv/6.5.3:
+    dependencies:
+      fast-deep-equal: 2.0.1
+      fast-json-stable-stringify: 2.0.0
+      json-schema-traverse: 0.4.1
+      uri-js: 4.2.2
+    dev: true
+    resolution:
+      integrity: sha512-LqZ9wY+fx3UMiiPd741yB2pj3hhil+hQc8taf4o2QGRFpWgZ2V5C8HA165DY9sS3fJwsk7uT7ZlFEyC3Ig3lLg==
   /align-text/0.1.4:
     dependencies:
       kind-of: 3.2.2
@@ -2645,28 +2662,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
-  /fork-ts-checker-webpack-plugin/0.4.3:
-    dependencies:
-      babel-code-frame: 6.26.0
-      chalk: 1.1.3
-      chokidar: 1.7.0
-      lodash.endswith: 4.2.1
-      lodash.isfunction: 3.0.9
-      lodash.isstring: 4.0.1
-      lodash.startswith: 4.2.1
-      minimatch: 3.0.4
-      resolve: 1.8.1
-      tapable: 1.0.0
-      vue-parser: 1.1.6
-    dev: true
-    engines:
-      node: '>=6.11.5'
-    peerDependencies:
-      tslint: ^4.0.0 || ^5.0.0
-      typescript: ^2.1.0
-      webpack: ^2.3.0 || ^3.0.0 || ^4.0.0
-    resolution:
-      integrity: sha512-C9wLxW4aL/1Ja2LvuJu5Ig6Dglerjl3b03bYtEKi9nota0mXEtJ/2RZcpZBF23vdRDXy88CAfmiOQIPvH2aO0w==
   /form-data/2.3.2:
     dependencies:
       asynckit: 0.4.0
@@ -2683,10 +2678,6 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha1-mMI9qxF1ZXuMBXPozszZGw/xjIQ=
-  /fp-ts/1.7.1:
-    dev: false
-    resolution:
-      integrity: sha512-7jAWAdc+TQ6qEm89VvwsHBliF93VxCzYXKr8Zr99hdVJ/eB+/fjNwWT3qkKI4i4PS89H8tRTe4h9/sFvHrf65Q==
   /fragment-cache/0.2.1:
     dependencies:
       map-cache: 0.2.2
@@ -4141,26 +4132,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=
-  /lodash.endswith/4.2.1:
-    dev: true
-    resolution:
-      integrity: sha1-/tWawXOO0+I27dcGTsRWRIs3vAk=
-  /lodash.isfunction/3.0.9:
-    dev: true
-    resolution:
-      integrity: sha512-AirXNj15uRIMMPihnkInB4i3NHeb4iBtNg9WRWuK2o31S+ePwwNmDPaTL3o7dTJ+VXNZim7rFs4rxN4YU1oUJw==
-  /lodash.isstring/4.0.1:
-    dev: true
-    resolution:
-      integrity: sha1-1SfftUVuynzJu5XV2ur4i6VKVFE=
   /lodash.sortby/4.7.0:
     dev: true
     resolution:
       integrity: sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
-  /lodash.startswith/4.2.1:
-    dev: true
-    resolution:
-      integrity: sha1-xZjErc4YiiflMUVzHNxsDnF3YAw=
   /lodash/4.17.10:
     dev: true
     resolution:
@@ -4896,12 +4871,6 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-9ID0BDTvgHQfhGkJn43qGPVaTck=
-  /parse5/3.0.3:
-    dependencies:
-      '@types/node': 10.5.2
-    dev: true
-    resolution:
-      integrity: sha512-rgO9Zg5LLLkfJF9E6CCmXlSE4UVceloys8JrFqCcHloC3usd/kJCyPDwH2SOlzix2j3xaP9sUX3e8+kvkuleAA==
   /parse5/4.0.0:
     dev: true
     resolution:
@@ -5645,6 +5614,15 @@ packages:
       webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
     resolution:
       integrity: sha512-yYrjb9TX2k/J1Y5UNy3KYdZq10xhYcF8nMpAW6o3hy6Q8WSIEf9lJHG/ePnOBfziPM3fvQwfOwa13U/Fh8qTfA==
+  /schema-utils/0.4.7:
+    dependencies:
+      ajv: 6.5.3
+      ajv-keywords: /ajv-keywords/3.2.0/ajv@6.5.3
+    dev: true
+    engines:
+      node: '>= 4'
+    resolution:
+      integrity: sha512-v/iwU6wvwGK8HbU9yi3/nhGzP0yGSuhQMzL6ySiec1FSrZZDkhm4noOSWzrNFo/jEc+SJY6jRTwuwbSXJPDUnQ==
   /select-hose/2.0.0:
     dev: true
     resolution:
@@ -6438,6 +6416,23 @@ packages:
       webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
     resolution:
       integrity: sha512-1VicfKhCYHLS8m1DCApqBhoulnASsEoJ/BvpUpP4zoNAPpKzdH+ghk0olGJMmwX2/jprK2j3hAHdUbczBSy2FA==
+  /uglifyjs-webpack-plugin/1.3.0:
+    dependencies:
+      cacache: 10.0.4
+      find-cache-dir: 1.0.0
+      schema-utils: 0.4.7
+      serialize-javascript: 1.5.0
+      source-map: 0.6.1
+      uglify-es: 3.3.9
+      webpack-sources: 1.1.0
+      worker-farm: 1.6.0
+    dev: true
+    engines:
+      node: '>= 4.8 < 5.0.0 || >= 5.10'
+    peerDependencies:
+      webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
+    resolution:
+      integrity: sha512-ovHIch0AMlxjD/97j9AYovZxG5wnHOPkL7T1GKochBADp/Zwc44pEWNqpKl1Loupp1WhFg7SlYmHZRUfdAacgw==
   /union-value/1.0.0:
     dependencies:
       arr-union: 3.1.0
@@ -6610,15 +6605,6 @@ packages:
       vue-template-compiler: ^2.0.0
     resolution:
       integrity: sha512-pArIvo89q3rBgYsDzc/EQoqJZH4lTiH5RJa3AguwazdO/+gN7NDyu59UyEdVCc1h+67xZlah2viNAvk3JE3CMw==
-  /vue-parser/1.1.6:
-    dependencies:
-      parse5: 3.0.3
-    dev: true
-    engines:
-      node: '>= 4.0.0'
-      npm: '>= 3.0.0'
-    resolution:
-      integrity: sha512-v3/R7PLbaFVF/c8IIzWs1HgRpT2gN0dLRkaLIT5q+zJGVgmhN4VuZJF4Y9N4hFtFjS4B1EHxAOP6/tzqM4Ug2g==
   /vue-style-loader/4.1.1:
     dependencies:
       hash-sum: 1.0.2
@@ -7028,8 +7014,6 @@ specifiers:
   cross-env: ^5.2.0
   css-loader: ^1.0.0
   file-loader: ^1.1.11
-  fork-ts-checker-webpack-plugin: ^0.4.3
-  fp-ts: ^1.7.1
   jest: ^23.4.1
   jest-environment-jsdom: ^23.4.0
   ramda: ^0.25.0
@@ -7037,6 +7021,7 @@ specifiers:
   ts-loader: ^4.4.2
   tslint: ^5.11.0
   typescript: ^2.9.2
+  uglifyjs-webpack-plugin: ^1.3.0
   vue-loader: ^15.2.6
   vue-template-compiler: ^2.5.16
   webpack: ^4.16.1

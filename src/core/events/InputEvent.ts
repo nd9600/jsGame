@@ -4,7 +4,10 @@ import GameState from "@/core/GameState";
 import boardFunctions from "@/core/board/boardFunctions";
 
 export default class InputEvent extends Event {
+
+    public type = "InputEvent";
     public data: Direction;
+
     constructor(direction: Direction) {
         super();
         this.data = direction;
