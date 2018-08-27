@@ -3,6 +3,7 @@ import TestSetup from "@/shell/TestSetup";
 import {Direction} from "@/core/myTypes";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
+import InputEvent from "@/core/events/InputEvent";
 
 const KEYS = {
     up: "ArrowUp",
@@ -31,7 +32,10 @@ window.addEventListener("keyup", ({code}) => {
     KEYS_TO_DIRECTIONS[KEYS.down] = Direction.Down;
     KEYS_TO_DIRECTIONS[KEYS.left] = Direction.Left;
     KEYS_TO_DIRECTIONS[KEYS.right] = Direction.Right;
-    gameState = boardFunctions.move(gameState, KEYS_TO_DIRECTIONS[code]);
+
+    const inputEvent = new InputEvent(KEYS_TO_DIRECTIONS[code]);
+    gameState = inputEvent.handle(gameState);
+
     console.log(code);
     console.log(gameState.board);
     boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
