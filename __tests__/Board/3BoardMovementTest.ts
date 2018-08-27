@@ -38,11 +38,10 @@ describe("BoardMovementUp", () => {
         };
         const movementEvent = new SuccessfulMovementEvent(expectedCharacterPosition);
         gameState = movementEvent.handle(gameState);
-        const {characterPosition: newCharacterPosition, board: newBoard} = gameState;
         
-        expect(newCharacterPosition).toEqual(expectedCharacterPosition);
-        expect(newBoard.getPosition(expectedCharacterPosition)).toEqual(Place.Character);
-        expect(newBoard.getPosition(characterPosition)).toEqual(Place.Empty);
+        expect(gameState.characterPosition).toEqual(expectedCharacterPosition);
+        expect(gameState.board.getPosition(expectedCharacterPosition)).toEqual(Place.Character);
+        expect(gameState.board.getPosition(characterPosition)).toEqual(Place.Empty);
     });
 
     it("moves_up_from_one_below_top", () => {

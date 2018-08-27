@@ -1,4 +1,4 @@
-import { GameState } from "@/core/myTypes";
+import GameState from "@/core/GameState";
 
 export default abstract class Event {
     public data: any;
