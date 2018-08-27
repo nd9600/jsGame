@@ -1,5 +1,7 @@
 import {SetupInterface} from "@/shell/SetupInterface";
-import {twoNumbers, Position} from "@/core/myTypes";
+import {twoNumbers, Position, Place} from "@/core/myTypes";
+import GameState from "@/core/GameState";
+import Board from "@/core/board/boardClass";
 
 export default class TestSetup implements SetupInterface {
     public getSize(): twoNumbers {
@@ -18,5 +20,15 @@ export default class TestSetup implements SetupInterface {
             x: 9,
             y: 9
         };
+    }
+
+    public getEmptyGameState(): GameState {
+        return new GameState(
+            {
+                x: 0,
+                y: 0
+            }, 
+            new Board([[Place.Character]], this.getStartPoint(), this.getEndPoint())
+        );
     }
 }

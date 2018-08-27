@@ -1,3 +1,5 @@
+import Board from "@/core/board/boardClass";
+
 enum Place {
     Character = "c",
     Wall = "x",
@@ -5,7 +7,7 @@ enum Place {
     End = "end"
 }
 
-type Board = Place[][];
+type BoardType = Place[][];
 type twoNumbers = [number, number];
 
 enum Direction {Up, Down, Left, Right}
@@ -15,14 +17,9 @@ interface Position {
     y: number;
 }
 
-interface GameState {
-    board: Board;
-    characterPosition: Position;
-}
-
 interface IError {
     name: string;
     message: string;
 }
 
-export {Place, Board, twoNumbers, Direction, Position, GameState, IError};
+export {Place, BoardType, twoNumbers, Direction, Position, IError};

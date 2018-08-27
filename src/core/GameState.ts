@@ -1,6 +1,5 @@
 import { Position, Place, twoNumbers } from "@/core/myTypes";
 import Board from "@/core/board/boardClass";
-import R from "ramda";
 
 export default class GameState {
     public characterPosition: Position;

@@ -1,10 +1,12 @@
 import * as R from "ramda";
-import {Board, Direction, IError, Position, GameState, Place} from "@/core/myTypes";
+import {Direction, IError, Position, Place} from "@/core/myTypes";
 import boardFunctions from "./board";
 import usefulFunctions from "@/core/usefulFunctions";
 import MovementEvent from "@/core/events/MovementEvent";
 import FailedMovementEvent from "@/core/events/FailedMovementEvent";
 import SuccessfulMovementEvent from "@/core/events/SuccessfulMovementEvent";
+import Board from "@/core/board/boardClass";
+import GameState from "@/core/GameState";
 
 /**
  * Returns the position that could be moved in to (if any), given a list of possible positions
@@ -13,7 +15,7 @@ import SuccessfulMovementEvent from "@/core/events/SuccessfulMovementEvent";
  */
 function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[], board: Board): MovementEvent {
     const firstWallInWayOfMovementIndex = R.findIndex((possibleWallPosition) => R.equals(
-        boardFunctions.getPosition(possibleWallPosition, board),
+        board.getPosition(possibleWallPosition),
         Place.Wall),
     positionsCouldMoveInto);
     
@@ -37,7 +39,8 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
  * @param direction Direction
  * @param fromPosition Position
  */
-function getPositionToMoveInto(board: Board, direction: Direction, fromPosition: Position): MovementEvent {
+function getPositionToMoveInto(gameState: GameState, direction: Direction): MovementEvent {
+    const {characterPosition: fromPosition, board} = gameState;
     switch (direction) {
         case Direction.Up: {
             if (fromPosition.y === 0) {
@@ -53,12 +56,12 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
 
             return getPositionToMoveIntoFromPossibleList(squaresCouldMoveInto, board);
         } case Direction.Down: {
-            if (fromPosition.y + 1 === board.length) {
+            if (fromPosition.y + 1 === board.numberOfRows) {
                 return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "at bottom of board"));
             }
 
             // range that increments does include the starting number i.e. the position, which isn't what we want, so we have to increment by 1 to get rid of it
-            const yRange = usefulFunctions.range(fromPosition.y + 1, board.length);
+            const yRange = usefulFunctions.range(fromPosition.y + 1, board.numberOfRows);
             const positionsCouldMoveInto = R.map(
                 (y): Position => R.assoc("y", y, fromPosition),
                 yRange
@@ -78,10 +81,10 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
             return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board);
         }
         case Direction.Right: {
-            if (fromPosition.x + 1 === board[0].length) {
+            if (fromPosition.x + 1 === board.numberOfColumns) {
                 return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "at right of board"));
             }
-            const xRange = usefulFunctions.range(fromPosition.x + 1, board[0].length);
+            const xRange = usefulFunctions.range(fromPosition.x + 1, board.numberOfColumns);
             const positionsCouldMoveInto = R.map(
                 (x): Position => R.assoc("x", x, fromPosition),
                 xRange
@@ -94,10 +97,7 @@ function getPositionToMoveInto(board: Board, direction: Direction, fromPosition:
 }
 
 const move = (errorHandler: (error: IError) => void, direction: Direction, state: GameState): GameState => {
-    const {characterPosition, board} = state;
-    boardFunctions.isPositionOnBoard(characterPosition, board);
-
-    const movementEvent = getPositionToMoveInto(board, direction, characterPosition);
+    const movementEvent = getPositionToMoveInto(state, direction);
     return movementEvent.handle(state);
 };
 

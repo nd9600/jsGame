@@ -1,25 +1,27 @@
 import boardFunctions from "@/core/board/board";
 import TestSetup from "@/shell/TestSetup";
-import {Direction, GameState} from "@/core/myTypes";
+import {Direction} from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
+import Board from "@/core/board/boardClass";
+import GameState from "@/core/GameState";
 
 const setup = new TestSetup();
 const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
-const board = boardFunctions.setInitialPositions(characterPosition, endPoint, boardFunctions.makeInitialBoard(size));
+const board = new Board(boardFunctions.makeInitialBoard(size), characterPosition, endPoint);
 
-let gameState: GameState = {
+let gameState = new GameState(
     characterPosition,
     board
-};
+);
 
 const boardDiv = document.getElementById("board")!;
 
-boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
+boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 
 gameState = boardFunctions.move(usefulFunctions.errorHandler, Direction.Up, gameState);
 console.log(gameState.board);
-boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
+boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 
 const KEYS = {
     up: "ArrowUp",
@@ -36,5 +38,5 @@ window.addEventListener("keyup", ({code}) => {
     gameState = boardFunctions.move(usefulFunctions.errorHandler, KEYS_TO_DIRECTIONS[code], gameState);
     console.log(code);
     console.log(gameState.board);
-    boardDiv.innerHTML = `<pre>${boardFunctions.boardAsString(gameState.board)}</pre>`;
+    boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 });

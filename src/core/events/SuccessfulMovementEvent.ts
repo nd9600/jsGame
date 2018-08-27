@@ -1,7 +1,7 @@
 import * as R from "ramda";
-import boardFunctions from "@/core/board/board";
-import { GameState, Place, Position } from "@/core/myTypes";
+import { Place, Position } from "@/core/myTypes";
 import MovementEvent from "@/core/events/MovementEvent";
+import GameState from "@/core/GameState";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
 
@@ -14,14 +14,10 @@ export default class SuccessfulMovementEvent extends MovementEvent {
     public handle(state: GameState) {
         const {characterPosition, board} = state;
 
-        const newBoard = R.compose(
-            boardFunctions.setPosition(characterPosition, Place.Empty),
-            boardFunctions.setPosition(this.data, Place.Character)
-        )(board);
+        const newBoard = board
+            .setPosition(characterPosition, Place.Empty)
+            .setPosition(this.data, Place.Character);
 
-        return R.merge(state, {
-            characterPosition: this.data,
-            board: newBoard
-        });
+        return new GameState(this.data, newBoard);
     }
 }
