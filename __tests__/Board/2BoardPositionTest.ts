@@ -1,6 +1,6 @@
 import * as R from "ramda";
-import boardFunctions from "@/game/board/board";
-import { Place, Board, twoNumbers, Position } from "@/game/myTypes";
+import boardFunctions from "@/core/board/board";
+import { Place, Board, twoNumbers, Position } from "@/core/myTypes";
 
 describe("BoardPositionGettingAndSetting", () => {
     // beforeEach(() => {

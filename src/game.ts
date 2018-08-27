@@ -1,7 +1,7 @@
-import boardFunctions from "@/game/board/board";
-import TestSetup from "@/game/interaction/TestSetup";
-import {Direction, GameState} from "@/game/myTypes";
-import usefulFunctions from "@/game/usefulFunctions";
+import boardFunctions from "@/core/board/board";
+import TestSetup from "@/shell/TestSetup";
+import {Direction, GameState} from "@/core/myTypes";
+import usefulFunctions from "@/core/usefulFunctions";
 
 const setup = new TestSetup();
 const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];

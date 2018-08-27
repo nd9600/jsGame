@@ -1,4 +1,4 @@
-import {Position, twoNumbers} from "@/game/myTypes";
+import {Position, twoNumbers} from "@/core/myTypes";
 
 export interface SetupInterface {
 

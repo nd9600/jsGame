@@ -1,6 +1,6 @@
-import usefulFunctions from "@/game/usefulFunctions";
-import { GameState, IError } from "@/game/myTypes";
-import MovementEvent from "@/game/events/MovementEvent";
+import usefulFunctions from "@/core/usefulFunctions";
+import { GameState, IError } from "@/core/myTypes";
+import MovementEvent from "@/core/events/MovementEvent";
 
 export default class FailedMovementEvent extends MovementEvent {
 

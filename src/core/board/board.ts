@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { Board, Place, Position, twoNumbers } from "@/game/myTypes";
+import { Board, Place, Position, twoNumbers } from "@/core/myTypes";
 import movementFunctions from "./movement";
 
 const isPositionOnBoard = (position: Position, board: Board): void => {

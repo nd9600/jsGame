@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import {IError} from "@/game/myTypes";
+import {IError} from "@/core/myTypes";
 
 const range = (start: number, end: number): number[] => {
     const rangeStart = Math.min(start, end);

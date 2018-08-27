@@ -1,8 +1,8 @@
-import boardFunctions from "@/game/board/board";
-import { Place, Board, Position, Direction, GameState } from "@/game/myTypes";
-import usefulFunctions from "@/game/usefulFunctions";
-import MovementEvent from "@/game/events/MovementEvent";
-import SuccessfulMovementEvent from "@/game/events/SuccessfulMovementEvent";
+import boardFunctions from "@/core/board/board";
+import { Place, Board, Position, Direction, GameState } from "@/core/myTypes";
+import usefulFunctions from "@/core/usefulFunctions";
+import MovementEvent from "@/core/events/MovementEvent";
+import SuccessfulMovementEvent from "@/core/events/SuccessfulMovementEvent";
 
 describe("BoardMovementUp", () => {
     // beforeEach(() => {

@@ -10,6 +10,9 @@
     "trailing-comma": false,
     "interface-name": false,
     "prefer-template": true,
-    "max-line-length": false
+    "max-line-length": false,
+    "member-ordering": [
+      false
+    ]
   }
 }

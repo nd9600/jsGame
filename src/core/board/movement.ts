@@ -1,10 +1,10 @@
 import * as R from "ramda";
-import {Board, Direction, IError, Position, GameState, Place} from "@/game/myTypes";
+import {Board, Direction, IError, Position, GameState, Place} from "@/core/myTypes";
 import boardFunctions from "./board";
-import usefulFunctions from "@/game/usefulFunctions";
-import MovementEvent from "@/game/events/MovementEvent";
-import FailedMovementEvent from "@/game/events/FailedMovementEvent";
-import SuccessfulMovementEvent from "@/game/events/SuccessfulMovementEvent";
+import usefulFunctions from "@/core/usefulFunctions";
+import MovementEvent from "@/core/events/MovementEvent";
+import FailedMovementEvent from "@/core/events/FailedMovementEvent";
+import SuccessfulMovementEvent from "@/core/events/SuccessfulMovementEvent";
 
 /**
  * Returns the position that could be moved in to (if any), given a list of possible positions

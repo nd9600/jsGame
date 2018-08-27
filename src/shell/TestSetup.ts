@@ -1,5 +1,5 @@
-import {SetupInterface} from "@/game/interaction/SetupInterface";
-import {twoNumbers, Position} from "@/game/myTypes";
+import {SetupInterface} from "@/shell/SetupInterface";
+import {twoNumbers, Position} from "@/core/myTypes";
 
 export default class TestSetup implements SetupInterface {
     public getSize(): twoNumbers {

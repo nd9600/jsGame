@@ -1,7 +1,7 @@
 import * as R from "ramda";
-import boardFunctions from "@/game/board/board";
-import { GameState, Place, Position } from "@/game/myTypes";
-import MovementEvent from "@/game/events/MovementEvent";
+import boardFunctions from "@/core/board/board";
+import { GameState, Place, Position } from "@/core/myTypes";
+import MovementEvent from "@/core/events/MovementEvent";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
 
