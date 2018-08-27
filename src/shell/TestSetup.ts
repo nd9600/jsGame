@@ -24,7 +24,7 @@ export default class TestSetup implements SetupInterface {
 
     public getEmptyGameState(): GameState {
         return new GameState( 
-            new Board([[Place.Character]], this.getStartPoint(), this.getEndPoint())
+            new Board(Board.idCounter++, [[Place.Character]], this.getStartPoint(), this.getEndPoint())
         );
     }
 }

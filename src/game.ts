@@ -15,7 +15,7 @@ const KEYS = {
 const setup = new TestSetup();
 const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
-const board = new Board(boardFunctions.makeInitialBoard(size, characterPosition, endPoint), characterPosition, endPoint);
+const board = new Board(Board.idCounter++, boardFunctions.makeInitialBoard(size, characterPosition, endPoint), characterPosition, endPoint);
 
 let gameState = new GameState(
     board
@@ -32,10 +32,13 @@ window.addEventListener("keyup", ({code}) => {
     KEYS_TO_DIRECTIONS[KEYS.left] = Direction.Left;
     KEYS_TO_DIRECTIONS[KEYS.right] = Direction.Right;
 
-    const inputEvent = new InputEvent(KEYS_TO_DIRECTIONS[code]);
-    gameState = inputEvent.handle(gameState);
+    if (KEYS_TO_DIRECTIONS.hasOwnProperty(code)) {
+        const inputEvent = new InputEvent(KEYS_TO_DIRECTIONS[code]);
+        gameState = inputEvent.handle(gameState);
 
-    console.log(code);
-    console.log(gameState.board.getBoard());
-    boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
+        console.log(code);
+        console.log(gameState);
+        console.log(gameState.board.getBoard());
+        boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
+    }
 });

@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { Place, Position, BoardType } from "@/core/myTypes";
 
 export default class Board {
-    private static idCounter: number = 0;
+    public static idCounter: number = 0;
     public id: number;
     private boardData: BoardType;
 
@@ -13,8 +13,8 @@ export default class Board {
 
     public boardSolved: boolean; 
 
-    constructor(board: BoardType, characterPosition: Position, endPoint: Position) {
-        this.id = Board.idCounter++;
+    constructor(id: number, board: BoardType, characterPosition: Position, endPoint: Position) {
+        this.id = id;
         this.boardData = board;
         this.characterPosition = characterPosition;
         this.endPoint = endPoint;
@@ -31,7 +31,7 @@ export default class Board {
         return R.join(separator, rowsJoined);
     }
 
-    public setCharacterPosition = (newCharacterPosition: Position): Board => new Board(this.boardData, newCharacterPosition, this.endPoint);
+    public setCharacterPosition = (newCharacterPosition: Position): Board => new Board(this.id, this.boardData, newCharacterPosition, this.endPoint);
     
     private uncurriedGetPosition = (position: Position): Place => {
         this.isPositionOnBoard(position);
@@ -46,7 +46,7 @@ export default class Board {
         const row = R.nth(position.y, this.boardData)!;
         const newRow = R.update(position.x, newValue, row);
         const newBoard = R.update(position.y, newRow, this.boardData);
-        return new Board(newBoard, this.characterPosition, this.endPoint);
+        return new Board(this.id, newBoard, this.characterPosition, this.endPoint);
     }
 
     public getPosition: R.CurriedFunction1<Position, Place> = R.curry( this.uncurriedGetPosition);
