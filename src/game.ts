@@ -18,7 +18,6 @@ const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoin
 const board = new Board(boardFunctions.makeInitialBoard(size, characterPosition, endPoint), characterPosition, endPoint);
 
 let gameState = new GameState(
-    characterPosition,
     board
 );
 

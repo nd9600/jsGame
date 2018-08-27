@@ -2,11 +2,9 @@ import { Position, Place } from "@/core/myTypes";
 import Board from "@/core/board/Board";
 
 export default class GameState {
-    public characterPosition: Position;
     public board: Board;
 
-    constructor(characterPosition: Position, board: Board) {
-        this.characterPosition = characterPosition;
+    constructor(board: Board) {
         this.board = board;
     }
     

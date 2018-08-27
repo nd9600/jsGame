@@ -28,7 +28,6 @@ describe("BoardMovementUp", () => {
         };
 
         let gameState = new GameState (
-            characterPosition,
             new Board(boardData, characterPosition, endPoint)
         );
 
@@ -39,7 +38,7 @@ describe("BoardMovementUp", () => {
         const movementEvent = new SuccessfulMovementEvent(expectedCharacterPosition);
         gameState = movementEvent.handle(gameState);
         
-        expect(gameState.characterPosition).toEqual(expectedCharacterPosition);
+        expect(gameState.board.characterPosition).toEqual(expectedCharacterPosition);
         expect(gameState.board.getPosition(expectedCharacterPosition)).toEqual(Place.Character);
         expect(gameState.board.getPosition(characterPosition)).toEqual(Place.Empty);
     });
@@ -57,7 +56,7 @@ describe("BoardMovementUp", () => {
             y: 1
         };
         const board = new Board(boardData, characterPosition, endPoint);
-        const gameState = new GameState(characterPosition, board);
+        const gameState = new GameState(board);
 
         const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
         const expectedCharacterPosition = {
@@ -81,7 +80,7 @@ describe("BoardMovementUp", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);        
-        const gameState = new GameState(characterPosition, board);          
+        const gameState = new GameState(board);          
         const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
         const expectedCharacterPosition = {
             x: 0,
@@ -104,7 +103,7 @@ describe("BoardMovementUp", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);
-        const gameState = new GameState(characterPosition, board);
+        const gameState = new GameState(board);
 
         const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
         const expectedError = {
@@ -128,7 +127,7 @@ describe("BoardMovementUp", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);
-        const gameState = new GameState(characterPosition, board);
+        const gameState = new GameState(board);
 
         const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
         const expectedError = {
@@ -153,7 +152,7 @@ describe("BoardMovementUp", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);         
-        const gameState = new GameState(characterPosition, board);          
+        const gameState = new GameState(board);          
         const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
         const expectedCharacterPosition = {
             x: 0,
@@ -186,7 +185,6 @@ describe("BoardMovementDown", () => {
         };
 
         let gameState = new GameState (
-            characterPosition,
             new Board(boardData, characterPosition, endPoint)
         );
 
@@ -196,7 +194,8 @@ describe("BoardMovementDown", () => {
         };
         const movementEvent = new SuccessfulMovementEvent(expectedCharacterPosition);
         gameState = movementEvent.handle(gameState);
-        const {characterPosition: newCharacterPosition, board: newBoard} = gameState;
+        const {board: newBoard} = gameState;
+        const newCharacterPosition = newBoard.characterPosition;
         
         expect(newCharacterPosition).toEqual(expectedCharacterPosition);
         expect(newBoard.getPosition(expectedCharacterPosition)).toEqual(Place.Character);
@@ -217,7 +216,7 @@ describe("BoardMovementDown", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);         
-        const gameState = new GameState(characterPosition, board);          
+        const gameState = new GameState(board);          
         const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedCharacterPosition = {
             x: 0,
@@ -240,7 +239,7 @@ describe("BoardMovementDown", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);
-        const gameState = new GameState(characterPosition, board);
+        const gameState = new GameState(board);
 
         const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedError = {
@@ -264,7 +263,7 @@ describe("BoardMovementDown", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);
-        const gameState = new GameState(characterPosition, board);
+        const gameState = new GameState(board);
 
         const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedError = {
@@ -289,7 +288,7 @@ describe("BoardMovementDown", () => {
         };
 
         const board = new Board(boardData, characterPosition, endPoint);         
-        const gameState = new GameState(characterPosition, board);          
+        const gameState = new GameState(board);          
         const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedCharacterPosition = {
             x: 0,

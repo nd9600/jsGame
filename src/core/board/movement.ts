@@ -39,7 +39,8 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
  * @param fromPosition Position
  */
 function getPositionToMoveInto(gameState: GameState, direction: Direction): MovementEvent {
-    const {characterPosition: fromPosition, board} = gameState;
+    const {board} = gameState;
+    const fromPosition = board.characterPosition;
     switch (direction) {
         case Direction.Up: {
             if (fromPosition.y === 0) {

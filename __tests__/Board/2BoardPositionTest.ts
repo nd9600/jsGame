@@ -1,6 +1,6 @@
 import * as R from "ramda";
 import boardFunctions from "@/core/board/boardFunctions";
-import { Place, BoardType, twoNumbers, Position } from "@/core/myTypes";
+import { Place, BoardType, Position } from "@/core/myTypes";
 import Board from "@/core/board/Board";
 import TestSetup from "@/shell/TestSetup";
 
