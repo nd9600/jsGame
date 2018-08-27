@@ -1,4 +1,4 @@
-import { Position, Place, twoNumbers } from "@/core/myTypes";
+import { Position, Place } from "@/core/myTypes";
 import Board from "@/core/board/Board";
 
 export default class GameState {

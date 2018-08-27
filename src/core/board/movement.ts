@@ -1,10 +1,9 @@
 import * as R from "ramda";
 import {Direction, IError, Position, Place} from "@/core/myTypes";
-import boardFunctions from "@/core/board/boardFunctions";
 import usefulFunctions from "@/core/usefulFunctions";
-import MovementEvent from "@/core/events/MovementEvent";
-import FailedMovementEvent from "@/core/events/FailedMovementEvent";
-import SuccessfulMovementEvent from "@/core/events/SuccessfulMovementEvent";
+import MovementEvent from "@/core/events/Movement/MovementEvent";
+import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
+import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 

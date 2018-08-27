@@ -1,6 +1,5 @@
-import * as R from "ramda";
 import { Place, Position } from "@/core/myTypes";
-import MovementEvent from "@/core/events/MovementEvent";
+import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
 
 export default class SuccessfulMovementEvent extends MovementEvent {

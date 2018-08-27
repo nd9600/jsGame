@@ -1,5 +1,3 @@
-import Board from "@/core/board/Board";
-
 enum Place {
     Character = "c",
     Wall = "x",

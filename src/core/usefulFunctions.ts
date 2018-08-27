@@ -1,4 +1,3 @@
-import * as R from "ramda";
 import {IError} from "@/core/myTypes";
 
 const range = (start: number, end: number): number[] => {
