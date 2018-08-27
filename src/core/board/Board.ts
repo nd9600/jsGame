@@ -1,18 +1,19 @@
 import { Place, Position, BoardType } from "@/core/myTypes";
-import R from "ramda";
+import * as R from "ramda";
 
 export default class Board {
     public startPoint: Position;
     public endPoint: Position;
     public numberOfRows: number;
     public numberOfColumns: number;
-    
+
     private boardData: BoardType;
 
     constructor(board: BoardType, startPoint: Position, endPoint: Position) {
         this.boardData = board;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+
         this.numberOfRows = this.boardData.length;
         this.numberOfColumns = R.nth(0, this.boardData)!.length;
     }

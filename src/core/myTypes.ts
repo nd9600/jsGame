@@ -1,4 +1,4 @@
-import Board from "@/core/board/boardClass";
+import Board from "@/core/board/Board";
 
 enum Place {
     Character = "c",

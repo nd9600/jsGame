@@ -1,5 +1,5 @@
 import { Position, Place, twoNumbers } from "@/core/myTypes";
-import Board from "@/core/board/boardClass";
+import Board from "@/core/board/Board";
 
 export default class GameState {
     public characterPosition: Position;

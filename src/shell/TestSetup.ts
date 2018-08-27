@@ -1,7 +1,7 @@
 import {SetupInterface} from "@/shell/SetupInterface";
 import {twoNumbers, Position, Place} from "@/core/myTypes";
 import GameState from "@/core/GameState";
-import Board from "@/core/board/boardClass";
+import Board from "@/core/board/Board";
 
 export default class TestSetup implements SetupInterface {
     public getSize(): twoNumbers {

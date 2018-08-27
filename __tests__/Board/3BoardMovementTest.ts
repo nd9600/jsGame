@@ -1,8 +1,8 @@
-import boardFunctions from "@/core/board/board";
+import boardFunctions from "@/core/board/boardFunctions";
 import { Place, BoardType, Position, Direction } from "@/core/myTypes";
 import SuccessfulMovementEvent from "@/core/events/SuccessfulMovementEvent";
 import TestSetup from "@/shell/TestSetup";
-import Board from "@/core/board/boardClass";
+import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 
 describe("BoardMovementUp", () => {

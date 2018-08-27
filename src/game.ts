@@ -1,14 +1,14 @@
-import boardFunctions from "@/core/board/board";
+import boardFunctions from "@/core/board/boardFunctions";
 import TestSetup from "@/shell/TestSetup";
 import {Direction} from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
-import Board from "@/core/board/boardClass";
+import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 
 const setup = new TestSetup();
 const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
-const board = new Board(boardFunctions.makeInitialBoard(size), characterPosition, endPoint);
+const board = new Board(boardFunctions.makeInitialBoard(size, characterPosition, endPoint), characterPosition, endPoint);
 
 let gameState = new GameState(
     characterPosition,

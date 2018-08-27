@@ -1,7 +1,7 @@
 import * as R from "ramda";
-import boardFunctions from "@/core/board/board";
+import boardFunctions from "@/core/board/boardFunctions";
 import { Place, BoardType, twoNumbers, Position } from "@/core/myTypes";
-import Board from "@/core/board/boardClass";
+import Board from "@/core/board/Board";
 import TestSetup from "@/shell/TestSetup";
 
 describe("BoardPositionGettingAndSetting", () => {
