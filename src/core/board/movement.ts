@@ -29,7 +29,7 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
         positionToMoveInto = positionsCouldMoveInto[firstWallInWayOfMovementIndex - 1];
     }
 
-    return new SuccessfulMovementEvent(positionToMoveInto);
+    return new SuccessfulMovementEvent(board.id, positionToMoveInto);
 }
 
 /**

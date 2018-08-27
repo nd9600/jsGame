@@ -23,11 +23,7 @@ export default class TestSetup implements SetupInterface {
     }
 
     public getEmptyGameState(): GameState {
-        return new GameState(
-            {
-                x: 0,
-                y: 0
-            }, 
+        return new GameState( 
             new Board([[Place.Character]], this.getStartPoint(), this.getEndPoint())
         );
     }

@@ -2,6 +2,10 @@ import * as R from "ramda";
 import { Place, Position, BoardType } from "@/core/myTypes";
 
 export default class Board {
+    private static idCounter: number = 0;
+    public id: number;
+    private boardData: BoardType;
+
     public characterPosition: Position;
     public endPoint: Position;
     public numberOfRows: number;
@@ -9,9 +13,8 @@ export default class Board {
 
     public boardSolved: boolean; 
 
-    private boardData: BoardType;
-
     constructor(board: BoardType, characterPosition: Position, endPoint: Position) {
+        this.id = Board.idCounter++;
         this.boardData = board;
         this.characterPosition = characterPosition;
         this.endPoint = endPoint;
