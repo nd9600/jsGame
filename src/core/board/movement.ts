@@ -95,7 +95,7 @@ function getPositionToMoveInto(gameState: GameState, direction: Direction): Move
     return usefulFunctions.assertUnreachable(direction);
 }
 
-const move = (errorHandler: (error: IError) => void, direction: Direction, state: GameState): GameState => {
+const move = (state: GameState, direction: Direction): GameState => {
     const movementEvent = getPositionToMoveInto(state, direction);
     return movementEvent.handle(state);
 };

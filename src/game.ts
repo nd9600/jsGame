@@ -1,7 +1,6 @@
 import boardFunctions from "@/core/board/boardFunctions";
 import TestSetup from "@/shell/TestSetup";
 import {Direction} from "@/core/myTypes";
-import usefulFunctions from "@/core/usefulFunctions";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 
@@ -32,7 +31,7 @@ window.addEventListener("keyup", ({code}) => {
     KEYS_TO_DIRECTIONS[KEYS.down] = Direction.Down;
     KEYS_TO_DIRECTIONS[KEYS.left] = Direction.Left;
     KEYS_TO_DIRECTIONS[KEYS.right] = Direction.Right;
-    gameState = boardFunctions.move(usefulFunctions.errorHandler, KEYS_TO_DIRECTIONS[code], gameState);
+    gameState = boardFunctions.move(gameState, KEYS_TO_DIRECTIONS[code]);
     console.log(code);
     console.log(gameState.board);
     boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
