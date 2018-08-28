@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import {Direction, IError, Position, Place} from "@/core/myTypes";
+import {Direction, Position, Place} from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
@@ -96,11 +96,4 @@ function getPositionToMoveInto(gameState: GameState, direction: Direction): Move
     return usefulFunctions.assertUnreachable(direction);
 }
 
-const move = (state: GameState, direction: Direction): GameState => {
-    const movementEvent = getPositionToMoveInto(state, direction);
-    return movementEvent.handle(state);
-};
-
-export default {
-    move, getPositionToMoveInto
-};
+export default {getPositionToMoveInto};

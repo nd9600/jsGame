@@ -1,7 +1,7 @@
 import { Direction } from "@/core/myTypes";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import boardFunctions from "@/core/board/boardFunctions";
+import movementFunctions from "@/core/board/movement";
 
 export default class InputEvent extends Event {
 
@@ -15,6 +15,7 @@ export default class InputEvent extends Event {
 
     public handle(gameState: GameState) {
         const direction = this.data;
-        return boardFunctions.move(gameState, direction);
+        const movementEvent = movementFunctions.getPositionToMoveInto(gameState, direction);
+        return movementEvent.handle(gameState);
     }
 }

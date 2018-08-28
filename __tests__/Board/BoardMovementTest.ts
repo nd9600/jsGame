@@ -1,4 +1,4 @@
-import boardFunctions from "@/core/board/boardFunctions";
+import movementFunctions from "@/core/board/movement";
 import { Place, BoardType, Position, Direction } from "@/core/myTypes";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import TestSetup from "@/shell/TestSetup";
@@ -58,7 +58,7 @@ describe("BoardMovementUp", () => {
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);
         const gameState = new GameState(board);
 
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data.newCharacterPosition;
+        const newCharacterPosition = movementFunctions.getPositionToMoveInto(gameState, Direction.Up).data.newCharacterPosition;
         const expectedCharacterPosition = {
             x: 0,
             y: 0
@@ -81,7 +81,7 @@ describe("BoardMovementUp", () => {
 
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);        
         const gameState = new GameState(board);          
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data.newCharacterPosition;
+        const newCharacterPosition = movementFunctions.getPositionToMoveInto(gameState, Direction.Up).data.newCharacterPosition;
         const expectedCharacterPosition = {
             x: 0,
             y: 0
@@ -105,7 +105,7 @@ describe("BoardMovementUp", () => {
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);
         const gameState = new GameState(board);
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
+        const errorReturned = movementFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -129,7 +129,7 @@ describe("BoardMovementUp", () => {
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);
         const gameState = new GameState(board);
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
+        const errorReturned = movementFunctions.getPositionToMoveInto(gameState, Direction.Up).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -153,7 +153,7 @@ describe("BoardMovementUp", () => {
 
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);         
         const gameState = new GameState(board);          
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Up).data.newCharacterPosition;
+        const newCharacterPosition = movementFunctions.getPositionToMoveInto(gameState, Direction.Up).data.newCharacterPosition;
         const expectedCharacterPosition = {
             x: 0,
             y: 2
@@ -217,7 +217,7 @@ describe("BoardMovementDown", () => {
 
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);         
         const gameState = new GameState(board);          
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data.newCharacterPosition;
+        const newCharacterPosition = movementFunctions.getPositionToMoveInto(gameState, Direction.Down).data.newCharacterPosition;
         const expectedCharacterPosition = {
             x: 0,
             y: 4
@@ -241,7 +241,7 @@ describe("BoardMovementDown", () => {
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);
         const gameState = new GameState(board);
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
+        const errorReturned = movementFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -265,7 +265,7 @@ describe("BoardMovementDown", () => {
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);
         const gameState = new GameState(board);
 
-        const errorReturned = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
+        const errorReturned = movementFunctions.getPositionToMoveInto(gameState, Direction.Down).data;
         const expectedError = {
             message: "wall immediately beside",
             name: "MovementError",
@@ -289,7 +289,7 @@ describe("BoardMovementDown", () => {
 
         const board = new Board(Board.idCounter++, boardData, characterPosition, endPoint);         
         const gameState = new GameState(board);          
-        const newCharacterPosition = boardFunctions.getPositionToMoveInto(gameState, Direction.Down).data.newCharacterPosition;
+        const newCharacterPosition = movementFunctions.getPositionToMoveInto(gameState, Direction.Down).data.newCharacterPosition;
         const expectedCharacterPosition = {
             x: 0,
             y: 3

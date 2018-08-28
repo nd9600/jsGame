@@ -1,6 +1,5 @@
 import * as R from "ramda";
 import { Place, twoNumbers, BoardType, Position } from "@/core/myTypes";
-import movementFunctions from "@/core/board/movement";
 function makeInitialBoard(size: twoNumbers, startPoint: Position, endPoint: Position): BoardType {
     const initialRow = R.map(R.always(Place.Empty), [...Array(size[0])]);
     const initialBoard: BoardType = R.map(R.always(initialRow), [...Array(size[1])]);
@@ -18,4 +17,4 @@ function makeInitialBoard(size: twoNumbers, startPoint: Position, endPoint: Posi
     return newBoard;
 }
 
-export default R.merge({makeInitialBoard}, movementFunctions);
+export default {makeInitialBoard};
