@@ -3,8 +3,7 @@ import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
-
-    public type = "SuccessfulMovementEvent";
+    public type = "SuccessfulMovement";
     public data: SuccessfulMovementEventData;
     
     constructor(boardID: number, newCharacterPosition: Position) {

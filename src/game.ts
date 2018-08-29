@@ -4,6 +4,7 @@ import {Direction} from "@/core/myTypes";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 import InputEvent from "@/core/events/InputEvent";
+import EventBus from "@/shell/EventBus";
 
 const KEYS = {
     up: "ArrowUp",
@@ -22,8 +23,15 @@ let gameState = new GameState(
 );
 
 const boardDiv = document.getElementById("board")!;
-
 boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
+
+const bus = new EventBus();
+const testFunction = (data1: number): void => {
+    console.log("hello", data1);
+};
+bus.addListener("test", testFunction);
+bus.dispatch("test", 1234);
+bus.removeListener("test", testFunction);
 
 window.addEventListener("keyup", ({code}) => {
     const KEYS_TO_DIRECTIONS: any = {};
