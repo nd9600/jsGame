@@ -10,9 +10,7 @@ export default class InputEvent extends Event {
     constructor(direction: Direction) {
         super();
         this.data = direction;
-        if (window.eventBus) {
-            window.eventBus.dispatch(this.type, this.data);
-        }
+        Event.dispatch(this.type, this.data);
     }
 
     public handle(gameState: GameState) {

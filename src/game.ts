@@ -32,8 +32,8 @@ const boardDiv = document.getElementById("board")!;
 boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 
 window.eventBus = new EventBus();
-const testFunction = (data1: any): void => {
-    console.log("input, direction: ", data1);
+const testFunction = (direction: Direction): void => {
+    console.log("input, direction: ", direction);
 };
 window.eventBus.addListener("Input", testFunction);
 

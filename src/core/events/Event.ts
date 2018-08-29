@@ -7,5 +7,14 @@ export default abstract class Event {
     public handle(state: GameState): GameState {
         return state;
     }
-}
 
+    public static dispatch(type: string, data?: any): void {
+        if (window.eventBus) {
+            if (data !== undefined) {
+                window.eventBus.dispatch(type, data);
+            } else {
+                window.eventBus.dispatch(type);
+            }
+        }
+    }
+}
