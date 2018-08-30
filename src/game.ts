@@ -1,16 +1,9 @@
-import boardFunctions from "@/core/board/boardFunctions";
-import TestSetup from "@/shell/TestSetup";
-import {Direction, DispatchedEvent, EventCallback} from "@/core/myTypes";
-import Board from "@/core/board/Board";
-import GameState from "@/core/GameState";
-import InputEvent from "@/core/events/InputEvent";
+import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
+import InputEvent from "@/core/events/Game/InputEvent";
+import { Direction, DispatchedEvent, EventCallback } from "@/core/myTypes";
+import usefulFunctions from "@/core/usefulFunctions";
+import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
-
-declare global {
-    interface Window { 
-        eventBus: EventBus; 
-    }
-}
 
 const KEYS = {
     up: "ArrowUp",
@@ -19,37 +12,23 @@ const KEYS = {
     right: "ArrowRight"
 };
 
-const setup = new TestSetup();
-const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
+window.eventBus = new EventBus();
+window.loggedEvents  = [];
+const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+    window.loggedEvents.push(dispatchedEvent);
+    console.log("event, data: ", dispatchedEvent.data);
+};
+window.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "InputEvent"], eventLogger);
 
-const initialBoardData = boardFunctions.makeInitialBoard(size, characterPosition, endPoint);
-const initialBoard = new Board(
-    Board.idCounter++, 
-    initialBoardData, 
-    characterPosition, 
-    endPoint
-);
-let gameState = new GameState(
-    initialBoard
-);
+const setup = new DefaultGameSetup();
+const [size, startPoint, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
+
+const initialGameSetupData = {size, startPoint, endPoint};
+const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
+let gameState = initialSetupEvent.handle(usefulFunctions.makeNewGameState());
 
 const boardDiv = document.getElementById("board")!;
 boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
-
-window.eventBus = new EventBus();
-const events: DispatchedEvent[] = [];
-const inputEvents: DispatchedEvent[] = [];
-const testFunction: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
-    events.push(dispatchedEvent);
-    console.log("event, data: ", dispatchedEvent.data);
-};
-window.eventBus.addListener("Event", testFunction);
-
-const testFunction2: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
-    inputEvents.push(dispatchedEvent);
-    console.log("input, direction: ", dispatchedEvent.data);
-};
-window.eventBus.addListener("InputEvent", testFunction2);
 
 window.addEventListener("keyup", ({code}) => {
     const KEYS_TO_DIRECTIONS: any = {};
@@ -64,9 +43,7 @@ window.addEventListener("keyup", ({code}) => {
 
         console.log(code);
         console.log(gameState);
-        console.log(gameState.board.getBoard());
-        console.log("events", events);
-        console.log("inputEvents", inputEvents);
+        console.log("loggedEvents", window.loggedEvents);
         console.log("");
         boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
     }

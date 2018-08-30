@@ -3,9 +3,9 @@ import {twoNumbers, Position, Place} from "@/core/myTypes";
 import GameState from "@/core/GameState";
 import Board from "@/core/board/Board";
 
-export default class TestSetup implements SetupInterface {
+export default class DefaultGameSetup implements SetupInterface {
     public getSize(): twoNumbers {
-        return [4, 4];
+        return [9, 9];
     }
 
     public getStartPoint(): Position {
@@ -17,8 +17,8 @@ export default class TestSetup implements SetupInterface {
 
     public getEndPoint(): Position {
         return {
-            x: 3,
-            y: 3
+            x: 8,
+            y: 8
         };
     }
 }

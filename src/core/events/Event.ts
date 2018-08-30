@@ -12,19 +12,7 @@ export default abstract class Event {
 
     public static dispatch(types: string[], originalEventType: string, data?: any): void {
         if (window.eventBus) {
-            if (data !== undefined) {
-                R.forEach(
-                    (type: string) => {
-                        window.eventBus.dispatch(type, {type: originalEventType, data});
-                    },
-                types);
-            } else {
-                R.forEach(
-                    (type: string) => {
-                        window.eventBus.dispatch(type, {type: originalEventType});
-                    },
-                types);
-            }
+            window.eventBus.dispatchToAllListeners(types, originalEventType, data);
         }
     }
 }

@@ -1,4 +1,6 @@
 import {IError} from "@/core/myTypes";
+import GameState from "@/core/GameState";
+import Board from "@/core/board/Board";
 
 const range = (start: number, end: number): number[] => {
     const rangeStart = Math.min(start, end);
@@ -22,6 +24,16 @@ const assertUnreachable = (x: never): never => {
 
 const abyss = (...args: any[]) => { return; };
 
+const makeNewGameState = (): GameState => {
+    const defaultPosition = { x: 0, y: 0 };
+    return new GameState(new Board(
+        -1,
+        [[]],
+        defaultPosition,
+        defaultPosition
+    ));
+};
+
 export default {
-    range, makeError, errorHandler, assertUnreachable, abyss
+    range, makeError, errorHandler, assertUnreachable, abyss, makeNewGameState
 };

@@ -1,17 +1,12 @@
-import * as R from "ramda";
-import boardFunctions from "@/core/board/boardFunctions";
 import { Place, BoardType, Position } from "@/core/myTypes";
 import Board from "@/core/board/Board";
-import TestSetup from "@/shell/TestSetup";
 
 describe("BoardPositionGettingAndSetting", () => {
-    let _;
-    let characterPosition: Position;
-    let endPoint: Position;
-    beforeEach(() => {
-        const setup = new TestSetup();
-        [_, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
-    });
+    const characterPosition = {
+        x: 9001,
+        y: 9001
+    };
+    const endPoint = characterPosition;
 
     const assertPositionIsChanged = (p: Position, newValue: Place, board: Board): void => {
         expect(

@@ -1,6 +1,13 @@
 import * as R from "ramda";
 import { DispatchedEvent, EventCallback } from "@/core/myTypes";
 
+declare global {
+    interface Window { 
+        eventBus: EventBus; 
+        loggedEvents: DispatchedEvent[];
+    }
+}
+
 export default class EventBus {
     private unCaughtEvents: DispatchedEvent[] = [];
 
@@ -44,7 +51,7 @@ export default class EventBus {
         this.listeners = R.assoc(event, newListOfListeners, this.listeners);
     }
 
-    public dispatch(event: string, dispatchedEvent: DispatchedEvent): void {
+    private dispatch(event: string, dispatchedEvent: DispatchedEvent): void {
         if (R.has(event, this.listeners)) {
             const eventsListOfListeners: EventCallback[] = this.listeners[event];
             const callListener = (listener: EventCallback) => {
@@ -56,11 +63,40 @@ export default class EventBus {
         }
     }
 
+    //////////
+    // other functions that are just useful to have
+    //////////
+
     public getListeners() {
         return this.listeners;
     }
 
     public getUncaughtEvents() {
         return this.unCaughtEvents;
+    }
+
+    public dispatchToAllListeners(types: string[], originalEventType: string, data?: any): void {
+        if (window.eventBus) {
+            if (data !== undefined) {
+                R.forEach(
+                    (type: string) => {
+                        this.dispatch(type, {type: originalEventType, data});
+                    },
+                types);
+            } else {
+                R.forEach(
+                    (type: string) => {
+                       this.dispatch(type, {type: originalEventType});
+                    },
+                types);
+            }
+        }
+    }
+
+    public addListenerToMultipleEvents(eventNames: string[], callback: EventCallback): void {
+        const addIndividualListener = (eventName: string) => {
+            this.addListener(eventName, callback);
+        };
+        R.forEach(addIndividualListener, eventNames);
     }
 }

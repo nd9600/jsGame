@@ -27,9 +27,15 @@ interface DispatchedEvent {
 
 type EventCallback = (dispatchedEvent: DispatchedEvent) => void;
 
+interface InitialGameSetupData {
+    size: twoNumbers;
+    startPoint: Position;
+    endPoint: Position;
+}
+
 interface IError {
     name: string;
     message: string;
 }
 
-export {Place, BoardType, twoNumbers, Direction, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, IError};
+export {Place, BoardType, twoNumbers, Direction, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, IError};

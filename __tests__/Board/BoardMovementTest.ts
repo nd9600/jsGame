@@ -1,18 +1,14 @@
 import movementFunctions from "@/core/board/movement";
 import { Place, BoardType, Position, Direction } from "@/core/myTypes";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
-import TestSetup from "@/shell/TestSetup";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 
 describe("BoardMovementUp", () => {
-    let _;
-    let startPoint: Position;
-    let endPoint: Position;
-    beforeEach(() => {
-        const setup = new TestSetup();
-        [_, startPoint, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
-    });
+    const endPoint = {
+        x: 9001,
+        y: 9001
+    };
 
     it("applies_succesful_movement_event", () => {
         const boardData: BoardType = [
@@ -163,13 +159,10 @@ describe("BoardMovementUp", () => {
 });
 
 describe("BoardMovementDown", () => {
-    let _;
-    let startPoint: Position;
-    let endPoint: Position;
-    beforeEach(() => {
-        const setup = new TestSetup();
-        [_, startPoint, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
-    });
+    const endPoint = {
+        x: 9001,
+        y: 9001
+    };
 
     it("moves_down_from_one_above_bottom", () => {
         const boardData: BoardType = [
