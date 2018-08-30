@@ -22,20 +22,30 @@ const KEYS = {
 const setup = new TestSetup();
 const [size, characterPosition, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
-const board = new Board(Board.idCounter++, boardFunctions.makeInitialBoard(size, characterPosition, endPoint), characterPosition, endPoint);
-
+const initialBoardData = boardFunctions.makeInitialBoard(size, characterPosition, endPoint);
+const initialBoard = new Board(
+    Board.idCounter++, 
+    initialBoardData, 
+    characterPosition, 
+    endPoint
+);
 let gameState = new GameState(
-    board
+    initialBoard
 );
 
 const boardDiv = document.getElementById("board")!;
 boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 
 window.eventBus = new EventBus();
-const testFunction = (direction: Direction): void => {
-    console.log("input, direction: ", direction);
+const events: any[] = [];
+const testFunction = (data: any): void => {
+    events.push({
+        type: "InputEvent",
+        data
+    });
+    console.log("input, direction: ", data);
 };
-window.eventBus.addListener("Input", testFunction);
+window.eventBus.addListener("InputEvent", testFunction);
 
 window.addEventListener("keyup", ({code}) => {
     const KEYS_TO_DIRECTIONS: any = {};
@@ -51,6 +61,7 @@ window.addEventListener("keyup", ({code}) => {
         console.log(code);
         console.log(gameState);
         console.log(gameState.board.getBoard());
+        console.log(events);
         console.log("");
         boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
     }

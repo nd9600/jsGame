@@ -1,14 +1,18 @@
 import { Place, Position, SuccessfulMovementEventData } from "@/core/myTypes";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
+import Event from "@/core/events/Event";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
-    public type = "SuccessfulMovement";
+    public type = "SuccessfulMovementEvent";
     public data: SuccessfulMovementEventData;
     
     constructor(boardID: number, newCharacterPosition: Position) {
         super();
         this.data = {boardID, newCharacterPosition};
+
+        // fail when dispatched
+        // Event.dispatch(this.type, this.data);
     }
 
     public handle(state: GameState) {
