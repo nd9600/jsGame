@@ -1,10 +1,14 @@
 import * as R from "ramda";
 import GameState from "@/core/GameState";
 
-export default abstract class Event {
+export default class Event {
     public type = "Event";
     public types: string[] = [this.type];
-    public data: any;
+    public data?: any;
+
+    constructor(data?: any) {
+        this.data = data;
+    }
 
     public handle(state: GameState): GameState {
         return state;

@@ -60,7 +60,18 @@ describe("EventApplication", () => {
 
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);
         const finalState = EventRunner.runEvents(listOfEvents);
-        console.log(listOfEvents);
-        console.log(finalState);
+        const wantedBoard = [
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+            [" ", " ", " ", " ", " ", " ", " ", " ", "c"]
+        ];
+        expect(finalState.board.boardSolved).toEqual(true);
+        expect(finalState.board.getBoard()).toEqual(wantedBoard);
     });
 });
