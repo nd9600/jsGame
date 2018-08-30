@@ -37,14 +37,14 @@ describe("EventApplication", () => {
             {
                 type: "InitialSetupEvent",
                 data: {
-                    size: [9, 9],
+                    size: [4, 4],
                     startPoint: {
                         x: 0,
                         y: 0
                     },
                     endPoint: {
-                        x: 8,
-                        y: 8
+                        x: 3,
+                        y: 3
                     }
                 }
             },
@@ -61,15 +61,10 @@ describe("EventApplication", () => {
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);
         const finalState = EventRunner.runEvents(listOfEvents);
         const wantedBoard = [
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", " "],
-            [" ", " ", " ", " ", " ", " ", " ", " ", "c"]
+            [" ", " ", " ", " "],
+            [" ", " ", " ", " "],
+            [" ", " ", " ", " "],
+            [" ", " ", " ", "c"]
         ];
         expect(finalState.board.boardSolved).toEqual(true);
         expect(finalState.board.getBoard()).toEqual(wantedBoard);
