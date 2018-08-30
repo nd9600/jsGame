@@ -12,7 +12,7 @@ export default class FailedMovementEvent extends MovementEvent {
     constructor(error: IError) {
         super();
         this.data = error;
-        Event.dispatch(this.type, this.data);
+        // Event.dispatch(this.type, this.data);
     }
 
 public handle(state: GameState): GameState {
