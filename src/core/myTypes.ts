@@ -20,9 +20,16 @@ interface SuccessfulMovementEventData {
     newCharacterPosition: Position;
 }
 
+interface DispatchedEvent {
+    type: string;
+    data?: any;
+}
+
+type EventCallback = (dispatchedEvent: DispatchedEvent) => void;
+
 interface IError {
     name: string;
     message: string;
 }
 
-export {Place, BoardType, twoNumbers, Direction, Position, SuccessfulMovementEventData, IError};
+export {Place, BoardType, twoNumbers, Direction, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, IError};

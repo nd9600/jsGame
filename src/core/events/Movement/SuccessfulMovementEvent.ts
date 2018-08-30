@@ -11,8 +11,7 @@ export default class SuccessfulMovementEvent extends MovementEvent {
         super();
         this.data = {boardID, newCharacterPosition};
 
-        // fail when dispatched
-        // Event.dispatch(this.type, this.data);
+        Event.dispatch(this.type, this.data);
     }
 
     public handle(state: GameState) {

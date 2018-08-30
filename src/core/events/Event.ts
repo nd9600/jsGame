@@ -11,9 +11,9 @@ export default abstract class Event {
     public static dispatch(type: string, data?: any): void {
         if (window.eventBus) {
             if (data !== undefined) {
-                window.eventBus.dispatch(type, data);
+                window.eventBus.dispatch(type, {type, data});
             } else {
-                window.eventBus.dispatch(type);
+                window.eventBus.dispatch(type, {type});
             }
         }
     }

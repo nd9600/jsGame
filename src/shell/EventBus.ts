@@ -1,19 +1,28 @@
 import * as R from "ramda";
+import { DispatchedEvent, EventCallback } from "@/core/myTypes";
 
 export default class EventBus {
-    private listeners: { 
-        [key: string]: Array<(data?: any) => void> 
-    } = {};
+    private unCaughtEvents: DispatchedEvent[] = [];
 
-    public addListener(event: string, callback: (data?: any) => void): void {
-        let newListOfListeners: Array<(data?: any) => void>;
-        if (R.has(event, this.listeners)) {
-            const eventsListOfListeners: Array<(data?: any) => void> = this.listeners[event];
+    private listeners: { 
+        [key: string]: EventCallback[] 
+    } = {
+        default: [
+            (dispatchedEvent: DispatchedEvent) => { 
+                this.unCaughtEvents = R.append(dispatchedEvent, this.unCaughtEvents);
+             }
+        ]
+    };
+
+    public addListener(eventName: string, callback: EventCallback): void {
+        let newListOfListeners: EventCallback[];
+        if (R.has(eventName, this.listeners)) {
+            const eventsListOfListeners: EventCallback[] = this.listeners[eventName];
             newListOfListeners = R.append(callback, eventsListOfListeners);
         } else {
             newListOfListeners = [callback];
         }
-        this.listeners = R.assoc(event, newListOfListeners, this.listeners);
+        this.listeners = R.assoc(eventName, newListOfListeners, this.listeners);
     }
 
     /**
@@ -21,10 +30,10 @@ export default class EventBus {
      * @param event the name of the event
      * @param callback the callback function to remove
      */
-    public removeListener(event: string, callback: (data?: any) => void): void {
-        let newListOfListeners: Array<() => void>;
+    public removeListener(event: string, callback: EventCallback): void {
+        let newListOfListeners: EventCallback[];
         if (R.has(event, this.listeners)) {
-            const eventsListOfListeners: Array<(data?: any) => void> = this.listeners[event];
+            const eventsListOfListeners: EventCallback[] = this.listeners[event];
             newListOfListeners = R.reject(
                 R.complement(R.equals(callback.toString())), 
                 eventsListOfListeners
@@ -35,15 +44,23 @@ export default class EventBus {
         this.listeners = R.assoc(event, newListOfListeners, this.listeners);
     }
 
-    public dispatch(event: string, data?: any): void {
-        const eventsListOfListeners: Array<(data?: any) => void> = this.listeners[event];
-        const callListener = (listener: (data?: any) => void) => {
-            listener(data);
-        };
-        R.forEach(callListener, eventsListOfListeners);
+    public dispatch(event: string, dispatchedEvent: DispatchedEvent): void {
+        if (R.has(event, this.listeners)) {
+            const eventsListOfListeners: EventCallback[] = this.listeners[event];
+            const callListener = (listener: EventCallback) => {
+                listener(dispatchedEvent);
+            };
+            R.forEach(callListener, eventsListOfListeners);
+        } else {
+            this.unCaughtEvents = R.append(dispatchedEvent, this.unCaughtEvents);
+        }
     }
 
     public getListeners() {
         return this.listeners;
+    }
+
+    public getUncaughtEvents() {
+        return this.unCaughtEvents;
     }
 }

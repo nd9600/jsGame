@@ -1,6 +1,6 @@
 import boardFunctions from "@/core/board/boardFunctions";
 import TestSetup from "@/shell/TestSetup";
-import {Direction} from "@/core/myTypes";
+import {Direction, DispatchedEvent, EventCallback} from "@/core/myTypes";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 import InputEvent from "@/core/events/InputEvent";
@@ -37,13 +37,10 @@ const boardDiv = document.getElementById("board")!;
 boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 
 window.eventBus = new EventBus();
-const events: any[] = [];
-const testFunction = (data: any): void => {
-    events.push({
-        type: "InputEvent",
-        data
-    });
-    console.log("input, direction: ", data);
+const events: DispatchedEvent[] = [];
+const testFunction: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+    events.push(dispatchedEvent);
+    console.log("input, direction: ", dispatchedEvent.data);
 };
 window.eventBus.addListener("InputEvent", testFunction);
 
