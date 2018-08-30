@@ -12,7 +12,7 @@ export default class InputEvent extends Event {
         super();
         this.types = R.append(this.type, this.types);
         this.data = direction;
-        Event.dispatch(this.type, this.data);
+        Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState) {

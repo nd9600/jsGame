@@ -7,7 +7,5 @@ export default class MovementEvent extends Event {
     constructor() {
         super();
         this.types = R.append(this.type, this.types);
-
-        Event.dispatch(this.type);
     }
 }

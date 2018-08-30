@@ -38,11 +38,18 @@ boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
 
 window.eventBus = new EventBus();
 const events: DispatchedEvent[] = [];
+const inputEvents: DispatchedEvent[] = [];
 const testFunction: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
     events.push(dispatchedEvent);
+    console.log("event, data: ", dispatchedEvent.data);
+};
+window.eventBus.addListener("Event", testFunction);
+
+const testFunction2: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+    inputEvents.push(dispatchedEvent);
     console.log("input, direction: ", dispatchedEvent.data);
 };
-window.eventBus.addListener("InputEvent", testFunction);
+window.eventBus.addListener("InputEvent", testFunction2);
 
 window.addEventListener("keyup", ({code}) => {
     const KEYS_TO_DIRECTIONS: any = {};
@@ -58,7 +65,8 @@ window.addEventListener("keyup", ({code}) => {
         console.log(code);
         console.log(gameState);
         console.log(gameState.board.getBoard());
-        console.log(events);
+        console.log("events", events);
+        console.log("inputEvents", inputEvents);
         console.log("");
         boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
     }

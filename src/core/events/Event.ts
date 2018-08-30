@@ -1,3 +1,4 @@
+import * as R from "ramda";
 import GameState from "@/core/GameState";
 
 export default abstract class Event {
@@ -5,20 +6,24 @@ export default abstract class Event {
     public types: string[] = [this.type];
     public data: any;
 
-    constructor() {
-        Event.dispatch(this.type);
-    }
-
     public handle(state: GameState): GameState {
         return state;
     }
 
-    public static dispatch(type: string, data?: any): void {
+    public static dispatch(types: string[], originalEventType: string, data?: any): void {
         if (window.eventBus) {
             if (data !== undefined) {
-                window.eventBus.dispatch(type, {type, data});
+                R.forEach(
+                    (type: string) => {
+                        window.eventBus.dispatch(type, {type: originalEventType, data});
+                    },
+                types);
             } else {
-                window.eventBus.dispatch(type, {type});
+                R.forEach(
+                    (type: string) => {
+                        window.eventBus.dispatch(type, {type: originalEventType});
+                    },
+                types);
             }
         }
     }
