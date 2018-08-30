@@ -2,7 +2,12 @@ import GameState from "@/core/GameState";
 
 export default abstract class Event {
     public type = "Event";
+    public types: string[] = [this.type];
     public data: any;
+
+    constructor() {
+        Event.dispatch(this.type);
+    }
 
     public handle(state: GameState): GameState {
         return state;

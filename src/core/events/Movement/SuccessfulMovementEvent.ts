@@ -1,3 +1,4 @@
+import * as R from "ramda";
 import { Place, Position, SuccessfulMovementEventData } from "@/core/myTypes";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
@@ -9,8 +10,8 @@ export default class SuccessfulMovementEvent extends MovementEvent {
     
     constructor(boardID: number, newCharacterPosition: Position) {
         super();
+        this.types = R.append(this.type, this.types);
         this.data = {boardID, newCharacterPosition};
-
         Event.dispatch(this.type, this.data);
     }
 

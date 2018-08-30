@@ -1,3 +1,5 @@
+import * as R from "ramda";
+
 import usefulFunctions from "@/core/usefulFunctions";
 import { IError } from "@/core/myTypes";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
@@ -11,6 +13,7 @@ export default class FailedMovementEvent extends MovementEvent {
 
     constructor(error: IError) {
         super();
+        this.types = R.append(this.type, this.types);
         this.data = error;
         Event.dispatch(this.type, this.data);
     }
