@@ -33,8 +33,8 @@ export default class EventRunner {
         return R.map(makeEventFromDispatchedEvent, listOfEventObjects);
     }
 
-    public static runEvents = (listOfEvents: Event[]): GameState => {
-        const initialState = usefulFunctions.makeNewGameState();
+    public static runEvents = (listOfEvents: Event[], initialState: (GameState | undefined) = undefined): GameState => {
+        initialState = initialState || usefulFunctions.makeNewGameState();
         const finalState = R.reduce(EventRunner.handleEvent, initialState, listOfEvents);
         return finalState;
     }
