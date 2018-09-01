@@ -16,7 +16,7 @@ If
 - both complete your maze, both get 5 points
 - neither complete your maze, 0 points
 - you don't complete your maze & opponent does, they get 20 points
-
+---
 - you complete your opponent's maze & they don't, you get 20 points
 - both complete your  opponent's maze, both get 5 points
 - neither complete your opponent's maze, 0 points
