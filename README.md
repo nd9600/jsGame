@@ -33,8 +33,8 @@ If
 ### Architecture
 The game is split up into a *Functional Core* and *Imperative Shell*, following Gary Bernhardt's [Boundaries talk](https://www.destroyallsoftware.com/talks/boundaries), which is similar to the [Hexagonal Architecture](https://github.com/jschairb/sandbox/wiki/HexagonalArchitecture) and [Ports and Adapters pattern](https://spin.atomicobject.com/2013/02/23/ports-adapters-software-architecture/) ideas.
 
-* The [Shell](https://github.com/nd9600/jsGame/tree/master/src/shell) handles all interaction, takes in input, passes it to the Core, and returns output to the screen
-* The [Core](https://github.com/nd9600/jsGame/tree/master/src/core) is given input from the Shell, makes decisions based on that input, and returns new data to the Shell to be displayed in whatever format the Shell wants.
+* The [Shell](https://github.com/nd9600/jsGame/tree/master/src/shell) handles all interaction, takes in input, passes it to the Core, and returns output to the screen. It will be written with Vue.
+* The [Core](https://github.com/nd9600/jsGame/tree/master/src/core) is given input from the Shell, makes decisions based on that input, and returns new data to the Shell to be displayed in whatever format the Shell wants. It's written in Typescript.
     * The Core is purely [functional](http://blog.jenkster.com/2015/12/what-is-functional-programming.html) - its output depends only on its input - with one exception; the [EventBus](#eventbus).
 * The game's current state is represented by a [GameState](https://github.com/nd9600/jsGame/blob/master/src/core/GameState.ts).
 
@@ -43,17 +43,21 @@ In this game, the Shell receives input from somewhere (typically the user, but t
 
 Each Event has a [handle() method](https://github.com/nd9600/jsGame/blob/master/src/core/events/Movement/SuccessfulMovementEvent.ts#L18), which takes in a GameState, does something to it, and returns a new GameState. An Event can create and handle other events in turn, as the [InputEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Game/InputEvent.ts) does.
 
+Events all have a `type: string` property, as well as their own `data: any` property, which can be overridden in a subclass to change its type.
+
 When the `handle()` method is called is entirely up to the section of code that created the Event.
 
-Every Event extends from a parent type of Event - for example, a SuccessfulMovementEvent is a MovementEvent, which is an Event.
+Every Event extends from a superclass Event - for example, a SuccessfulMovementEvent is a MovementEvent, which is an Event.
 
 Events are the **only** way state is changed in the game. This is kinda like [Event Sourcing](https://eventstore.org/docs/event-sourcing-basics/) [[video here]](https://www.youtube.com/watch?v=8JKjvY4etTY) (but easier, because I don't really understand Event Sourcing), and has some [benefits]().
 
 #### Benefits of using Events
-[EventRunner](https://github.com/nd9600/jsGame/blob/master/src/core/events/EventRunner.ts).
+* Similar to [Vuex](https://vuex.vuejs.org/guide/), only changing the State inside Events means it is very easy to see where the State was changed.
+* Like with Event Sourcing, Events can be [stored](https://eventstore.org/docs/event-sourcing-basics/events-as-a-storage-mechanism/index.html) and [played back](https://eventstore.org/docs/event-sourcing-basics/event-store-as-a-functional-database/index.html) at a later date very easily. You can see how this is done in [this test](https://github.com/nd9600/jsGame/blob/master/__tests__/Events/EventApplicationTest.ts), which uses the [EventRunner](https://github.com/nd9600/jsGame/blob/master/src/core/events/EventRunner.ts) to apply a list of Events and creates a final State that is exactly the same as if I had started playing a game with the web client, and pressed down and then left.
+* The same list of Events can be processed in many different ways, and at different times, to produce different results. For example, a list with a particular input (like Up, Down, Up, Right, Left, Down) that created a bug at one point, can be replayed after the bug is fixed, to produce the same behaviour.
+* Exporting and importing events is really easy, since an Event is just a `type` and a `data` property that can be encoded to JSON. This means a list of Events can be shown to a User, who can copy them somewhere, close the game, open a new instance of the game, import the list, and come back to exactly where they were before. This doesn't even need to be on the same machine, or instance of the game!
 
 ### EventBus
-
 When an [Event](#event) is created - **not** when it's handled - the event is [dispatched](https://github.com/nd9600/jsGame/blob/master/src/core/events/Event.ts#L17) to the [EventBus](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts) that has been registered on the [Window](https://developer.mozilla.org/en-US/docs/Web/API/Window), if it exists. This is the only linkage from the Core -> the Shell. Apart from this, the Shell creates and handles [Events](#events) using the Core.
 
 When an [Event](#event) is fired, it's sent to any listeners that have been [added](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts#L24) to the EventBus. 
