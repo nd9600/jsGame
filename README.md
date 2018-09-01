@@ -30,5 +30,14 @@ If
 ### Architecture
 The game is split up into a *Functional Core* and *Imperative Shell*, following Gary Bernhardt's [Boundaries talk](https://www.destroyallsoftware.com/talks/boundaries), which is similar to the [Hexagonal Architecture](https://github.com/jschairb/sandbox/wiki/HexagonalArchitecture) and [Ports and Adapters pattern](https://spin.atomicobject.com/2013/02/23/ports-adapters-software-architecture/) ideas.
 
-* The Shell handles all user interaction, taking in input, passes it to the Core, and returns output to the screen
-* The Core is given input from the Shell, makes decisions based on that input, and returns new data to the Shell to be displayed in whatever format the Shell wants.
+* The [Shell](https://github.com/nd9600/jsGame/tree/master/src/shell) handles all interaction, takes in input, passes it to the Core, and returns output to the screen
+* The [Core](https://github.com/nd9600/jsGame/tree/master/src/core) is given input from the Shell, makes decisions based on that input, and returns new data to the Shell to be displayed in whatever format the Shell wants.
+    * The Core is purely [functional](http://blog.jenkster.com/2015/12/what-is-functional-programming.html) - its output depends only on its input - with one exception; the [EventBus](#eventbus).
+* The game's current state is represented by a [GameState](https://github.com/nd9600/jsGame/blob/master/src/core/GameState.ts).
+
+### Events: how state is changed
+In this game, the Shell receives input from somewhere (typically the user, but theoretically, it can be anywhere) and creates an [Event](https://github.com/nd9600/jsGame/tree/master/src/core/events) from it - normally an [InputEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Game/InputEvent.ts)
+
+Each Event has a [handle() method](https://github.com/nd9600/jsGame/blob/master/src/core/events/Movement/SuccessfulMovementEvent.ts#L18), which takes in a GameState, does something to it, and returns a new GameState. An Event can create and handle other events in turn, as the [InputEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Game/InputEvent.ts) does.
+
+### EventBus
