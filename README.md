@@ -5,6 +5,8 @@
 * [The idea](#idea)
 * [Documentation](#documentation)
     * [Architecture](#architecture)
+    * [Events: how state is changed](#events)
+    * [EventBus](#eventbus)
 
 ## Idea
 
@@ -36,8 +38,17 @@ The game is split up into a *Functional Core* and *Imperative Shell*, following 
 * The game's current state is represented by a [GameState](https://github.com/nd9600/jsGame/blob/master/src/core/GameState.ts).
 
 ### Events: how state is changed
-In this game, the Shell receives input from somewhere (typically the user, but theoretically, it can be anywhere) and creates an [Event](https://github.com/nd9600/jsGame/tree/master/src/core/events) from it - normally an [InputEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Game/InputEvent.ts)
+In this game, the Shell receives input from somewhere (typically the user, but theoretically, it can be anywhere) and creates an [Event](https://github.com/nd9600/jsGame/tree/master/src/core/events) from it - normally an [InputEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Game/InputEvent.ts).
 
 Each Event has a [handle() method](https://github.com/nd9600/jsGame/blob/master/src/core/events/Movement/SuccessfulMovementEvent.ts#L18), which takes in a GameState, does something to it, and returns a new GameState. An Event can create and handle other events in turn, as the [InputEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Game/InputEvent.ts) does.
 
+When the `handle()` method is called is entirely up to the section of code that created the Event.
+
+Events are the *only* way state is changed in the game. This is kinda like [Event Sourcing](https://eventstore.org/docs/event-sourcing-basics/) [[video here]](https://www.youtube.com/watch?v=8JKjvY4etTY) (but easier, because I don't really understand Event Sourcing), and has some [benefits]().
+
+#### Benefits of using Events
+
+
 ### EventBus
+
+When an [Event](#event) is created - _not_ when it's handled - the event is dispatched to the [EventBus](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts) that has been registered on the Window, if it exists.
