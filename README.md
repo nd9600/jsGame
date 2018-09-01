@@ -40,6 +40,7 @@ The game is split up into a **Functional Core and Imperative Shell**, following 
 * The game's current state is represented by a [GameState](https://github.com/nd9600/jsGame/blob/master/src/core/GameState.ts).
 
 Simply, **the Core makes decisions, and the Shell applies those decisions**.
+So far, the only library this really uses is [Ramda](https://ramdajs.com/), for nice functional Javascript.
 
 ## Events: how state is changed
 In this game, the Shell receives input from somewhere (typically the user, but theoretically, it can be anywhere) and creates an [Event](https://github.com/nd9600/jsGame/tree/master/src/core/events) from it - normally an [InputEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Game/InputEvent.ts).
@@ -61,9 +62,9 @@ Events are the **only** way state is changed in the game. This is kinda like [Ev
 * Exporting and importing events is really easy, since an Event is just a `type` and a `data` property that can be encoded to JSON. This means a list of Events can be shown to a User, who can copy them somewhere, close the game, open the game again, import the list, and come back to exactly where they were before. This doesn't even need to be on the same machine!
 
 ## EventBus
-When an [Event](#event) is created - **not** when it's handled - the event is [dispatched](https://github.com/nd9600/jsGame/blob/master/src/core/events/Event.ts#L17) to the [EventBus](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts) that has been registered on the [Window](https://developer.mozilla.org/en-US/docs/Web/API/Window), if it exists. This is the only linkage from the Core -> the Shell. Apart from this, the Shell creates and handles [Events](#events) using the Core.
+When an [Event](#event) is created - **not** when it's handled - the event is [dispatched](https://github.com/nd9600/jsGame/blob/master/src/core/events/Event.ts#L17) to the [EventBus](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts) that has been registered on the [Window](https://developer.mozilla.org/en-US/docs/Web/API/Window), if it exists. This is the only linkage from the Core -> the Shell. Apart from this, the Shell creates and handles [Events](#events) using the Core. 
 
-When an [Event](#event) is fired, it's sent to any listeners that have been [added](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts#L24) to the EventBus. 
+When an [Event](#event) is fired, it's sent to any listeners that have been [added](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts#L24) to the EventBus. A listener, could, for example, shake the screen a bit or play a "bump" sound if someone tries to move up when they're right beside a wall, or it could just store them somehow. **Event listeners must not modify the State.**
 
 An Event can be fired to multiple listeners at the same time, and one listener can listen to multiple types of Events. 
 
