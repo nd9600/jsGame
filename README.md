@@ -2,6 +2,10 @@
 
 ![](https://orig00.deviantart.net/bdc4/f/2010/182/2/b/cave___blind_pokemon_mapping_by_quilavaking.png)
 
+* [The idea](#idea)
+  * [Documentation](#documentation)
+    * [Architecture](#architecture)
+
 ## Idea
 
 - Two players
