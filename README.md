@@ -21,3 +21,10 @@ If
 - both complete your opponent's maze, they get 5 points
 - neither complete your opponent's maze, thye get 0 points
 - you don't complete your opponent's maze & they do, they get 10 points
+
+## Documentation
+### Architecture
+The game is split up into a *Functional Core* and *Imperative Shell*, following Gary Bernhardt's [Boundaries talk](https://www.destroyallsoftware.com/talks/boundaries), which is similar to the [Hexagonal Architecture](https://github.com/jschairb/sandbox/wiki/HexagonalArchitecture) and [Ports and Adapters pattern](https://spin.atomicobject.com/2013/02/23/ports-adapters-software-architecture/) ideas.
+
+* The Shell handles all user interaction, taking in input, passes it to the Core, and returns output to the screen
+* The Core is given input from the Shell, makes decisions based on that input, and returns new data to the Shell to be displayed in whatever format the Shell wants.
