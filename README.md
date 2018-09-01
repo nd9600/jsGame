@@ -8,6 +8,7 @@
     * [Events: how state is changed](#events)
         * [Benefits of using events](#benefits-of-using-events)
     * [EventBus](#eventbus)
+    * [Testing](#testing)
 
 # Idea
 
@@ -71,4 +72,4 @@ An Event is fired all the way up the chain - a SuccessfulMovementEvent is fired 
 ## Testing
 Because of the game's [architecture](#architecture), testing it is [really really easy](https://github.com/nd9600/jsGame/blob/master/__tests__/Board/BoardMovementTest.ts#L42). All I have to do is create an initial [GameState](https://github.com/nd9600/jsGame/blob/master/src/core/GameState.ts), call some function in the Core that returns an [Event](#event), and assert something about that Event's data. Nothing needs to be mocked or spied on.
 
-The Core is tested, and the Shell doesn't need to be, because it's so simple - it just takes in user input, calls a function that makes all the decisions, and applies that decision.
+The Core is very thoroughly tested, and the Shell doesn't need to be, because it's so simple - it just takes in user input, calls a function that makes all the decisions, and applies that decision.
