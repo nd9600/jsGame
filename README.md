@@ -6,6 +6,7 @@
 * [Documentation](#documentation)
     * [Architecture](#architecture)
     * [Events: how state is changed](#events)
+        * [Benefits of using events](#benefits-of-using-events)
     * [EventBus](#eventbus)
 
 ## Idea
@@ -44,11 +45,19 @@ Each Event has a [handle() method](https://github.com/nd9600/jsGame/blob/master/
 
 When the `handle()` method is called is entirely up to the section of code that created the Event.
 
-Events are the *only* way state is changed in the game. This is kinda like [Event Sourcing](https://eventstore.org/docs/event-sourcing-basics/) [[video here]](https://www.youtube.com/watch?v=8JKjvY4etTY) (but easier, because I don't really understand Event Sourcing), and has some [benefits]().
+Every Event extends from a parent type of Event - for example, a SuccessfulMovementEvent is a MovementEvent, which is an Event.
+
+Events are the **only** way state is changed in the game. This is kinda like [Event Sourcing](https://eventstore.org/docs/event-sourcing-basics/) [[video here]](https://www.youtube.com/watch?v=8JKjvY4etTY) (but easier, because I don't really understand Event Sourcing), and has some [benefits]().
 
 #### Benefits of using Events
-
+[EventRunner](https://github.com/nd9600/jsGame/blob/master/src/core/events/EventRunner.ts).
 
 ### EventBus
 
-When an [Event](#event) is created - _not_ when it's handled - the event is dispatched to the [EventBus](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts) that has been registered on the Window, if it exists.
+When an [Event](#event) is created - **not** when it's handled - the event is [dispatched](https://github.com/nd9600/jsGame/blob/master/src/core/events/Event.ts#L17) to the [EventBus](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts) that has been registered on the [Window](https://developer.mozilla.org/en-US/docs/Web/API/Window), if it exists. This is the only linkage from the Core -> the Shell. Apart from this, the Shell creates and handles [Events](#events) using the Core.
+
+When an [Event](#event) is fired, it's sent to any listeners that have been [added](https://github.com/nd9600/jsGame/blob/master/src/shell/EventBus.ts#L24) to the EventBus. 
+
+An Event can be fired to multiple listeners at the same time, and one listener can listen to multiple types of Events. 
+
+An Event is fired all the way up the chain - a SuccessfulMovementEvent is fired as aSuccessfulMovementEvent, a MovementEvent, and as the base Event.
