@@ -9,6 +9,7 @@ type BoardType = Place[][];
 type twoNumbers = [number, number];
 
 enum Direction {Up, Down, Left, Right}
+enum Command {MoveUp, MoveDown, MoveLeft, MoveRight}
 
 interface Position {
     x: number;
@@ -38,4 +39,4 @@ interface IError {
     message: string;
 }
 
-export {Place, BoardType, twoNumbers, Direction, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, IError};
+export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, IError};

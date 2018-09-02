@@ -1,6 +1,6 @@
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import usefulFunctions from "@/core/usefulFunctions";
-import { Position, twoNumbers, Place, DispatchedEvent } from "@/core/myTypes";
+import { Position, twoNumbers, Place, DispatchedEvent, Command } from "@/core/myTypes";
 import TestSetup from "@/shell/TestSetup";
 import EventRunner from "@/core/events/EventRunner";
 import Board from "@/core/board/Board";
@@ -44,8 +44,8 @@ describe("EventApplication", () => {
                     endPoint: { x: 3, y: 3 }
                 }
             },
-            { type: "InputEvent", data: 1 },
-            { type: "InputEvent", data: 3 }
+            { type: "InputEvent", data: Command.MoveDown },
+            { type: "InputEvent", data: Command.MoveRight }
         ];
 
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);
@@ -75,8 +75,8 @@ describe("EventApplication", () => {
         );
         const initialState = new GameState(initialBoard);
         const listOfEventObjects: DispatchedEvent[] = [
-            { type: "InputEvent", data: 1 },
-            { type: "InputEvent", data: 3 }
+            { type: "InputEvent", data: Command.MoveDown },
+            { type: "InputEvent", data: Command.MoveRight }
         ];
 
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);
