@@ -51,7 +51,7 @@ Events all have a `type: string` property, as well as their own `data: any` prop
 
 When the `handle()` method is called is entirely up to the section of code that created the Event.
 
-Every Event extends from a superclass Event - for example, a SuccessfulMovementEvent is a MovementEvent, which is an Event.
+Every Event extends from a superclass [Event](https://github.com/nd9600/jsGame/blob/master/src/core/events/Event.ts) - for example, a [SuccessfulMovementEvent](https://github.com/nd9600/jsGame/blob/master/src/core/events/Movement/SuccessfulMovementEvent.ts) is a MovementEvent, which is an Event. The Base Event kinda functions like a [Null Object](https://refactoring.guru/introduce-null-object) - it doesn't do anything in its `handle()` method, it just returns the same GameState.
 
 Events are the **only** way state is changed in the game. This is kinda like [Event Sourcing](https://eventstore.org/docs/event-sourcing-basics/) [[video here]](https://www.youtube.com/watch?v=8JKjvY4etTY) (but easier, because I don't really understand Event Sourcing), and has some [benefits]().
 
