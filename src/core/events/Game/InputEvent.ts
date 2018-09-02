@@ -3,7 +3,6 @@ import { Command, Direction } from "@/core/myTypes";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
 import movementFunctions from "@/core/board/movement";
-import usefulFunctions from "@/core/usefulFunctions";
 
 export default class InputEvent extends Event {
     public type = "InputEvent";
@@ -22,17 +21,23 @@ export default class InputEvent extends Event {
         switch (command) {
             case (Command.MoveUp): {
                 event = movementFunctions.getPositionToMoveInto(gameState, Direction.Up);
+                break;
             }
             case (Command.MoveDown): {
                 event = movementFunctions.getPositionToMoveInto(gameState, Direction.Down);
+                break;
             }
             case (Command.MoveLeft): {
                 event = movementFunctions.getPositionToMoveInto(gameState, Direction.Left);
+                break;
             }
             case (Command.MoveRight): {
                 event = movementFunctions.getPositionToMoveInto(gameState, Direction.Right);
+                break;
+            } default: {
+                event = new Event();
             }
         }
-        return event!.handle(gameState);
+        return event.handle(gameState);
     }
 }

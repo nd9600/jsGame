@@ -12,11 +12,11 @@ const KEYS_TO_COMMANDS: { [index: string]: Command } = {
 
 const COMMANDS_TO_KEYS: { [index: number]: string } = R.invertObj(KEYS_TO_COMMANDS);
 
-const handleUserInput = (initialGameState: GameState): void {
+const handleUserInput = (initialGameState: GameState): void => {
     const boardDiv = document.getElementById("board")!;
     boardDiv.innerHTML = `<pre>${initialGameState.board.boardAsString()}</pre>`;
 
-    let gameState: GameState;
+    let gameState: GameState = initialGameState;
     window.addEventListener("keyup", ({code}) => {
         if (KEYS_TO_COMMANDS.hasOwnProperty(code)) {
             const inputEvent = new InputEvent(KEYS_TO_COMMANDS[code]);
