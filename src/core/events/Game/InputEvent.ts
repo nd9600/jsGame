@@ -15,29 +15,29 @@ export default class InputEvent extends Event {
         Event.dispatch(this.types, this.type, this.data);
     }
 
-    public handle(gameState: GameState) {
-        const command = this.data;
-        let event: Event;
+    public createEvent(command: Command, gameState: GameState): Event {
         switch (command) {
             case (Command.MoveUp): {
-                event = movementFunctions.getPositionToMoveInto(gameState, Direction.Up);
-                break;
+                return movementFunctions.getPositionToMoveInto(gameState, Direction.Up);
             }
             case (Command.MoveDown): {
-                event = movementFunctions.getPositionToMoveInto(gameState, Direction.Down);
-                break;
+                return movementFunctions.getPositionToMoveInto(gameState, Direction.Down);
             }
             case (Command.MoveLeft): {
-                event = movementFunctions.getPositionToMoveInto(gameState, Direction.Left);
-                break;
+                return movementFunctions.getPositionToMoveInto(gameState, Direction.Left);
             }
             case (Command.MoveRight): {
-                event = movementFunctions.getPositionToMoveInto(gameState, Direction.Right);
-                break;
-            } default: {
-                event = new Event();
+                return movementFunctions.getPositionToMoveInto(gameState, Direction.Right);
+            }
+            default: {
+                return new Event();
             }
         }
+    }
+
+    public handle(gameState: GameState) {
+        const command = this.data;
+        const event = this.createEvent(command, gameState);
         return event.handle(gameState);
     }
 }
