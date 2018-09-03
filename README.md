@@ -32,7 +32,7 @@ If
 
 # Documentation
 ## Architecture
-The game is split up into a **Functional Core and Imperative Shell**, following Gary Bernhardt's [Boundaries talk](https://www.destroyallsoftware.com/talks/boundaries), which is similar to the [Hexagonal Architecture](https://github.com/jschairb/sandbox/wiki/HexagonalArchitecture) and [Ports and Adapters pattern](https://spin.atomicobject.com/2013/02/23/ports-adapters-software-architecture/) ideas.
+The game is split up into a **Functional Core and Imperative Shell**, following Gary Bernhardt's [Boundaries talk](https://www.destroyallsoftware.com/talks/boundaries), which is similar to the [Hexagonal Architecture](https://github.com/jschairb/sandbox/wiki/HexagonalArchitecture) and [Ports and Adapters pattern](https://herbertograca.com/2017/09/14/ports-adapters-architecture/) ideas.
 
 * The [Shell](https://github.com/nd9600/jsGame/tree/master/src/shell) handles all interaction, takes in input, passes it to the Core, and returns output to the screen. It will be written with Vue.
 * The [Core](https://github.com/nd9600/jsGame/tree/master/src/core) is given input from the Shell, makes decisions based on that input, and returns new data to the Shell to be displayed in whatever format the Shell wants. It's written in Typescript.
