@@ -1,8 +1,8 @@
-import movementFunctions from "@/core/board/movement";
-import { Place, BoardType, Position, Direction } from "@/core/myTypes";
-import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import Board from "@/core/board/Board";
+import movementFunctions from "@/core/board/movement";
+import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import GameState from "@/core/GameState";
+import { BoardType, Direction, Place, Position } from "@/core/myTypes";
 
 describe("BoardMovementUp", () => {
     const endPoint = {

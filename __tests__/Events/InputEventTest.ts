@@ -1,11 +1,7 @@
-import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
-import usefulFunctions from "@/core/usefulFunctions";
-import { Position, twoNumbers, Place, DispatchedEvent, Command, BoardType } from "@/core/myTypes";
-import TestSetup from "@/shell/TestSetup";
-import EventRunner from "@/core/events/EventRunner";
 import Board from "@/core/board/Board";
-import GameState from "@/core/GameState";
 import InputEvent from "@/core/events/Game/InputEvent";
+import GameState from "@/core/GameState";
+import { BoardType, Command, Place, Position } from "@/core/myTypes";
 
 describe("InputEvent", () => {
     let gameState: GameState;

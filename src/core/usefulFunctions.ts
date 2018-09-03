@@ -1,6 +1,6 @@
-import {IError} from "@/core/myTypes";
-import GameState from "@/core/GameState";
 import Board from "@/core/board/Board";
+import GameState from "@/core/GameState";
+import { IError } from "@/core/myTypes";
 
 const range = (start: number, end: number): number[] => {
     const rangeStart = Math.min(start, end);

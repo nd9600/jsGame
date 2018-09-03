@@ -1,13 +1,13 @@
-import * as R from "ramda";
 import Event from "@/core/events/Event";
-import GameState from "@/core/GameState";
-import usefulFunctions from "@/core/usefulFunctions";
-import { DispatchedEvent } from "@/core/myTypes";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
+import GameState from "@/core/GameState";
+import { DispatchedEvent } from "@/core/myTypes";
+import usefulFunctions from "@/core/usefulFunctions";
+import * as R from "ramda";
 
 export default class EventRunner {
     private static handleEvent = (state: GameState, event: Event): GameState => event.handle(state);

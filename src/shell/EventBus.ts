@@ -1,5 +1,5 @@
-import * as R from "ramda";
 import { DispatchedEvent, EventCallback } from "@/core/myTypes";
+import * as R from "ramda";
 
 declare global {
     interface Window { 
