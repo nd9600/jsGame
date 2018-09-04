@@ -1,11 +1,11 @@
-import * as R from "ramda";
-import {Direction, Position, Place} from "@/core/myTypes";
-import usefulFunctions from "@/core/usefulFunctions";
-import MovementEvent from "@/core/events/Movement/MovementEvent";
-import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
-import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import Board from "@/core/board/Board";
+import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
+import MovementEvent from "@/core/events/Movement/MovementEvent";
+import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import GameState from "@/core/GameState";
+import { Direction, Place, Position } from "@/core/myTypes";
+import usefulFunctions from "@/core/usefulFunctions";
+import * as R from "ramda";
 
 /**
  * Returns the position that could be moved in to (if any), given a list of possible positions
@@ -38,8 +38,20 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
  * @param direction Direction
  * @param fromPosition Position
  */
-function getPositionToMoveInto(gameState: GameState, direction: Direction): MovementEvent {
-    const {board} = gameState;
+function getPositionToMoveInto(gameState: GameState, direction: Direction): MovementEvent[] {
+    const boards = R.values(gameState.boards);
+    return R.map((board) => getPositionToMoveIntoForBoard(board, direction),
+        boards
+    );
+}
+
+/**
+ * Finds last square to move to, makes a list of squares from fromPosition to that square, and finds the last empty square in that list
+ * @param board Board
+ * @param direction Direction
+ * @param fromPosition Position
+ */
+function getPositionToMoveIntoForBoard(board: Board, direction: Direction): MovementEvent {
     const fromPosition = board.characterPosition;
     switch (direction) {
         case Direction.Up: {
@@ -96,4 +108,4 @@ function getPositionToMoveInto(gameState: GameState, direction: Direction): Move
     return usefulFunctions.assertUnreachable(direction);
 }
 
-export default {getPositionToMoveInto};
+export default {getPositionToMoveInto, getPositionToMoveIntoForBoard};

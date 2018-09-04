@@ -12,19 +12,21 @@ const KEYS_TO_COMMANDS: { [index: string]: Command } = {
 
 const handleUserInput = (initialGameState: GameState): void => {
     const boardDiv = document.getElementById("board")!;
-    boardDiv.innerHTML = `<pre>${initialGameState.board.boardAsString()}</pre>`;
+    let board = R.values(initialGameState.boards)[0];
+    boardDiv.innerHTML = `<pre>${board.boardAsString()}</pre>`;
 
     let gameState: GameState = initialGameState;
     window.addEventListener("keyup", ({code}) => {
         if (KEYS_TO_COMMANDS.hasOwnProperty(code)) {
             const inputEvent = new InputEvent(KEYS_TO_COMMANDS[code]);
             gameState = inputEvent.handle(gameState);
+            board = R.values(gameState.boards)[0];
 
             console.log(code);
             console.log(gameState);
             console.log("loggedEvents", window.loggedEvents);
             console.log("");
-            boardDiv.innerHTML = `<pre>${gameState.board.boardAsString()}</pre>`;
+            boardDiv.innerHTML = `<pre>${board.boardAsString()}</pre>`;
         }
     });
 };

@@ -77,7 +77,7 @@ describe("EventApplication", () => {
             { x: 0, y: 0 }, 
             { x: 3, y: 3 }
         );
-        const initialState = new GameState(usefulFunctions.makeBoards([initialBoard]));
+        const initialState = new GameState(usefulFunctions.makeBoardsObject([initialBoard]));
         const listOfEventObjects: DispatchedEvent[] = [
             { type: "InputEvent", data: Command.MoveDown },
             { type: "InputEvent", data: Command.MoveRight }

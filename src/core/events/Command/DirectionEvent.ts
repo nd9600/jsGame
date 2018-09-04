@@ -4,6 +4,7 @@ import { Direction } from "@/core/myTypes";
 import GameState from "@/core/GameState";
 import movementFunctions from "@/core/board/movement";
 import CommandEvent from "@/core/events/Command/CommandEvent";
+import EventRunner from "@/core/events/EventRunner";
 
 export default class DirectionEvent extends CommandEvent {
     public type = "DirectionEvent";
@@ -17,7 +18,7 @@ export default class DirectionEvent extends CommandEvent {
     }
 
     public handle(gameState: GameState): GameState {
-        const movementEvent = movementFunctions.getPositionToMoveInto(gameState, this.data);
-        return movementEvent.handle(gameState);
+        const movementEvents = movementFunctions.getPositionToMoveInto(gameState, this.data);
+        return EventRunner.runEvents(movementEvents, gameState);
     }
 }

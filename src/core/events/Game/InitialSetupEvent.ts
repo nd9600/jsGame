@@ -3,8 +3,8 @@ import boardFunctions from "@/core/board/boardFunctions";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
 import { InitialGameSetupData } from "@/core/myTypes";
-import * as R from "ramda";
 import usefulFunctions from "@/core/usefulFunctions";
+import * as R from "ramda";
 
 export default class InitialSetupEvent extends Event {
     public type = "InitialSetupEvent";
@@ -25,7 +25,7 @@ export default class InitialSetupEvent extends Event {
             this.data.startPoint, 
             this.data.endPoint
         );
-        const boards = usefulFunctions.makeBoards([initialBoard]);
+        const boards = usefulFunctions.makeBoardsObject([initialBoard]);
         return new GameState(boards);
     }
 }

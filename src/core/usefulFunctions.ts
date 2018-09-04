@@ -25,10 +25,10 @@ const assertUnreachable = (x: never): never => {
 
 const abyss = (...args: any[]) => { return; };
 
-const makeBoards = (boards: Board[]): Boards => {
-    const boardsObject = {};
+const makeBoardsObject = (boards: Board[]): Boards => {
+    let boardsObject = {};
     R.forEach((board: Board) => {
-        R.assoc(board.id, board, boardsObject);
+        boardsObject = R.assoc(board.id, board, boardsObject);
     }, boards);
     return boardsObject;
 };
@@ -36,10 +36,10 @@ const makeBoards = (boards: Board[]): Boards => {
 const makeNewGameState = (): GameState => {
     const defaultPosition = { x: 0, y: 0 };
     const initialBoard = new Board(-1, [[]], defaultPosition, defaultPosition);
-    const boardsObject = makeBoards([initialBoard]);
+    const boardsObject = makeBoardsObject([initialBoard]);
     return new GameState(boardsObject);
 };
 
 export default {
-    range, makeError, errorHandler, assertUnreachable, abyss, makeNewGameState, makeBoards
+    range, makeError, errorHandler, assertUnreachable, abyss, makeNewGameState, makeBoardsObject
 };
