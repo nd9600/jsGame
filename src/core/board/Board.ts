@@ -24,7 +24,7 @@ export default class Board {
         this.boardSolved = R.equals(this.characterPosition, this.endPoint);
     }
 
-    public getBoard = () => this.boardData;
+    public getBoardData = () => this.boardData;
 
     public boardAsString = (separator: string = "\n"): string => {
         const rowsJoined = R.map(R.join(" ", ), this.boardData);

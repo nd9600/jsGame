@@ -33,12 +33,14 @@ describe("BoardMovementUp", () => {
             x: 0,
             y: 0
         };
-        const movementEvent = new SuccessfulMovementEvent(R.values(gameState.boards)[0].id, expectedCharacterPosition);
+        const board = R.values(gameState.boards)[0];
+        const movementEvent = new SuccessfulMovementEvent(board.id, expectedCharacterPosition);
         gameState = movementEvent.handle(gameState);
         
-        expect(R.values(gameState.boards)[0].characterPosition).toEqual(expectedCharacterPosition);
-        expect(R.values(gameState.boards)[0].getPosition(expectedCharacterPosition)).toEqual(Place.Character);
-        expect(R.values(gameState.boards)[0].getPosition(characterPosition)).toEqual(Place.Empty);
+        const newBoard = R.values(gameState.boards)[0];
+        expect(newBoard.characterPosition).toEqual(expectedCharacterPosition);
+        expect(newBoard.getPosition(expectedCharacterPosition)).toEqual(Place.Character);
+        expect(newBoard.getPosition(characterPosition)).toEqual(Place.Empty);
     });
 
     it("moves_up_from_one_below_top", () => {
@@ -187,7 +189,9 @@ describe("BoardMovementDown", () => {
             x: 0,
             y: 4
         };
-        const movementEvent = new SuccessfulMovementEvent(R.values(gameState.boards)[0].id, expectedCharacterPosition);
+        const board = R.values(gameState.boards)[0];
+        
+        const movementEvent = new SuccessfulMovementEvent(board.id, expectedCharacterPosition);
         gameState = movementEvent.handle(gameState);
         const newBoard = R.values(gameState.boards)[0];
         const newCharacterPosition = newBoard.characterPosition;

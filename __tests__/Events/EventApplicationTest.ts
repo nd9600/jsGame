@@ -32,7 +32,9 @@ describe("EventApplication", () => {
             [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
             [Place.Empty, Place.Empty, Place.Empty, Place.End]
         ];
-        expect(R.values(gameState.boards)[0].getBoard()).toEqual(wantedBoard);
+        
+        const board = R.values(gameState.boards)[0];
+        expect(board.getBoardData()).toEqual(wantedBoard);
     });
 
     it("applies_a_list_of_events", () => {
@@ -59,7 +61,7 @@ describe("EventApplication", () => {
         ];
         const finalBoard = R.values(finalState.boards)[0];
         expect(finalBoard.boardSolved).toEqual(true);
-        expect(finalBoard.getBoard()).toEqual(wantedBoard);
+        expect(finalBoard.getBoardData()).toEqual(wantedBoard);
     });
 
     it("applies_a_list_of_events_with_an_initial_state", () => {
@@ -91,6 +93,6 @@ describe("EventApplication", () => {
         ];
         const finalBoard = R.values(finalState.boards)[0];
         expect(finalBoard.boardSolved).toEqual(true);
-        expect(finalBoard.getBoard()).toEqual(wantedBoard);
+        expect(finalBoard.getBoardData()).toEqual(wantedBoard);
     });
 });
