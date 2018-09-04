@@ -2,7 +2,7 @@ import * as R from "ramda";
 import { Command, Direction } from "@/core/myTypes";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import movementFunctions from "@/core/board/movement";
+import DirectionEvent from "@/core/events/Command/DirectionEvent";
 
 export default class InputEvent extends Event {
     public type = "InputEvent";
@@ -15,19 +15,19 @@ export default class InputEvent extends Event {
         Event.dispatch(this.types, this.type, this.data);
     }
 
-    public createEvent(command: Command, gameState: GameState): Event {
-        switch (command) {
+    public createEvent(): Event {
+        switch (this.data) {
             case (Command.MoveUp): {
-                return movementFunctions.getPositionToMoveInto(gameState, Direction.Up);
+                return new DirectionEvent(Direction.Up);
             }
             case (Command.MoveDown): {
-                return movementFunctions.getPositionToMoveInto(gameState, Direction.Down);
+                return new DirectionEvent(Direction.Down);
             }
             case (Command.MoveLeft): {
-                return movementFunctions.getPositionToMoveInto(gameState, Direction.Left);
+                return new DirectionEvent(Direction.Left);
             }
             case (Command.MoveRight): {
-                return movementFunctions.getPositionToMoveInto(gameState, Direction.Right);
+                return new DirectionEvent(Direction.Right);
             }
             default: {
                 return new Event();
@@ -36,8 +36,7 @@ export default class InputEvent extends Event {
     }
 
     public handle(gameState: GameState) {
-        const command = this.data;
-        const event = this.createEvent(command, gameState);
+        const event = this.createEvent();
         return event.handle(gameState);
     }
 }
