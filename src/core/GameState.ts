@@ -1,9 +1,16 @@
+import { Boards } from "@/core/myTypes";
 import Board from "@/core/board/Board";
+import * as R from "ramda";
 
 export default class GameState {
-    public board: Board;
+    public boards: Boards;
 
-    constructor(board: Board) {
-        this.board = board;
+    constructor(boards: Boards) {
+        this.boards = boards;
+    }
+
+    public replaceBoard(newBoard: Board) {
+        const newBoards = R.assoc(newBoard.id, newBoard, this.boards);
+        return new GameState(newBoards);
     }
 }

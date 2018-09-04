@@ -1,10 +1,11 @@
-import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
-import usefulFunctions from "@/core/usefulFunctions";
-import { Position, twoNumbers, Place, DispatchedEvent, Command } from "@/core/myTypes";
-import TestSetup from "@/shell/TestSetup";
-import EventRunner from "@/core/events/EventRunner";
 import Board from "@/core/board/Board";
+import EventRunner from "@/core/events/EventRunner";
+import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import GameState from "@/core/GameState";
+import { Command, DispatchedEvent, Place, Position, twoNumbers } from "@/core/myTypes";
+import usefulFunctions from "@/core/usefulFunctions";
+import TestSetup from "@/shell/TestSetup";
+import * as R from "ramda";
 
 describe("EventApplication", () => {
     let size: twoNumbers;
@@ -31,7 +32,7 @@ describe("EventApplication", () => {
             [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
             [Place.Empty, Place.Empty, Place.Empty, Place.End]
         ];
-        expect(gameState.board.getBoard()).toEqual(wantedBoard);
+        expect(R.values(gameState.boards)[0].getBoard()).toEqual(wantedBoard);
     });
 
     it("applies_a_list_of_events", () => {
@@ -56,8 +57,9 @@ describe("EventApplication", () => {
             [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
             [Place.Empty, Place.Empty, Place.Empty, Place.Character]
         ];
-        // expect(finalState.board.boardSolved).toEqual(true);
-        expect(finalState.board.getBoard()).toEqual(wantedBoard);
+        const finalBoard = R.values(finalState.boards)[0];
+        expect(finalBoard.boardSolved).toEqual(true);
+        expect(finalBoard.getBoard()).toEqual(wantedBoard);
     });
 
     it("applies_a_list_of_events_with_an_initial_state", () => {
@@ -73,7 +75,7 @@ describe("EventApplication", () => {
             { x: 0, y: 0 }, 
             { x: 3, y: 3 }
         );
-        const initialState = new GameState(initialBoard);
+        const initialState = new GameState(usefulFunctions.makeBoards([initialBoard]));
         const listOfEventObjects: DispatchedEvent[] = [
             { type: "InputEvent", data: Command.MoveDown },
             { type: "InputEvent", data: Command.MoveRight }
@@ -87,7 +89,8 @@ describe("EventApplication", () => {
             [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
             [Place.Empty, Place.Empty, Place.Empty, Place.Character]
         ];
-        // expect(finalState.board.boardSolved).toEqual(true);
-        expect(finalState.board.getBoard()).toEqual(wantedBoard);
+        const finalBoard = R.values(finalState.boards)[0];
+        expect(finalBoard.boardSolved).toEqual(true);
+        expect(finalBoard.getBoard()).toEqual(wantedBoard);
     });
 });

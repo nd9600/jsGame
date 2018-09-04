@@ -1,3 +1,5 @@
+import Board from "@/core/board/Board";
+
 enum Place {
     Character = "c",
     Wall = "x",
@@ -34,9 +36,13 @@ interface InitialGameSetupData {
     endPoint: Position;
 }
 
+interface Boards {
+    [id: number]: Board;
+}
+
 interface IError {
     name: string;
     message: string;
 }
 
-export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, IError};
+export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, Boards, IError};

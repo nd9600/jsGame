@@ -1,6 +1,7 @@
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
-import { IError } from "@/core/myTypes";
+import { IError, Boards } from "@/core/myTypes";
+import * as R from "ramda";
 
 const range = (start: number, end: number): number[] => {
     const rangeStart = Math.min(start, end);
@@ -24,16 +25,21 @@ const assertUnreachable = (x: never): never => {
 
 const abyss = (...args: any[]) => { return; };
 
+const makeBoards = (boards: Board[]): Boards => {
+    const boardsObject = {};
+    R.forEach((board: Board) => {
+        R.assoc(board.id, board, boardsObject);
+    }, boards);
+    return boardsObject;
+};
+
 const makeNewGameState = (): GameState => {
     const defaultPosition = { x: 0, y: 0 };
-    return new GameState(new Board(
-        -1,
-        [[]],
-        defaultPosition,
-        defaultPosition
-    ));
+    const initialBoard = new Board(-1, [[]], defaultPosition, defaultPosition);
+    const boardsObject = makeBoards([initialBoard]);
+    return new GameState(boardsObject);
 };
 
 export default {
-    range, makeError, errorHandler, assertUnreachable, abyss, makeNewGameState
+    range, makeError, errorHandler, assertUnreachable, abyss, makeNewGameState, makeBoards
 };

@@ -1,8 +1,8 @@
-import * as R from "ramda";
-import { Place, Position, SuccessfulMovementEventData } from "@/core/myTypes";
+import Event from "@/core/events/Event";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
-import Event from "@/core/events/Event";
+import { Place, Position, SuccessfulMovementEventData } from "@/core/myTypes";
+import * as R from "ramda";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
     public type = "SuccessfulMovementEvent";
@@ -16,11 +16,11 @@ export default class SuccessfulMovementEvent extends MovementEvent {
     }
 
     public handle(state: GameState) {
-        const newBoard = state.board
-            .setPosition(state.board.characterPosition, Place.Empty)
+        const newBoard = state.boards[this.data.boardID]
+            .setPosition(state.boards[this.data.boardID].characterPosition, Place.Empty)
             .setPosition(this.data.newCharacterPosition, Place.Character)
             .setCharacterPosition(this.data.newCharacterPosition);
 
-        return new GameState(newBoard);
+        return state.replaceBoard(newBoard);
     }
 }

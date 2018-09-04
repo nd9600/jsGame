@@ -10,8 +10,6 @@ const KEYS_TO_COMMANDS: { [index: string]: Command } = {
     ArrowRight: Command.MoveRight
 };
 
-const COMMANDS_TO_KEYS: { [index: number]: string } = R.invertObj(KEYS_TO_COMMANDS);
-
 const handleUserInput = (initialGameState: GameState): void => {
     const boardDiv = document.getElementById("board")!;
     boardDiv.innerHTML = `<pre>${initialGameState.board.boardAsString()}</pre>`;
