@@ -1,5 +1,12 @@
 import Board from "@/core/board/Board";
 
+interface Boards {
+    [id: number]: Board;
+}
+
+type BoardType = Place[][];
+type twoNumbers = [number, number];
+
 enum Place {
     Character = "c",
     Wall = "x",
@@ -7,21 +14,13 @@ enum Place {
     End = "end"
 }
 
-type BoardType = Place[][];
-type twoNumbers = [number, number];
-
-enum Direction {Up, Down, Left, Right}
-enum Command {MoveUp, MoveDown, MoveLeft, MoveRight}
-
 interface Position {
     x: number;
     y: number;
 }
 
-interface SuccessfulMovementEventData {
-    boardID: number;
-    newCharacterPosition: Position;
-}
+enum Command {MoveUp, MoveDown, MoveLeft, MoveRight}
+enum Direction {Up, Down, Left, Right}
 
 interface DispatchedEvent {
     type: string;
@@ -36,8 +35,9 @@ interface InitialGameSetupData {
     endPoint: Position;
 }
 
-interface Boards {
-    [id: number]: Board;
+interface SuccessfulMovementEventData {
+    boardID: number;
+    newCharacterPosition: Position;
 }
 
 interface IError {
