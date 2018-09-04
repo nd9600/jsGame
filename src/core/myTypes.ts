@@ -19,6 +19,17 @@ interface Position {
     y: number;
 }
 
+enum Status {
+    NotStarted,
+    PlacingWalls,
+    Playing,
+    Finished
+}
+
+////////////////////
+///// 
+////////////////////
+
 enum Command {MoveUp, MoveDown, MoveLeft, MoveRight}
 enum Direction {Up, Down, Left, Right}
 
@@ -45,4 +56,4 @@ interface IError {
     message: string;
 }
 
-export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, Boards, IError};
+export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, Boards, Status, IError};

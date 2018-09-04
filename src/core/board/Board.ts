@@ -1,5 +1,5 @@
 import * as R from "ramda";
-import { Place, Position, BoardType } from "@/core/myTypes";
+import { Place, Position, BoardType, Status } from "@/core/myTypes";
 
 export default class Board {
     public static idCounter: number = 0;
@@ -11,6 +11,7 @@ export default class Board {
     public numberOfRows: number;
     public numberOfColumns: number;
 
+    public status: Status;
     public boardSolved: boolean; 
 
     constructor(id: number, board: BoardType, characterPosition: Position, endPoint: Position) {
