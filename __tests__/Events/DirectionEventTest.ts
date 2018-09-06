@@ -1,11 +1,9 @@
 import Board from "@/core/board/Board";
-import movementFunctions from "@/core/board/movement";
-import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
+import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import GameState from "@/core/GameState";
 import { BoardType, Direction, Place, Position } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
-import DirectionEvent from "@/core/events/Command/DirectionEvent";
 
 describe("DirectionEvent", () => {
     const endPoint = {

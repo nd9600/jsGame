@@ -1,5 +1,5 @@
+import { BoardType, Place, Position, twoNumbers } from "@/core/myTypes";
 import * as R from "ramda";
-import { Place, twoNumbers, BoardType, Position } from "@/core/myTypes";
 function makeInitialBoard(size: twoNumbers, startPoint: Position, endPoint: Position): BoardType {
     const initialRow = R.map(R.always(Place.Empty), [...Array(size[0])]);
     const initialBoard: BoardType = R.map(R.always(initialRow), [...Array(size[1])]);
