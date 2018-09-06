@@ -2,7 +2,7 @@ import * as R from "ramda";
 import Event from "@/core/events/Event";
 
 export default class MovementEvent extends Event {
-    public readonly type = "MovementEvent";
+    public type = "MovementEvent";
 
     constructor(data?: any) {
         super(data);

@@ -8,8 +8,8 @@ import Event from "@/core/events/Event";
 
 export default class FailedMovementEvent extends MovementEvent {
 
-    public readonly type = "FailedMovementEvent";
-    public readonly data: IError;
+    public type = "FailedMovementEvent";
+    public data: IError;
 
     constructor(error: IError) {
         super();

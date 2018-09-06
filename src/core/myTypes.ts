@@ -20,18 +20,28 @@ interface Position {
 }
 
 enum Status {
-    NotStarted,
-    PlacingWalls,
-    Playing,
-    Finished
+    NotStarted = "NotStarted",
+    PlacingWalls = "PlacingWalls",
+    Playing = "Playing",
+    Finished = "Finished"
 }
 
 ////////////////////
 ///// 
 ////////////////////
 
-enum Command {MoveUp, MoveDown, MoveLeft, MoveRight}
-enum Direction {Up, Down, Left, Right}
+enum Command {
+    MoveUp = "MoveUp",
+    MoveDown = "MoveDown",
+    MoveLeft = "MoveLeft",
+    MoveRight = "MoveRight"
+}
+enum Direction {
+    Up = "Up",
+    Down = "Down",
+    Left = "Left",
+    Right = "Right"
+}
 
 interface DispatchedEvent {
     type: string;
