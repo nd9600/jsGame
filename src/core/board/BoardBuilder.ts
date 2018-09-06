@@ -9,6 +9,7 @@ export default class BoardBuilder {
     public static mergeWithOptions(board: Board, boardOptions: BoardOptions): Board {
         return new Board(
             board.id,
+            boardOptions.player || board.player,
             boardOptions.boardData || board.boardData,
             boardOptions.characterPosition || board.characterPosition,
             boardOptions.endPoint || board.endPoint,

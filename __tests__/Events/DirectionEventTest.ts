@@ -18,8 +18,8 @@ describe("DirectionEvent", () => {
         const board2Data: BoardType = [ [Place.Empty], [Place.Empty], [Place.Empty], [Place.Character], [Place.Empty] ];
         const characterPosition2: Position = {x: 0, y: 3};
 
-        const board1 = new Board(Board.idCounter++, board1Data, characterPosition1, endPoint);
-        const board2 = new Board(Board.idCounter++, board2Data, characterPosition2, endPoint);
+        const board1 = new Board(Board.idCounter++, "", board1Data, characterPosition1, endPoint);
+        const board2 = new Board(Board.idCounter++, "", board2Data, characterPosition2, endPoint);
         let gameState = new GameState (
             usefulFunctions.makeBoardsObject([board1, board2])
         );

@@ -20,7 +20,8 @@ export default class InitialSetupEvent extends Event {
     public handle(gameState: GameState): GameState {
         const initialBoardData = boardFunctions.makeInitialBoard(this.data.size, this.data.startPoint, this.data.endPoint);
         const initialBoard = new Board(
-            Board.idCounter++, 
+            Board.idCounter++,
+            this.data.initialPlayerName, 
             initialBoardData, 
             this.data.startPoint, 
             this.data.endPoint

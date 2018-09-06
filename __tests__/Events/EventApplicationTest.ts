@@ -42,6 +42,7 @@ describe("EventApplication", () => {
             {
                 type: "InitialSetupEvent",
                 data: {
+                    initialPlayerName: "x",
                     size: [4, 4],
                     startPoint: { x: 0, y: 0 },
                     endPoint: { x: 3, y: 3 }
@@ -73,6 +74,7 @@ describe("EventApplication", () => {
         ];
         const initialBoard = new Board(
             Board.idCounter++, 
+            "",
             initialBoardData, 
             { x: 0, y: 0 }, 
             { x: 3, y: 3 }

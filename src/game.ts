@@ -4,7 +4,6 @@ import usefulFunctions from "@/core/usefulFunctions";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import UserInput from "@/shell/interaction/UserInput";
-import * as R from "ramda";
 
 
 window.eventBus = new EventBus();
@@ -16,9 +15,9 @@ const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
 window.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "InputEvent"], eventLogger);
 
 const setup = new DefaultGameSetup();
-const [size, startPoint, endPoint] = [setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
+const [initialPlayerName, size, startPoint, endPoint] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
 
-const initialGameSetupData = {size, startPoint, endPoint};
+const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint};
 const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
 const initialGameState = initialSetupEvent.handle(usefulFunctions.makeNewGameState());
 // console.log(initialGameState.boards);

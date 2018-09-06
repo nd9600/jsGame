@@ -12,6 +12,7 @@ export default class Board {
 
     constructor(
         public readonly id: number,
+        public readonly player: string,
         public readonly boardData: BoardType, 
         public readonly characterPosition: Position, 
         public readonly endPoint: Position,

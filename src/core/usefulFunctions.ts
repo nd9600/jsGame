@@ -35,7 +35,7 @@ const makeBoardsObject = (boards: Board[]): Boards => {
 
 const makeNewGameState = (): GameState => {
     const defaultPosition = { x: 0, y: 0 };
-    const initialBoard = new Board(-1, [[]], defaultPosition, defaultPosition);
+    const initialBoard = new Board(-1, "", [[]], defaultPosition, defaultPosition);
     const boardsObject = makeBoardsObject([initialBoard]);
     return new GameState(boardsObject);
 };

@@ -1,13 +1,26 @@
 import Board from "@/core/board/Board";
 
+////////////////////
+///// gameState
+////////////////////
+
+interface Players {
+    [id: number]: string;
+}
+
 interface Boards {
     [id: number]: Board;
 }
+
+////////////////////
+///// board
+////////////////////
 
 /**
  * A list of possible options that can be used to make a new board from an existing one
  */
 interface BoardOptions {
+    player?: string;
     boardData?: BoardType;
     characterPosition?: Position;
     endPoint?: Position;
@@ -37,7 +50,7 @@ enum Status {
 }
 
 ////////////////////
-///// 
+///// interaction
 ////////////////////
 
 enum Command {
@@ -61,6 +74,7 @@ interface DispatchedEvent {
 type EventCallback = (dispatchedEvent: DispatchedEvent) => void;
 
 interface InitialGameSetupData {
+    initialPlayerName: string;
     size: twoNumbers;
     startPoint: Position;
     endPoint: Position;
@@ -76,4 +90,4 @@ interface IError {
     message: string;
 }
 
-export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, Boards, Status, BoardOptions, IError};
+export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, Boards, Status, BoardOptions, Players,  IError};

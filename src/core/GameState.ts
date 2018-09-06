@@ -1,12 +1,15 @@
-import { Boards, Status } from "@/core/myTypes";
+import { Boards, Status, Players } from "@/core/myTypes";
 import Board from "@/core/board/Board";
 import * as R from "ramda";
 
 export default class GameState {
 
     public readonly status: Status;
+    public readonly players: Players;
 
     constructor(public readonly boards: Boards) {
+        this.players = R.pluck("player", R.values(boards));
+        
         const statuses = R.pluck("status", R.values(boards));
 
         if (R.contains(Status.NotStarted, statuses)) {

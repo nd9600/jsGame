@@ -1,9 +1,11 @@
-import {SetupInterface} from "@/shell/SetupInterface";
-import {twoNumbers, Position, Place} from "@/core/myTypes";
-import GameState from "@/core/GameState";
-import Board from "@/core/board/Board";
+import { Position, twoNumbers } from "@/core/myTypes";
+import { SetupInterface } from "@/shell/SetupInterface";
 
 export default class DefaultGameSetup implements SetupInterface {
+    public getInitialPlayerName(): string {
+        return "";
+    }
+
     public getSize(): twoNumbers {
         return [9, 9];
     }
