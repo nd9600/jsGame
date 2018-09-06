@@ -34,7 +34,7 @@ describe("EventApplication", () => {
         ];
         
         const board = R.values(gameState.boards)[0];
-        expect(board.getBoardData()).toEqual(wantedBoard);
+        expect(board.boardData).toEqual(wantedBoard);
     });
 
     it("applies_a_list_of_events", () => {
@@ -61,7 +61,7 @@ describe("EventApplication", () => {
         ];
         const finalBoard = R.values(finalState.boards)[0];
         expect(finalBoard.boardSolved).toEqual(true);
-        expect(finalBoard.getBoardData()).toEqual(wantedBoard);
+        expect(finalBoard.boardData).toEqual(wantedBoard);
     });
 
     it("applies_a_list_of_events_with_an_initial_state", () => {
@@ -93,6 +93,6 @@ describe("EventApplication", () => {
         ];
         const finalBoard = R.values(finalState.boards)[0];
         expect(finalBoard.boardSolved).toEqual(true);
-        expect(finalBoard.getBoardData()).toEqual(wantedBoard);
+        expect(finalBoard.boardData).toEqual(wantedBoard);
     });
 });

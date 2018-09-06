@@ -7,8 +7,8 @@ import CommandEvent from "@/core/events/Command/CommandEvent";
 import EventRunner from "@/core/events/EventRunner";
 
 export default class DirectionEvent extends CommandEvent {
-    public type = "DirectionEvent";
-    public data: Direction;
+    public readonly type = "DirectionEvent";
+    public readonly data: Direction;
 
     constructor(direction: Direction) {
         super(direction);

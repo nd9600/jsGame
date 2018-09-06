@@ -2,7 +2,7 @@ import * as R from "ramda";
 import Event from "@/core/events/Event";
 
 export default class CommandEvent extends Event {
-    public type = "CommandEvent";
+    public readonly type = "CommandEvent";
 
     constructor(data?: any) {
         super(data);

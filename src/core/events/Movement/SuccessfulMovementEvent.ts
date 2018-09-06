@@ -5,8 +5,8 @@ import { Place, Position, SuccessfulMovementEventData } from "@/core/myTypes";
 import * as R from "ramda";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
-    public type = "SuccessfulMovementEvent";
-    public data: SuccessfulMovementEventData;
+    public readonly type = "SuccessfulMovementEvent";
+    public readonly data: SuccessfulMovementEventData;
     
     constructor(boardID: number, newCharacterPosition: Position) {
         super();

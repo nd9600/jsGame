@@ -3,11 +3,8 @@ import Board from "@/core/board/Board";
 import * as R from "ramda";
 
 export default class GameState {
-    public boards: Boards;
 
-    constructor(boards: Boards) {
-        this.boards = boards;
-    }
+    constructor(public readonly boards: Boards) {}
 
     public replaceBoard(newBoard: Board) {
         const newBoards = R.assoc(newBoard.id, newBoard, this.boards);

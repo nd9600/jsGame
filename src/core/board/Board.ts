@@ -3,29 +3,23 @@ import { Place, Position, BoardType, Status } from "@/core/myTypes";
 
 export default class Board {
     public static idCounter: number = 0;
-    public id: number;
-    private boardData: BoardType;
 
-    public characterPosition: Position;
-    public endPoint: Position;
-    public numberOfRows: number;
-    public numberOfColumns: number;
+    public readonly numberOfRows: number;
+    public readonly numberOfColumns: number;
 
-    public status: Status;
-    public boardSolved: boolean; 
+    public readonly status: Status;
+    public readonly boardSolved: boolean; 
 
-    constructor(id: number, board: BoardType, characterPosition: Position, endPoint: Position) {
-        this.id = id;
-        this.boardData = board;
-        this.characterPosition = characterPosition;
-        this.endPoint = endPoint;
-
+    constructor(
+        public readonly id: number,
+        public readonly boardData: BoardType, 
+        public readonly characterPosition: Position, 
+        public readonly endPoint: Position
+    ) {
         this.numberOfRows = this.boardData.length;
         this.numberOfColumns = R.nth(0, this.boardData)!.length;
         this.boardSolved = R.equals(this.characterPosition, this.endPoint);
     }
-
-    public getBoardData = () => this.boardData;
 
     public boardAsString = (separator: string = "\n"): string => {
         const rowsJoined = R.map(R.join(" ", ), this.boardData);

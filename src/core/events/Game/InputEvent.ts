@@ -5,8 +5,8 @@ import GameState from "@/core/GameState";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 
 export default class InputEvent extends Event {
-    public type = "InputEvent";
-    public data: Command;
+    public readonly type = "InputEvent";
+    public readonly data: Command;
 
     constructor(command: Command) {
         super();

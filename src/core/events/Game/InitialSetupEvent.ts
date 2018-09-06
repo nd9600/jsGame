@@ -7,8 +7,8 @@ import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 
 export default class InitialSetupEvent extends Event {
-    public type = "InitialSetupEvent";
-    public data: InitialGameSetupData;
+    public readonly type = "InitialSetupEvent";
+    public readonly data: InitialGameSetupData;
 
     constructor(initialGameSetupData: InitialGameSetupData) {
         super();
