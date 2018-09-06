@@ -4,6 +4,16 @@ interface Boards {
     [id: number]: Board;
 }
 
+/**
+ * A list of possible options that can be used to make a new board from an existing one
+ */
+interface BoardOptions {
+    boardData?: BoardType;
+    characterPosition?: Position;
+    endPoint?: Position;
+    status?: Status;
+}
+
 type BoardType = Place[][];
 type twoNumbers = [number, number];
 
@@ -66,4 +76,4 @@ interface IError {
     message: string;
 }
 
-export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, Boards, Status, IError};
+export {Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, Boards, Status, BoardOptions, IError};

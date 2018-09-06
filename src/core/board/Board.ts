@@ -1,5 +1,6 @@
+import { BoardType, Place, Position, Status } from "@/core/myTypes";
 import * as R from "ramda";
-import { Place, Position, BoardType, Status } from "@/core/myTypes";
+import BoardBuilder from "@/core/board/BoardBuilder";
 
 export default class Board {
     public static idCounter: number = 0;
@@ -26,7 +27,9 @@ export default class Board {
         return R.join(separator, rowsJoined);
     }
 
-    public setCharacterPosition = (newCharacterPosition: Position): Board => new Board(this.id, this.boardData, newCharacterPosition, this.endPoint, this.status);
+    public setCharacterPosition = (characterPosition: Position): Board => BoardBuilder.mergeWithOptions(this, {characterPosition});
+
+    public setStatus = (status: Status): Board => BoardBuilder.mergeWithOptions(this, {status});
     
     private uncurriedGetPosition = (position: Position): Place => {   
         const row = R.nth(position.y, this.boardData)!;
@@ -37,7 +40,7 @@ export default class Board {
         const row = R.nth(position.y, this.boardData)!;
         const newRow = R.update(position.x, newValue, row);
         const newBoard = R.update(position.y, newRow, this.boardData);
-        return new Board(this.id, newBoard, this.characterPosition, this.endPoint, this.status);
+        return BoardBuilder.mergeWithOptions(this, {boardData: newBoard});
     }
 
     public getPosition: R.CurriedFunction1<Position, Place> = R.curry( this.uncurriedGetPosition);
