@@ -8,10 +8,10 @@ export default class SuccessfulMovementEvent extends MovementEvent {
     public type = "SuccessfulMovementEvent";
     public data: SuccessfulMovementEventData;
     
-    constructor(boardID: number, newCharacterPosition: Position) {
+    constructor(successfulMovementEventData: SuccessfulMovementEventData) {
         super();
         this.types = R.append(this.type, this.types);
-        this.data = {boardID, newCharacterPosition};
+        this.data = successfulMovementEventData;
         Event.dispatch(this.types, this.type, this.data);
     }
 

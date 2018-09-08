@@ -34,7 +34,7 @@ describe("BoardMovementUp", () => {
             y: 0
         };
         const board = R.values(gameState.boards)[0];
-        const movementEvent = new SuccessfulMovementEvent(board.id, expectedCharacterPosition);
+        const movementEvent = new SuccessfulMovementEvent({boardID: board.id, newCharacterPosition: expectedCharacterPosition});
         gameState = movementEvent.handle(gameState);
         
         const newBoard = R.values(gameState.boards)[0];
@@ -186,7 +186,7 @@ describe("BoardMovementDown", () => {
         };
         const board = R.values(gameState.boards)[0];
         
-        const movementEvent = new SuccessfulMovementEvent(board.id, expectedCharacterPosition);
+        const movementEvent = new SuccessfulMovementEvent({boardID: board.id, newCharacterPosition: expectedCharacterPosition});
         gameState = movementEvent.handle(gameState);
         const newBoard = R.values(gameState.boards)[0];
         const newCharacterPosition = newBoard.characterPosition;

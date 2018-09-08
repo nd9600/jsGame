@@ -18,18 +18,18 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
         Place.Wall),
     positionsCouldMoveInto);
     
-    let positionToMoveInto: Position;
+    let newCharacterPosition: Position;
     if (firstWallInWayOfMovementIndex === 0) {
         return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "wall immediately beside"));
 
     // no wall was found, so we can move to the top of the board
     } else if (firstWallInWayOfMovementIndex === -1) {
-        positionToMoveInto = positionsCouldMoveInto[positionsCouldMoveInto.length - 1];
+        newCharacterPosition = positionsCouldMoveInto[positionsCouldMoveInto.length - 1];
     } else {
-        positionToMoveInto = positionsCouldMoveInto[firstWallInWayOfMovementIndex - 1];
+        newCharacterPosition = positionsCouldMoveInto[firstWallInWayOfMovementIndex - 1];
     }
 
-    return new SuccessfulMovementEvent(board.id, positionToMoveInto);
+    return new SuccessfulMovementEvent({boardID: board.id, newCharacterPosition});
 }
 
 /**

@@ -1,3 +1,7 @@
+import CommandEvent from "@/core/events/Command/CommandEvent";
+import DirectionEvent from "@/core/events/Command/DirectionEvent";
+import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
+import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
 import Event from "@/core/events/Event";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
@@ -8,8 +12,6 @@ import GameState from "@/core/GameState";
 import { DispatchedEvent } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
-import CommandEvent from "@/core/events/Command/CommandEvent";
-import DirectionEvent from "@/core/events/Command/DirectionEvent";
 
 export default class EventRunner {
     private static handleEvent = (gameState: GameState, event: Event): GameState => event.handle(gameState);
@@ -26,11 +28,15 @@ export default class EventRunner {
                 } case "MovementEvent": {
                     return new MovementEvent(dispatchedEvent.data);
                 } case "SuccessfulMovementEvent": {
-                    return new SuccessfulMovementEvent(dispatchedEvent.data.boardID, dispatchedEvent.data.newCharacterPosition);
+                    return new SuccessfulMovementEvent(dispatchedEvent.data);
                 } case "CommandEvent": {
                     return new CommandEvent(dispatchedEvent.data);
                 } case "DirectionEvent": {
                     return new DirectionEvent(dispatchedEvent.data);
+                } case "PlayerNameChangeEvent": {
+                    return new PlayerNameChangeEvent(dispatchedEvent.data);
+                } case "StatusChangeEvent": {
+                    return new StatusChangeEvent(dispatchedEvent.data);
                 } default: {
                     return new Event(dispatchedEvent.data);
                 }

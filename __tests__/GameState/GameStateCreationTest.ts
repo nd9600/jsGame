@@ -38,6 +38,8 @@ describe("GameStateCreation", () => {
         const board1 = new Board(Board.idCounter++, player1, [[]], pos, pos, Status.NotStarted);
         const board2 = new Board(Board.idCounter++, player2, [[]], pos, pos, Status.PlacingWalls);
         const gameState = new GameState(usefulFunctions.makeBoardsObject([board1, board2]));
+        console.log(gameState.players);
         expect(gameState.players).toEqual(players);
+        console.log(gameState.players);
     });
 });
