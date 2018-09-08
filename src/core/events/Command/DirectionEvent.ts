@@ -17,6 +17,10 @@ export default class DirectionEvent extends CommandEvent {
         Event.dispatch(this.types, this.type, this.data);
     }
 
+    /**
+     * getPositionToMoveInto() returns multiple events, so we need to run them with the EventRunner here
+     * @param gameState 
+     */
     public handle(gameState: GameState): GameState {
         const movementEvents = movementFunctions.getPositionToMoveInto(gameState, this.data);
         return EventRunner.runEvents(movementEvents, gameState);

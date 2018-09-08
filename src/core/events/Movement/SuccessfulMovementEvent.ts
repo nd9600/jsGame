@@ -15,12 +15,12 @@ export default class SuccessfulMovementEvent extends MovementEvent {
         Event.dispatch(this.types, this.type, this.data);
     }
 
-    public handle(state: GameState) {
-        const newBoard = state.boards[this.data.boardID]
-            .setPosition(state.boards[this.data.boardID].characterPosition, Place.Empty)
+    public handle(gameState: GameState) {
+        const newBoard = gameState.boards[this.data.boardID]
+            .setPosition(gameState.boards[this.data.boardID].characterPosition, Place.Empty)
             .setPosition(this.data.newCharacterPosition, Place.Character)
             .setCharacterPosition(this.data.newCharacterPosition);
 
-        return state.replaceBoard(newBoard);
+        return gameState.replaceBoard(newBoard);
     }
 }

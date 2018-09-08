@@ -18,8 +18,8 @@ export default class FailedMovementEvent extends MovementEvent {
         Event.dispatch(this.types, this.type, this.data);
     }
 
-public handle(state: GameState): GameState {
+public handle(gameState: GameState): GameState {
     usefulFunctions.errorHandler(this.data);
-    return super.handle(state);
+    return super.handle(gameState);
 }
 }

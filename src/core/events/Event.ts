@@ -1,6 +1,8 @@
-import * as R from "ramda";
 import GameState from "@/core/GameState";
 
+/**
+ * Only the subclasses that aren't extended dispatch to the EventBus - e.g. SuccessfulMovementEvents do, MovementEvents don't, and Events don't
+ */
 export default class Event {
     public type = "Event";
     public types: string[] = [this.type];
@@ -10,8 +12,8 @@ export default class Event {
         this.data = data;
     }
 
-    public handle(state: GameState): GameState {
-        return state;
+    public handle(gameState: GameState): GameState {
+        return gameState;
     }
 
     public static dispatch(types: string[], originalEventType: string, data?: any): void {

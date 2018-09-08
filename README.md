@@ -68,7 +68,7 @@ When an [Event](#event) is fired, it's sent to any listeners that have been [add
 
 An Event can be fired to multiple listeners at the same time, and one listener can listen to multiple types of Events. 
 
-An Event is fired all the way up the chain - a SuccessfulMovementEvent is fired as aSuccessfulMovementEvent, a MovementEvent, and as the base Event.
+An Event is fired all the way up the chain - a SuccessfulMovementEvent is fired as a SuccessfulMovementEvent, a MovementEvent, and as the base Event. Because of this, only the subclasses that aren't extended dispatch to the EventBus - e.g. SuccessfulMovementEvents do, MovementEvents don't, and Events don't.
 
 ## Testing
 Because of the game's [architecture](#architecture), testing it is [really really easy](https://github.com/nd9600/jsGame/blob/master/__tests__/Board/BoardMovementTest.ts#L42). All I have to do is create an initial [GameState](https://github.com/nd9600/jsGame/blob/master/src/core/GameState.ts), call some function in the Core that returns an [Event](#event), and assert something about that Event's data. Nothing needs to be mocked or spied on.

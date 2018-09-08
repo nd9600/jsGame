@@ -8,9 +8,11 @@ import GameState from "@/core/GameState";
 import { DispatchedEvent } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
+import CommandEvent from "@/core/events/Command/CommandEvent";
+import DirectionEvent from "@/core/events/Command/DirectionEvent";
 
 export default class EventRunner {
-    private static handleEvent = (state: GameState, event: Event): GameState => event.handle(state);
+    private static handleEvent = (gameState: GameState, event: Event): GameState => event.handle(gameState);
 
     public static makeListOfEvents = (listOfEventObjects: DispatchedEvent[]): Event[] => {
         const makeEventFromDispatchedEvent = (dispatchedEvent: DispatchedEvent): Event => {
@@ -25,6 +27,10 @@ export default class EventRunner {
                     return new MovementEvent(dispatchedEvent.data);
                 } case "SuccessfulMovementEvent": {
                     return new SuccessfulMovementEvent(dispatchedEvent.data.boardID, dispatchedEvent.data.newCharacterPosition);
+                } case "CommandEvent": {
+                    return new CommandEvent(dispatchedEvent.data);
+                } case "DirectionEvent": {
+                    return new DirectionEvent(dispatchedEvent.data);
                 } default: {
                     return new Event(dispatchedEvent.data);
                 }

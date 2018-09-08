@@ -67,7 +67,7 @@ describe("EventApplication", () => {
         expect(finalBoard.boardData).toEqual(wantedBoard);
     });
 
-    it("applies_a_list_of_events_with_an_initial_state", () => {
+    it("applies_a_list_of_events_with_an_initial_gameState", () => {
         const initialBoardData = [
             [Place.Character, Place.Empty, Place.Empty, Place.Empty],
             [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
