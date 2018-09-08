@@ -33,7 +33,10 @@ describe("GameStateCreation", () => {
     it("creates_players_object", () => {
         const player1 = "abc";
         const player2 = "def";
-        const players = [player1, player2];
+        const players = {
+            0: player1, 
+            1: player2
+        };
 
         const board1 = new Board(Board.idCounter++, player1, [[]], pos, pos, Status.NotStarted);
         const board2 = new Board(Board.idCounter++, player2, [[]], pos, pos, Status.PlacingWalls);

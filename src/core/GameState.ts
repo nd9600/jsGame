@@ -8,7 +8,8 @@ export default class GameState {
     public readonly players: Players;
 
     constructor(public readonly boards: Boards) {
-        this.players = R.pluck("player", R.values(boards));
+        const playersArray: string[] = R.pluck("player", R.values(boards));
+        this.players = R.zipObj(R.range(0, R.length(playersArray)), playersArray);
         
         const statuses = R.pluck("status", R.values(boards));
 

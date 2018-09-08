@@ -1,15 +1,15 @@
-import EventRunner from "@/core/events/EventRunner";
-import { Command, DispatchedEvent, Direction, Status } from "@/core/myTypes";
+import CommandEvent from "@/core/events/Command/CommandEvent";
+import DirectionEvent from "@/core/events/Command/DirectionEvent";
+import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
+import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
 import Event from "@/core/events/Event";
+import EventRunner from "@/core/events/EventRunner";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
-import CommandEvent from "@/core/events/Command/CommandEvent";
-import DirectionEvent from "@/core/events/Command/DirectionEvent";
-import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
-import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
+import { Command, Direction, DispatchedEvent, Status } from "@/core/myTypes";
 
 describe("EventApplication", () => {
 
