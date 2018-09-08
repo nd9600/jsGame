@@ -2,12 +2,12 @@ import Board from "@/core/board/Board";
 import boardFunctions from "@/core/board/boardFunctions";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import { InitialGameSetupData, Status } from "@/core/myTypes";
+import { DispatchedEventNameTypes, InitialGameSetupData } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 
 export default class InitialSetupEvent extends Event {
-    public type = "InitialSetupEvent";
+    public type: DispatchedEventNameTypes = "InitialSetupEvent";
     public data: InitialGameSetupData;
 
     constructor(initialGameSetupData: InitialGameSetupData) {

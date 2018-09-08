@@ -1,11 +1,11 @@
 import Event from "@/core/events/Event";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
-import { Place, Position, SuccessfulMovementEventData } from "@/core/myTypes";
+import { DispatchedEventNameTypes, Place, SuccessfulMovementEventData } from "@/core/myTypes";
 import * as R from "ramda";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
-    public type = "SuccessfulMovementEvent";
+    public type: DispatchedEventNameTypes = "SuccessfulMovementEvent";
     public data: SuccessfulMovementEventData;
     
     constructor(successfulMovementEventData: SuccessfulMovementEventData) {

@@ -1,13 +1,13 @@
-import * as R from "ramda";
-import Event from "@/core/events/Event";
-import { Direction } from "@/core/myTypes";
-import GameState from "@/core/GameState";
 import movementFunctions from "@/core/board/movement";
 import CommandEvent from "@/core/events/Command/CommandEvent";
+import Event from "@/core/events/Event";
 import EventRunner from "@/core/events/EventRunner";
+import GameState from "@/core/GameState";
+import { Direction, DispatchedEventNameTypes } from "@/core/myTypes";
+import * as R from "ramda";
 
 export default class DirectionEvent extends CommandEvent {
-    public type = "DirectionEvent";
+    public type: DispatchedEventNameTypes = "DirectionEvent";
     public data: Direction;
 
     constructor(direction: Direction) {

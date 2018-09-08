@@ -1,14 +1,13 @@
-import * as R from "ramda";
-
-import usefulFunctions from "@/core/usefulFunctions";
-import { IError } from "@/core/myTypes";
+import Event from "@/core/events/Event";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
-import Event from "@/core/events/Event";
+import { DispatchedEventNameTypes, IError } from "@/core/myTypes";
+import usefulFunctions from "@/core/usefulFunctions";
+import * as R from "ramda";
 
 export default class FailedMovementEvent extends MovementEvent {
 
-    public type = "FailedMovementEvent";
+    public type: DispatchedEventNameTypes = "FailedMovementEvent";
     public data: IError;
 
     constructor(error: IError) {

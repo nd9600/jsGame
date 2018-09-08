@@ -1,4 +1,4 @@
-import { DispatchedEvent, EventCallback } from "@/core/myTypes";
+import { DispatchedEvent, EventCallback, DispatchedEventNameTypes } from "@/core/myTypes";
 import * as R from "ramda";
 
 declare global {
@@ -75,21 +75,14 @@ export default class EventBus {
         return this.unCaughtEvents;
     }
 
-    public dispatchToAllListeners(types: string[], originalEventType: string, data?: any): void {
+    public dispatchToAllListeners(types: string[], originalEventType: DispatchedEventNameTypes, data?: any): void {
         if (window.eventBus) {
-            if (data !== undefined) {
-                R.forEach(
-                    (type: string) => {
-                        this.dispatch(type, {type: originalEventType, data});
-                    },
-                types);
-            } else {
-                R.forEach(
-                    (type: string) => {
-                       this.dispatch(type, {type: originalEventType});
-                    },
-                types);
-            }
+            // we need to cast originalEventType to the any-type so TS doesn't complain
+            R.forEach(
+                (type: string) => {
+                    this.dispatch(type, {type: originalEventType as any, data});
+                },
+            types);
         }
     }
 

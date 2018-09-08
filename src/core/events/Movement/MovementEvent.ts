@@ -1,8 +1,9 @@
-import * as R from "ramda";
 import Event from "@/core/events/Event";
+import { DispatchedEventNameTypes } from "@/core/myTypes";
+import * as R from "ramda";
 
 export default class MovementEvent extends Event {
-    public type = "MovementEvent";
+    public type: DispatchedEventNameTypes = "MovementEvent";
 
     constructor(data?: any) {
         super(data);

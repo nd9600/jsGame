@@ -2,11 +2,11 @@ import BoardBuilder from "@/core/board/BoardBuilder";
 import CommandEvent from "@/core/events/Command/CommandEvent";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import { PlayerNameChangeEventData } from "@/core/myTypes";
+import { DispatchedEventNameTypes, PlayerNameChangeEventData } from "@/core/myTypes";
 import * as R from "ramda";
 
 export default class PlayerNameChangeEvent extends CommandEvent {
-    public type = "PlayerNameChangeEvent";
+    public type: DispatchedEventNameTypes = "PlayerNameChangeEvent";
     public data: PlayerNameChangeEventData;
 
     constructor(playerNameChangeEventData: PlayerNameChangeEventData) {
