@@ -29,4 +29,15 @@ describe("GameStateCreation", () => {
         const gameState = new GameState(usefulFunctions.makeBoardsObject([board, board]));
         expect(gameState.status).toEqual(Status.Finished);
     });
+
+    it("creates_players_object", () => {
+        const player1 = "abc";
+        const player2 = "def";
+        const players = [player1, player2];
+
+        const board1 = new Board(Board.idCounter++, player1, [[]], pos, pos, Status.NotStarted);
+        const board2 = new Board(Board.idCounter++, player2, [[]], pos, pos, Status.PlacingWalls);
+        const gameState = new GameState(usefulFunctions.makeBoardsObject([board1, board2]));
+        expect(gameState.players).toEqual(players);
+    });
 });
