@@ -90,9 +90,14 @@ interface PlayerNameChangeEventData {
     newPlayerName: string;
 }
 
+interface StatusChangeEventData {
+    boardID: number;
+    newStatus: Status;
+}
+
 interface IError {
     name: string;
     message: string;
 }
 
-export { Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, PlayerNameChangeEventData, Boards, Status, BoardOptions, Players, IError };
+export { Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, EventCallback, InitialGameSetupData, PlayerNameChangeEventData, StatusChangeEventData, Boards, Status, BoardOptions, Players, IError };

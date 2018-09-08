@@ -2,23 +2,23 @@ import BoardBuilder from "@/core/board/BoardBuilder";
 import CommandEvent from "@/core/events/Command/CommandEvent";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import { PlayerNameChangeEventData } from "@/core/myTypes";
+import { StatusChangeEventData } from "@/core/myTypes";
 import * as R from "ramda";
 
-export default class PlayerNameChangeEvent extends CommandEvent {
-    public type = "PlayerNameChangeEvent";
-    public data: PlayerNameChangeEventData;
+export default class StatusChangeEvent extends CommandEvent {
+    public type = "StatusChangeEvent";
+    public data: StatusChangeEventData;
 
-    constructor(playerNameChangeEventData: PlayerNameChangeEventData) {
-        super(playerNameChangeEventData);
+    constructor(statusChangeEventData: StatusChangeEventData) {
+        super(statusChangeEventData);
         this.types = R.append(this.type, this.types);
-        this.data = playerNameChangeEventData;
+        this.data = statusChangeEventData;
         Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState): GameState {
         const oldBoard = gameState.boards[this.data.boardID];
-        const newBoard = BoardBuilder.mergeWithOptions(oldBoard, {player: this.data.newPlayerName});
+        const newBoard = BoardBuilder.mergeWithOptions(oldBoard, {status: this.data.newStatus});
         return gameState.replaceBoard(newBoard);
     }
 }
