@@ -6,7 +6,7 @@ import { DispatchedEventNameTypes } from "@/core/myTypes";
  */
 export default class Event {
     public type: DispatchedEventNameTypes = "Event";
-    public types: string[] = [this.type];
+    public types: DispatchedEventNameTypes[] = [this.type];
     public data?: any;
 
     constructor(data?: any) {
