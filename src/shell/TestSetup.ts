@@ -2,6 +2,9 @@ import { Position, twoNumbers } from "@/core/myTypes";
 import { SetupInterface } from "@/shell/SetupInterface";
 
 export default class TestSetup implements SetupInterface {
+    public getInitialPlayerName(): string {
+        return "";
+    }
     public getSize(): twoNumbers {
         return [4, 4];
     }

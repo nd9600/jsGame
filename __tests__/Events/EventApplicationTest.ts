@@ -11,9 +11,11 @@ describe("EventApplication", () => {
     let size: twoNumbers;
     let startPoint: Position;
     let endPoint: Position;
+    let initialPlayerName: string;
     beforeEach(() => {
         const setup = new TestSetup();
-        [size, startPoint, endPoint] = [
+        [initialPlayerName, size, startPoint, endPoint] = [
+            setup.getInitialPlayerName(),
             setup.getSize(),
             setup.getStartPoint(),
             setup.getEndPoint()
@@ -21,7 +23,7 @@ describe("EventApplication", () => {
     });
 
     it("creates_initial_game", () => {
-        const initialGameSetupData = { size, startPoint, endPoint };
+        const initialGameSetupData = { initialPlayerName, size, startPoint, endPoint };
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         const gameState = initialSetupEvent.handle(
             usefulFunctions.makeNewGameState()
