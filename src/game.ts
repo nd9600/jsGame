@@ -20,7 +20,4 @@ const [initialPlayerName, size, startPoint, endPoint] = [setup.getInitialPlayerN
 const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint};
 const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
 const initialGameState = initialSetupEvent.handle(usefulFunctions.makeNewGameState());
-// console.log(initialGameState.boards);
-// console.log(R.values(initialGameState.boards));
-// console.log(R.values(initialGameState.boards)[0]);
 UserInput.handleUserInput(initialGameState);

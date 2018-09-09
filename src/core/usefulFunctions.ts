@@ -25,13 +25,7 @@ const assertUnreachable = (x: never): never => {
 
 const abyss = (...args: any[]) => { return; };
 
-const makeBoardsObject = (boards: Board[]): Boards => {
-    let boardsObject = {};
-    R.forEach((board: Board) => {
-        boardsObject = R.assoc(board.id, board, boardsObject);
-    }, boards);
-    return boardsObject;
-};
+const makeBoardsObject = (boards: Board[]): Boards => R.indexBy((board: Board) => board.id, boards);
 
 const makeNewGameState = (): GameState => {
     const defaultPosition = { x: 0, y: 0 };
@@ -40,6 +34,8 @@ const makeNewGameState = (): GameState => {
     return new GameState(boardsObject);
 };
 
+const countNumberOf = <T>(element: T, list: T[]): number => R.filter(R.equals(element), list).length;
+
 export default {
-    range, makeError, errorHandler, assertUnreachable, abyss, makeNewGameState, makeBoardsObject
+    range, makeError, errorHandler, assertUnreachable, abyss, makeBoardsObject, makeNewGameState, countNumberOf
 };

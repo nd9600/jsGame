@@ -24,6 +24,8 @@ const handleUserInput = (initialGameState: GameState): void => {
 
             console.log(code);
             console.log(gameState);
+            console.log(R.values(gameState.boards));
+            console.log(R.values(gameState.boards)[0]);
             console.log("loggedEvents", window.loggedEvents);
             console.log("");
             boardDiv.innerHTML = `<pre>${board.boardAsString()}</pre>`;

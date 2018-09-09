@@ -1,6 +1,7 @@
 import { BoardType, Place, Position, Status } from "@/core/myTypes";
 import * as R from "ramda";
 import BoardBuilder from "@/core/board/BoardBuilder";
+import usefulFunctions from "@/core/usefulFunctions";
 
 export default class Board {
     public static idCounter: number = 0;
@@ -8,7 +9,11 @@ export default class Board {
     public readonly numberOfRows: number;
     public readonly numberOfColumns: number;
 
-    public readonly boardSolved: boolean; 
+    public readonly boardSolved: boolean;
+
+    public static MAX_NUMBER_OF_WALLS_FACTOR = 0.5;
+    public readonly maxNumberOfWalls: number;
+    public readonly currentNumberOfWalls: number;
 
     constructor(
         public readonly id: number,
@@ -21,6 +26,9 @@ export default class Board {
         this.numberOfRows = this.boardData.length;
         this.numberOfColumns = R.nth(0, this.boardData)!.length;
         this.boardSolved = R.equals(this.characterPosition, this.endPoint);
+
+        this.maxNumberOfWalls = Math.floor(this.numberOfRows * this.numberOfColumns * Board.MAX_NUMBER_OF_WALLS_FACTOR);
+        this.currentNumberOfWalls = usefulFunctions.countNumberOf(Place.Wall, R.flatten(this.boardData));
     }
 
     public boardAsString = (separator: string = "\n"): string => {
