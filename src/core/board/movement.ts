@@ -13,6 +13,10 @@ import * as R from "ramda";
  * @param board Board
  */
 function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[], board: Board): MovementEvent {
+    if (R.isEmpty(positionsCouldMoveInto)) {
+        return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "no positions to move in to"));
+    }
+
     const firstWallInWayOfMovementIndex = R.findIndex((possibleWallPosition) => R.equals(
         board.getPosition(possibleWallPosition),
         Place.Wall),

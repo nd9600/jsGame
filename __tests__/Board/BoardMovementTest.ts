@@ -288,3 +288,112 @@ describe("BoardMovementDown", () => {
     });
 });
 
+describe("BoardMovementLeft", () => {
+    const endPoint = {
+        x: 9001,
+        y: 9001
+    };
+
+    it("moves_left_from_right", () => {
+        const boardData: BoardType = [
+            [
+                Place.Empty,
+                Place.Empty,
+                Place.Empty,
+                Place.Empty,
+                Place.Character
+            ]
+        ];
+        const characterPosition: Position = {
+            x: 4,
+            y: 0
+        };
+
+        const board = new Board(Board.idCounter++, "", boardData, characterPosition, endPoint);         
+        const newCharacterPosition = movementFunctions.getPositionToMoveIntoForBoard(board, Direction.Left).data.newCharacterPosition;
+        const expectedCharacterPosition = {
+            x: 0,
+            y: 0
+        };
+        expect(newCharacterPosition).toEqual(expectedCharacterPosition);
+    });
+
+    it("moves_left_to_beside_wall", () => {
+        const boardData: BoardType = [
+            [
+                Place.Empty,
+                Place.Wall,
+                Place.Empty,
+                Place.Character,
+                Place.Empty
+            ]
+        ];
+        const characterPosition: Position = {
+            x: 3,
+            y: 0
+        };
+
+        const board = new Board(Board.idCounter++, "", boardData, characterPosition, endPoint);         
+        const newCharacterPosition = movementFunctions.getPositionToMoveIntoForBoard(board, Direction.Left).data.newCharacterPosition;
+        const expectedCharacterPosition = {
+            x: 2,
+            y: 0
+        };
+        expect(newCharacterPosition).toEqual(expectedCharacterPosition);
+    });
+});
+
+describe("BoardMovementRight", () => {
+    const endPoint = {
+        x: 9001,
+        y: 9001
+    };
+
+    it("moves_right_from_left", () => {
+        const boardData: BoardType = [
+            [
+                Place.Character,
+                Place.Empty,
+                Place.Empty,
+                Place.Empty,
+                Place.Empty
+            ]
+        ];
+        const characterPosition: Position = {
+            x: 0,
+            y: 0
+        };
+
+        const board = new Board(Board.idCounter++, "", boardData, characterPosition, endPoint);         
+        const newCharacterPosition = movementFunctions.getPositionToMoveIntoForBoard(board, Direction.Right).data.newCharacterPosition;
+        const expectedCharacterPosition = {
+            x: 4,
+            y: 0
+        };
+        expect(newCharacterPosition).toEqual(expectedCharacterPosition);
+    });
+
+    it("moves_right_to_beside_wall", () => {
+        const boardData: BoardType = [
+            [
+                Place.Empty,
+                Place.Character,
+                Place.Empty,
+                Place.Wall,
+                Place.Empty
+            ]
+        ];
+        const characterPosition: Position = {
+            x: 1,
+            y: 0
+        };
+
+        const board = new Board(Board.idCounter++, "", boardData, characterPosition, endPoint);         
+        const newCharacterPosition = movementFunctions.getPositionToMoveIntoForBoard(board, Direction.Right).data.newCharacterPosition;
+        const expectedCharacterPosition = {
+            x: 2,
+            y: 0
+        };
+        expect(newCharacterPosition).toEqual(expectedCharacterPosition);
+    });
+});
