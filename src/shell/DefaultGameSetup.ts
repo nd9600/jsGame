@@ -7,7 +7,7 @@ export default class DefaultGameSetup implements SetupInterface {
     }
 
     public getSize(): twoNumbers {
-        return [9, 9];
+        return [4, 4];
     }
 
     public getStartPoint(): Position {
@@ -19,8 +19,8 @@ export default class DefaultGameSetup implements SetupInterface {
 
     public getEndPoint(): Position {
         return {
-            x: 8,
-            y: 8
+            x: 3,
+            y: 3
         };
     }
 }

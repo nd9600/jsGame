@@ -116,7 +116,12 @@ interface DispatchedStatusChangeEvent {
     data: StatusChangeEventData;
 }
 
-type DispatchedEvent = DispatchedGeneralEvent | DispatchedInitialSetupEvent | DispatchedInputEvent | DispatchedFailedMovementEvent | DispatchedMovementEvent | DispatchedSuccessfulMovementEventEvent | DispatchedCommandEvent | DispatchedDirectionEvent | DispatchedPlayerNameChangeEvent | DispatchedStatusChangeEvent;
+interface DispatchedToggleWallEvent {
+    type: "ToggleWallEvent";
+    data: ToggleWallEventData;
+}
+
+type DispatchedEvent = DispatchedGeneralEvent | DispatchedInitialSetupEvent | DispatchedInputEvent | DispatchedFailedMovementEvent | DispatchedMovementEvent | DispatchedSuccessfulMovementEventEvent | DispatchedCommandEvent | DispatchedDirectionEvent | DispatchedPlayerNameChangeEvent | DispatchedStatusChangeEvent | DispatchedToggleWallEvent;
 
 type DispatchedEventNameTypes = DispatchedEvent["type"];
 type DispatchedEventDataTypes = DispatchedEvent["data"];
@@ -145,9 +150,14 @@ interface StatusChangeEventData {
     newStatus: Status;
 }
 
+interface ToggleWallEventData {
+    boardID: number;
+    positionToToggle: Position;
+}
+
 interface IError {
     name: string;
     message: string;
 }
 
-export { Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, DispatchedEventNameTypes, DispatchedEventDataTypes, EventCallback, InitialGameSetupData, PlayerNameChangeEventData, StatusChangeEventData, Boards, Status, BoardOptions, Players, IError };
+export { Place, BoardType, twoNumbers, Direction, Command, Position, SuccessfulMovementEventData, DispatchedEvent, DispatchedEventNameTypes, DispatchedEventDataTypes, EventCallback, InitialGameSetupData, PlayerNameChangeEventData, StatusChangeEventData, ToggleWallEventData, Boards, Status, BoardOptions, Players, IError };
