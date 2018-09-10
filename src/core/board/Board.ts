@@ -39,6 +39,30 @@ export default class Board {
     public setCharacterPosition = (characterPosition: Position): Board => BoardBuilder.mergeWithOptions(this, {characterPosition});
 
     public setStatus = (status: Status): Board => BoardBuilder.mergeWithOptions(this, {status});
+
+    public toggleWallAtPosition = (positionToToggle: Position): Board => {
+
+        // you can only toggle somewhere if the board is the PlacingWalls state, and you're trying to toggle somewhere that's empty or already has a wall
+        if (this.status !== Status.PlacingWalls) {
+            return this;
+        }
+
+        const thingAtPosition = this.getPosition(positionToToggle);
+        if (thingAtPosition !== Place.Wall && thingAtPosition !== Place.Empty) {
+            return this;
+        }
+
+        if (thingAtPosition === Place.Wall) {
+            return this.setPosition(positionToToggle, Place.Empty);
+        }
+        
+        // position must be empty now, so we're placing a wall, so we need to check if we can
+        if (this.currentNumberOfWalls < this.maxNumberOfWalls) {
+            return this.setPosition(positionToToggle, Place.Wall);
+        }
+
+        return this;
+    }
     
     private uncurriedGetPosition = (position: Position): Place => {   
         const row = R.nth(position.y, this.boardData)!;
