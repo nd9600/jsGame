@@ -1,6 +1,7 @@
+import { Boards } from "@/core/@typings/GameStateTypes";
+import { IError } from "@/core/@typings/GeneralTypes";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
-import { IError, Boards, Status } from "@/core/myTypes";
 import * as R from "ramda";
 
 const range = (start: number, end: number): number[] => {

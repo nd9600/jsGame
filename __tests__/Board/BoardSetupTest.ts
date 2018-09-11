@@ -1,18 +1,15 @@
+import { Place, BoardPosition } from "@/core/@typings/BoardTypes";
 import boardFunctions from "@/core/board/boardFunctions";
-import {Place, BoardType, twoNumbers, Position} from "@/core/myTypes";
-import Board from "@/core/board/Board";
 
 describe("BoardSetup", () => {
-    // beforeEach(() => {
-    // });
 
     it("makes_initial_board", () => {
         const size: [number, number] = [10, 10];
-        const startPoint: Position = {
+        const startPoint: BoardPosition = {
             x: 0,
             y: 0
         };
-        const endPoint: Position = {
+        const endPoint: BoardPosition = {
             x: 9,
             y: 9
         };

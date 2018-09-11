@@ -1,7 +1,7 @@
-import { BoardType, Place, Position, Status } from "@/core/myTypes";
-import * as R from "ramda";
+import { BoardPosition, BoardType, Place, Status } from "@/core/@typings/BoardTypes";
 import BoardBuilder from "@/core/board/BoardBuilder";
 import usefulFunctions from "@/core/usefulFunctions";
+import * as R from "ramda";
 
 export default class Board {
     public static idCounter: number = 0;
@@ -19,8 +19,8 @@ export default class Board {
         public readonly id: number,
         public readonly player: string,
         public readonly boardData: BoardType, 
-        public readonly characterPosition: Position, 
-        public readonly endPoint: Position,
+        public readonly characterPosition: BoardPosition, 
+        public readonly endPoint: BoardPosition,
         public readonly status: Status = Status.NotStarted
     ) {
         this.numberOfRows = this.boardData.length;
@@ -36,11 +36,11 @@ export default class Board {
         return R.join(separator, rowsJoined);
     }
 
-    public setCharacterPosition = (characterPosition: Position): Board => BoardBuilder.mergeWithOptions(this, {characterPosition});
+    public setCharacterPosition = (characterPosition: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {characterPosition});
 
     public setStatus = (status: Status): Board => BoardBuilder.mergeWithOptions(this, {status});
 
-    public toggleWallAtPosition = (positionToToggle: Position): Board => {
+    public toggleWallAtPosition = (positionToToggle: BoardPosition): Board => {
 
         // you can only toggle somewhere if the board is the PlacingWalls state, and you're trying to toggle somewhere that's empty or already has a wall
         if (this.status !== Status.PlacingWalls) {
@@ -64,19 +64,19 @@ export default class Board {
         return this;
     }
     
-    private uncurriedGetPosition = (position: Position): Place => {   
+    private uncurriedGetPosition = (position: BoardPosition): Place => {   
         const row = R.nth(position.y, this.boardData)!;
         return R.nth(position.x, row)!;
     }
     
-    private uncurriedSetPosition = (position: Position, newValue: Place): Board => {    
+    private uncurriedSetPosition = (position: BoardPosition, newValue: Place): Board => {    
         const row = R.nth(position.y, this.boardData)!;
         const newRow = R.update(position.x, newValue, row);
         const newBoard = R.update(position.y, newRow, this.boardData);
         return BoardBuilder.mergeWithOptions(this, {boardData: newBoard});
     }
 
-    public getPosition: R.CurriedFunction1<Position, Place> = R.curry( this.uncurriedGetPosition);
+    public getPosition: R.CurriedFunction1<BoardPosition, Place> = R.curry( this.uncurriedGetPosition);
 
-    public setPosition: R.CurriedFunction2<Position, Place, Board> = R.curry(this.uncurriedSetPosition);
+    public setPosition: R.CurriedFunction2<BoardPosition, Place, Board> = R.curry(this.uncurriedSetPosition);
 }

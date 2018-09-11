@@ -1,3 +1,4 @@
+import { DispatchedEvent } from "@/core/@typings/EventTypes";
 import CommandEvent from "@/core/events/Command/CommandEvent";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
@@ -9,7 +10,6 @@ import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import GameState from "@/core/GameState";
-import { DispatchedEvent } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 

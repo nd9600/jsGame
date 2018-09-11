@@ -1,4 +1,4 @@
-import { BoardOptions } from "@/core/myTypes";
+import { BoardOptions } from "@/core/@typings/BoardTypes";
 import Board from "./Board";
 
 /**

@@ -1,7 +1,7 @@
+import { Status } from "@/core/@typings/BoardTypes";
 import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
-import { Status } from "@/core/myTypes";
 
 describe("StatusChangeEvent", () => {
 

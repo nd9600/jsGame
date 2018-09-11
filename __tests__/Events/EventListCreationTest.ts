@@ -1,3 +1,6 @@
+import { Status } from "@/core/@typings/BoardTypes";
+import { Command, Direction } from "@/core/@typings/EventDataTypes";
+import { DispatchedEvent } from "@/core/@typings/EventTypes";
 import CommandEvent from "@/core/events/Command/CommandEvent";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
@@ -9,7 +12,6 @@ import InputEvent from "@/core/events/Game/InputEvent";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
-import { Command, Direction, DispatchedEvent, Status } from "@/core/myTypes";
 
 describe("EventApplication", () => {
 

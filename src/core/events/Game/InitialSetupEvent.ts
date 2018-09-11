@@ -1,8 +1,9 @@
+import { InitialGameSetupData } from "@/core/@typings/EventDataTypes";
+import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import Board from "@/core/board/Board";
 import boardFunctions from "@/core/board/boardFunctions";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import { DispatchedEventNameTypes, InitialGameSetupData } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 

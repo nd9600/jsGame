@@ -1,5 +1,5 @@
+import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import GameState from "@/core/GameState";
-import { DispatchedEventNameTypes } from "@/core/myTypes";
 
 /**
  * Only the subclasses that aren't extended dispatch to the EventBus - e.g. SuccessfulMovementEvents do, MovementEvents don't, and Events don't

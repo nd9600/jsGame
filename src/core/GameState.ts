@@ -1,4 +1,5 @@
-import { Boards, Status, Players } from "@/core/myTypes";
+import { Status } from "@/core/@typings/BoardTypes";
+import { Boards, Players } from "@/core/@typings/GameStateTypes";
 import Board from "@/core/board/Board";
 import * as R from "ramda";
 

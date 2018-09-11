@@ -1,7 +1,8 @@
+import { Command, Direction } from "@/core/@typings/EventDataTypes";
+import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import { Command, Direction, DispatchedEventNameTypes } from "@/core/myTypes";
 import * as R from "ramda";
 
 export default class InputEvent extends Event {

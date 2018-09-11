@@ -1,4 +1,4 @@
-import { Position, twoNumbers } from "@/core/myTypes";
+import { twoNumbers, BoardPosition } from "@/core/@typings/BoardTypes";
 import { SetupInterface } from "@/shell/SetupInterface";
 
 export default class DefaultGameSetup implements SetupInterface {
@@ -10,14 +10,14 @@ export default class DefaultGameSetup implements SetupInterface {
         return [4, 4];
     }
 
-    public getStartPoint(): Position {
+    public getStartPoint(): BoardPosition {
         return {
             x: 0,
             y: 0
         };
     }
 
-    public getEndPoint(): Position {
+    public getEndPoint(): BoardPosition {
         return {
             x: 3,
             y: 3

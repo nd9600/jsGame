@@ -1,4 +1,4 @@
-import {Position, twoNumbers} from "@/core/myTypes";
+import { twoNumbers, BoardPosition } from "@/core/@typings/BoardTypes";
 
 export interface SetupInterface {
 
@@ -11,6 +11,6 @@ export interface SetupInterface {
      */
     getSize(): twoNumbers;
 
-    getStartPoint(): Position;
-    getEndPoint(): Position;
+    getStartPoint(): BoardPosition;
+    getEndPoint(): BoardPosition;
 }

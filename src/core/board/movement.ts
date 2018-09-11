@@ -1,18 +1,19 @@
+import { BoardPosition, Place } from "@/core/@typings/BoardTypes";
+import { Direction } from "@/core/@typings/EventDataTypes";
 import Board from "@/core/board/Board";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import GameState from "@/core/GameState";
-import { Direction, Place, Position } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 
 /**
  * Returns the position that could be moved in to (if any), given a list of possible positions
- * @param positionsCouldMoveInto Position[] - a list of the possible squares that could be moved in to
+ * @param positionsCouldMoveInto BoardPosition[] - a list of the possible squares that could be moved in to
  * @param board Board
  */
-function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[], board: Board): MovementEvent {
+function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: BoardPosition[], board: Board): MovementEvent {
     if (R.isEmpty(positionsCouldMoveInto)) {
         return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "no positions to move in to"));
     }
@@ -22,7 +23,7 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
         Place.Wall),
     positionsCouldMoveInto);
     
-    let newCharacterPosition: Position;
+    let newCharacterPosition: BoardPosition;
     if (firstWallInWayOfMovementIndex === 0) {
         return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "wall immediately beside"));
 
@@ -40,7 +41,7 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: Position[
  * Finds last square to move to, makes a list of squares from fromPosition to that square, and finds the last empty square in that list
  * @param board Board
  * @param direction Direction
- * @param fromPosition Position
+ * @param fromPosition BoardPosition
  */
 function getPositionToMoveInto(gameState: GameState, direction: Direction): MovementEvent[] {
     const boards = R.values(gameState.boards);
@@ -53,7 +54,7 @@ function getPositionToMoveInto(gameState: GameState, direction: Direction): Move
  * Finds last square to move to, makes a list of squares from fromPosition to that square, and finds the last empty square in that list
  * @param board Board
  * @param direction Direction
- * @param fromPosition Position
+ * @param fromPosition BoardPosition
  */
 function getPositionToMoveIntoForBoard(board: Board, direction: Direction): MovementEvent {
     const fromPosition = board.characterPosition;
@@ -66,7 +67,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
             // range that decrements doesn't include the starting number i.e. the position, which is what we want
             const yRange = usefulFunctions.range(fromPosition.y, 0);
             const squaresCouldMoveInto = R.map(
-                (y): Position => R.assoc("y", y, fromPosition),
+                (y): BoardPosition => R.assoc("y", y, fromPosition),
                 yRange
             );
 
@@ -79,7 +80,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
             // range that increments does include the starting number i.e. the position, which isn't what we want, so we have to increment by 1 to get rid of it
             const yRange = usefulFunctions.range(fromPosition.y + 1, board.numberOfRows);
             const positionsCouldMoveInto = R.map(
-                (y): Position => R.assoc("y", y, fromPosition),
+                (y): BoardPosition => R.assoc("y", y, fromPosition),
                 yRange
             );
 
@@ -90,7 +91,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
             }
             const xRange = usefulFunctions.range(fromPosition.x, 0);
             const positionsCouldMoveInto = R.map(
-                (x): Position => R.assoc("x", x, fromPosition),
+                (x): BoardPosition => R.assoc("x", x, fromPosition),
                 xRange
             );
 
@@ -102,7 +103,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
             }
             const xRange = usefulFunctions.range(fromPosition.x + 1, board.numberOfColumns);
             const positionsCouldMoveInto = R.map(
-                (x): Position => R.assoc("x", x, fromPosition),
+                (x): BoardPosition => R.assoc("x", x, fromPosition),
                 xRange
             );
 

@@ -1,7 +1,9 @@
+import { Place } from "@/core/@typings/BoardTypes";
+import { SuccessfulMovementEventData } from "@/core/@typings/EventDataTypes";
+import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import Event from "@/core/events/Event";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
-import { DispatchedEventNameTypes, Place, SuccessfulMovementEventData } from "@/core/myTypes";
 import * as R from "ramda";
 
 export default class SuccessfulMovementEvent extends MovementEvent {

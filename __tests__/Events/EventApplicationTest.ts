@@ -2,15 +2,17 @@ import Board from "@/core/board/Board";
 import EventRunner from "@/core/events/EventRunner";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import GameState from "@/core/GameState";
-import { Command, DispatchedEvent, Place, Position, twoNumbers } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import TestSetup from "@/shell/TestSetup";
 import * as R from "ramda";
+import { twoNumbers, BoardPosition, Place } from "@/core/@typings/BoardTypes";
+import { DispatchedEvent } from "@/core/@typings/EventTypes";
+import { Command } from "@/core/@typings/EventDataTypes";
 
 describe("EventApplication", () => {
     let size: twoNumbers;
-    let startPoint: Position;
-    let endPoint: Position;
+    let startPoint: BoardPosition;
+    let endPoint: BoardPosition;
     let initialPlayerName: string;
     beforeEach(() => {
         const setup = new TestSetup();

@@ -1,4 +1,4 @@
-import { DispatchedEvent, EventCallback, DispatchedEventNameTypes } from "@/core/myTypes";
+import { DispatchedEvent, DispatchedEventNameTypes, EventCallback } from "@/core/@typings/EventTypes";
 import * as R from "ramda";
 
 declare global {

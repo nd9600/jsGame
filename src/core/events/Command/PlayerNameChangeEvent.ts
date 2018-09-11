@@ -1,8 +1,9 @@
+import { PlayerNameChangeEventData } from "@/core/@typings/EventDataTypes";
+import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import BoardBuilder from "@/core/board/BoardBuilder";
 import CommandEvent from "@/core/events/Command/CommandEvent";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import { DispatchedEventNameTypes, PlayerNameChangeEventData } from "@/core/myTypes";
 import * as R from "ramda";
 
 export default class PlayerNameChangeEvent extends CommandEvent {

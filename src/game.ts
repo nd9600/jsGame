@@ -1,10 +1,9 @@
+import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
-import { DispatchedEvent, EventCallback } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import UserInput from "@/shell/interaction/UserInput";
-
 
 window.eventBus = new EventBus();
 window.loggedEvents  = [];

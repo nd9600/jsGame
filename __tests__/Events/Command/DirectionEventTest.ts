@@ -1,7 +1,8 @@
+import { BoardType, Place, BoardPosition } from "@/core/@typings/BoardTypes";
+import { Direction } from "@/core/@typings/EventDataTypes";
 import Board from "@/core/board/Board";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import GameState from "@/core/GameState";
-import { BoardType, Direction, Place, Position } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 
@@ -13,10 +14,10 @@ describe("DirectionEvent", () => {
 
     it("handles_direction_event", () => {
         const board1Data: BoardType = [ [Place.Empty], [Place.Character], [Place.Empty], [Place.Empty], [Place.Empty] ];
-        const characterPosition1: Position = {x: 0, y: 1};
+        const characterPosition1: BoardPosition = {x: 0, y: 1};
 
         const board2Data: BoardType = [ [Place.Empty], [Place.Empty], [Place.Empty], [Place.Character], [Place.Empty] ];
-        const characterPosition2: Position = {x: 0, y: 3};
+        const characterPosition2: BoardPosition = {x: 0, y: 3};
 
         const board1 = new Board(Board.idCounter++, "", board1Data, characterPosition1, endPoint);
         const board2 = new Board(Board.idCounter++, "", board2Data, characterPosition2, endPoint);

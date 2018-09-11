@@ -1,8 +1,9 @@
+import { BoardType, Place, BoardPosition } from "@/core/@typings/BoardTypes";
+import { Direction } from "@/core/@typings/EventDataTypes";
 import Board from "@/core/board/Board";
 import movementFunctions from "@/core/board/movement";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import GameState from "@/core/GameState";
-import { BoardType, Direction, Place, Position } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 
@@ -12,7 +13,7 @@ describe("BoardMovementUp", () => {
         y: 9001
     };
 
-    it("applies_succesful_movement_event", () => {
+    it("applies_successful_movement_event", () => {
         const boardData: BoardType = [
             [Place.Empty],
             [Place.Character],
@@ -20,7 +21,7 @@ describe("BoardMovementUp", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 1
         };
@@ -51,7 +52,7 @@ describe("BoardMovementUp", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 1
         };
@@ -73,7 +74,7 @@ describe("BoardMovementUp", () => {
             [Place.Empty],
             [Place.Character]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 4
         };
@@ -95,7 +96,7 @@ describe("BoardMovementUp", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 1
         };
@@ -118,7 +119,7 @@ describe("BoardMovementUp", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 2
         };
@@ -142,7 +143,7 @@ describe("BoardMovementUp", () => {
             [Place.Character],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 4
         };
@@ -171,7 +172,7 @@ describe("BoardMovementDown", () => {
             [Place.Character],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 3
         };
@@ -204,7 +205,7 @@ describe("BoardMovementDown", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 0
         };
@@ -226,7 +227,7 @@ describe("BoardMovementDown", () => {
             [Place.Character],
             [Place.Wall]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 3
         };
@@ -249,7 +250,7 @@ describe("BoardMovementDown", () => {
             [Place.Wall],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 2
         };
@@ -273,7 +274,7 @@ describe("BoardMovementDown", () => {
             [Place.Wall],
             [Place.Empty]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 1
         };
@@ -304,7 +305,7 @@ describe("BoardMovementLeft", () => {
                 Place.Character
             ]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 4,
             y: 0
         };
@@ -328,7 +329,7 @@ describe("BoardMovementLeft", () => {
                 Place.Empty
             ]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 3,
             y: 0
         };
@@ -359,7 +360,7 @@ describe("BoardMovementRight", () => {
                 Place.Empty
             ]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 0,
             y: 0
         };
@@ -383,7 +384,7 @@ describe("BoardMovementRight", () => {
                 Place.Empty
             ]
         ];
-        const characterPosition: Position = {
+        const characterPosition: BoardPosition = {
             x: 1,
             y: 0
         };

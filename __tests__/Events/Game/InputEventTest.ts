@@ -1,5 +1,5 @@
+import { Command, Direction } from "@/core/@typings/EventDataTypes";
 import InputEvent from "@/core/events/Game/InputEvent";
-import { Command, Direction } from "@/core/myTypes";
 
 describe("InputEvent", () => {
     it("handles_moving_up", () => {

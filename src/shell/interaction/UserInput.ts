@@ -1,7 +1,7 @@
-import * as R from "ramda";
-import { Command } from "@/core/myTypes";
-import GameState from "@/core/GameState";
+import { Command } from "@/core/@typings/EventDataTypes";
 import InputEvent from "@/core/events/Game/InputEvent";
+import GameState from "@/core/GameState";
+import * as R from "ramda";
 
 const KEYS_TO_COMMANDS: { [index: string]: Command } = {
     ArrowUp: Command.MoveUp,

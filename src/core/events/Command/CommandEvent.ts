@@ -1,6 +1,6 @@
-import * as R from "ramda";
+import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import Event from "@/core/events/Event";
-import { DispatchedEventNameTypes } from "@/core/myTypes";
+import * as R from "ramda";
 
 export default class CommandEvent extends Event {
     

@@ -1,10 +1,10 @@
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
-import { Position, Status } from "@/core/myTypes";
 import usefulFunctions from "@/core/usefulFunctions";
+import { BoardPosition, Status } from "@/core/@typings/BoardTypes";
 
 describe("GameStateCreation", () => {
-    const pos: Position = { x: 0, y: 0 };
+    const pos: BoardPosition = { x: 0, y: 0 };
     it("creates_NotStarted_status", () => {
         const board1 = new Board(Board.idCounter++, "", [[]], pos, pos, Status.NotStarted);
         const board2 = new Board(Board.idCounter++, "", [[]], pos, pos, Status.PlacingWalls);
