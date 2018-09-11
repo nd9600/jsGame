@@ -12,6 +12,7 @@ import InputEvent from "@/core/events/Game/InputEvent";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
+import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 
 describe("EventApplication", () => {
 
@@ -26,7 +27,7 @@ describe("EventApplication", () => {
             { type: "DirectionEvent", data: Direction.Down },
             { type: "PlayerNameChangeEvent", data: {boardID: 0, newPlayerName: "x"} },
             { type: "StatusChangeEvent", data: {boardID: 0, newStatus: Status.Finished} },
-            { type: "Event" },
+            { type: "ToggleWallEvent", data: {boardID: 0, positionToToggle: {x: 0, y: 0}} },
         ];
         const expectedListOfEvents: object[] = [
             new InitialSetupEvent({initialPlayerName: "x", size: [4, 4], startPoint: { x: 0, y: 0 }, endPoint: { x: 3, y: 3 }}),
@@ -38,7 +39,7 @@ describe("EventApplication", () => {
             new DirectionEvent(Direction.Down),
             new PlayerNameChangeEvent({boardID: 0, newPlayerName: "x"}),
             new StatusChangeEvent({boardID: 0, newStatus: Status.Finished}),
-            new Event(),
+            new ToggleWallEvent({boardID: 0, positionToToggle: {x: 0, y: 0}}),
         ];
 
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);

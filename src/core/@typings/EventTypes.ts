@@ -17,14 +17,14 @@ interface DispatchedInputEvent {
     data: Command;
 }
 
+interface DispatchedMovementEvent {
+    type: "MovementEvent";
+    data?: IError | SuccessfulMovementEventData;
+}
+
 interface DispatchedFailedMovementEvent {
     type: "FailedMovementEvent";
     data: IError;
-}
-
-interface DispatchedMovementEvent {
-    type: "MovementEvent";
-    data?: any;
 }
 
 interface DispatchedSuccessfulMovementEventEvent {
@@ -34,7 +34,7 @@ interface DispatchedSuccessfulMovementEventEvent {
 
 interface DispatchedCommandEvent {
     type: "CommandEvent";
-    data?: any;
+    data?: Command | Direction | PlayerNameChangeEventData | StatusChangeEventData | ToggleWallEventData;
 }
 
 interface DispatchedDirectionEvent {
@@ -57,10 +57,21 @@ interface DispatchedToggleWallEvent {
     data: ToggleWallEventData;
 }
 
-type DispatchedEvent = DispatchedGeneralEvent | DispatchedInitialSetupEvent | DispatchedInputEvent | DispatchedFailedMovementEvent | DispatchedMovementEvent | DispatchedSuccessfulMovementEventEvent | DispatchedCommandEvent | DispatchedDirectionEvent | DispatchedPlayerNameChangeEvent | DispatchedStatusChangeEvent | DispatchedToggleWallEvent;
+type DispatchedEvent = DispatchedInitialSetupEvent 
+    | DispatchedInputEvent 
+    | DispatchedFailedMovementEvent 
+    | DispatchedMovementEvent 
+    | DispatchedSuccessfulMovementEventEvent 
+    | DispatchedCommandEvent 
+    | DispatchedDirectionEvent 
+    | DispatchedPlayerNameChangeEvent 
+    | DispatchedStatusChangeEvent 
+    | DispatchedToggleWallEvent;
 
-type DispatchedEventNameTypes = DispatchedEvent["type"];
-type DispatchedEventDataTypes = DispatchedEvent["data"];
+type DispatchedEventNameTypes = DispatchedGeneralEvent["type"] 
+    | DispatchedEvent["type"];
+type DispatchedEventDataTypes = DispatchedGeneralEvent["data"] 
+    | DispatchedEvent["data"];
 
 type EventCallback = (dispatchedEvent: DispatchedEvent) => void;
 

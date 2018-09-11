@@ -12,6 +12,7 @@ import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEv
 import GameState from "@/core/GameState";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
+import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 
 export default class EventRunner {
     private static handleEvent = (gameState: GameState, event: Event): GameState => event.handle(gameState);
@@ -37,9 +38,12 @@ export default class EventRunner {
                     return new PlayerNameChangeEvent(dispatchedEvent.data);
                 } case "StatusChangeEvent": {
                     return new StatusChangeEvent(dispatchedEvent.data);
-                } default: {
-                    return new Event(dispatchedEvent.data);
-                }
+                } case "ToggleWallEvent": {
+                    return new ToggleWallEvent(dispatchedEvent.data);
+                } 
+                // default: {
+                //     return new Event(dispatchedEvent.data);
+                // }
             }
         };
         return R.map(makeEventFromDispatchedEvent, listOfEventObjects);
