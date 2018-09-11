@@ -1,4 +1,4 @@
-import { twoNumbers } from "@/core/@typings/BoardTypes";
+import { BoardPosition, twoNumbers } from "@/core/@typings/BoardTypes";
 import { SetupInterface } from "@/shell/SetupInterface";
 
 export default class TestSetup implements SetupInterface {
