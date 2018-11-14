@@ -1,4 +1,4 @@
-import { InitialGameSetupData, Command, SuccessfulMovementEventData, Direction, PlayerNameChangeEventData, StatusChangeEventData, ToggleWallEventData } from "@/core/@typings/EventDataTypes";
+import { InitialGameSetupData, Command, SuccessfulMovementEventData, Direction, PlayerNameChangeEventData, StatusChangeEventData, ToggleWallEventData, DirectionEventData, InputEventData } from "@/core/@typings/EventDataTypes";
 
 import { IError } from "@/core/@typings/GeneralTypes";
 
@@ -34,12 +34,12 @@ interface DispatchedSuccessfulMovementEventEvent {
 
 interface DispatchedCommandEvent {
     type: "CommandEvent";
-    data?: Command | Direction | PlayerNameChangeEventData | StatusChangeEventData | ToggleWallEventData;
+    data?: Command | InputEventData | DirectionEventData | PlayerNameChangeEventData | StatusChangeEventData | ToggleWallEventData;
 }
 
 interface DispatchedDirectionEvent {
     type: "DirectionEvent";
-    data: Direction;
+    data: DirectionEventData;
 }
 
 interface DispatchedPlayerNameChangeEvent {

@@ -5,9 +5,10 @@ import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import GameState from "@/core/GameState";
+import PlayerBoard from "@/core/player/PlayerBoard";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
-import PlayerBoard from "../player/PlayerBoard";
+import Player from "../player/Player";
 
 /**
  * Returns the position that could be moved in to (if any), given a list of possible positions
@@ -42,13 +43,16 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: BoardPosi
 /**
  * Finds last square to move to, makes a list of squares from fromPosition to that square, and finds the last empty square in that list
  * @param board Board
- * @param playerBoard PlayerBoard
+ * @param player Player
  * @param direction Direction
  * @param fromPosition BoardPosition
  */
-function getPositionToMoveInto(gameState: GameState, playerBoard: PlayerBoard, direction: Direction): MovementEvent[] {
+function getPositionToMoveInto(gameState: GameState, player: Player, direction: Direction): MovementEvent[] {
     const boards = R.values(gameState.boards);
-    return R.map((board) => getPositionToMoveIntoForBoard(board, playerBoard, direction),
+    return R.map((board) => {
+        const playerBoard = gameState.getPlayerBoard(player.id, board.id);
+        return getPositionToMoveIntoForBoard(board, playerBoard, direction);
+    },
         boards
     );
 }

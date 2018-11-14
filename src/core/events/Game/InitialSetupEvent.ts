@@ -4,9 +4,9 @@ import Board from "@/core/board/Board";
 import boardFunctions from "@/core/board/boardFunctions";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
+import Player from "@/core/player/Player";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
-import Player from "@/core/player/Player";
 
 export default class InitialSetupEvent extends Event {
     public type: DispatchedEventNameTypes = "InitialSetupEvent";
@@ -22,11 +22,13 @@ export default class InitialSetupEvent extends Event {
     public handle(gameState: GameState): GameState {
         const initialPlayer1 = new Player(
             Player.idCounter++,
-            this.data.initialPlayerName
+            this.data.initialPlayerName,
+            0
         );
         const initialPlayer2 = new Player(
             Player.idCounter++,
-            this.data.initialPlayerName
+            this.data.initialPlayerName,
+            0
         );
 
         const initialBoardData = boardFunctions.makeInitialBoard(this.data.size, this.data.startPoint, this.data.endPoint);

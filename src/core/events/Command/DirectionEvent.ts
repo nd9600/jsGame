@@ -1,4 +1,4 @@
-import { Direction } from "@/core/@typings/EventDataTypes";
+import { DirectionEventData } from "@/core/@typings/EventDataTypes";
 import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import movementFunctions from "@/core/board/movement";
 import CommandEvent from "@/core/events/Command/CommandEvent";
@@ -9,12 +9,12 @@ import * as R from "ramda";
 
 export default class DirectionEvent extends CommandEvent {
     public type: DispatchedEventNameTypes = "DirectionEvent";
-    public data: Direction;
+    public data: DirectionEventData;
 
-    constructor(direction: Direction) {
-        super(direction);
+    constructor(data: DirectionEventData) {
+        super(data);
         this.types = R.append(this.type, this.types);
-        this.data = direction;
+        this.data = data;
         Event.dispatch(this.types, this.type, this.data);
     }
 
@@ -23,7 +23,7 @@ export default class DirectionEvent extends CommandEvent {
      * @param gameState 
      */
     public handle(gameState: GameState): GameState {
-        const movementEvents = movementFunctions.getPositionToMoveInto(gameState, this.data);
+        const movementEvents = movementFunctions.getPositionToMoveInto(gameState, this.data.player, this.data.direction);
         return EventRunner.runEvents(movementEvents, gameState);
     }
 }

@@ -1,4 +1,4 @@
-import { Command, Direction } from "@/core/@typings/EventDataTypes";
+import { Command, Direction, InputEventData } from "@/core/@typings/EventDataTypes";
 import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import Event from "@/core/events/Event";
@@ -7,28 +7,44 @@ import * as R from "ramda";
 
 export default class InputEvent extends Event {
     public type: DispatchedEventNameTypes = "InputEvent";
-    public data: Command;
+    public data: InputEventData;
 
-    constructor(command: Command) {
+    constructor(data: InputEventData) {
         super();
         this.types = R.append(this.type, this.types);
-        this.data = command;
+        this.data = data;
         Event.dispatch(this.types, this.type, this.data);
     }
 
     public createEvent(): Event {
-        switch (this.data) {
+        switch (this.data.command) {
             case (Command.MoveUp): {
-                return new DirectionEvent(Direction.Up);
+                const eventData = { 
+                    direction: Direction.Up, 
+                    player: this.data.player
+                };
+                return new DirectionEvent(eventData);
             }
             case (Command.MoveDown): {
-                return new DirectionEvent(Direction.Down);
+                const eventData = { 
+                    direction: Direction.Down, 
+                    player: this.data.player
+                };
+                return new DirectionEvent(eventData);
             }
             case (Command.MoveLeft): {
-                return new DirectionEvent(Direction.Left);
+                const eventData = { 
+                    direction: Direction.Left, 
+                    player: this.data.player
+                };
+                return new DirectionEvent(eventData);
             }
             case (Command.MoveRight): {
-                return new DirectionEvent(Direction.Right);
+                const eventData = { 
+                    direction: Direction.Right, 
+                    player: this.data.player
+                };
+                return new DirectionEvent(eventData);
             }
             default: {
                 return new Event();

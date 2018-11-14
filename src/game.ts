@@ -4,6 +4,7 @@ import usefulFunctions from "@/core/usefulFunctions";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import UserInput from "@/shell/interaction/UserInput";
+import * as R from "ramda";
 
 window.eventBus = new EventBus();
 window.loggedEvents  = [];
@@ -19,4 +20,7 @@ const [initialPlayerName, size, startPoint, endPoint] = [setup.getInitialPlayerN
 const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint};
 const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
 const initialGameState = initialSetupEvent.handle(usefulFunctions.makeNewGameState());
-UserInput.handleUserInput(initialGameState);
+
+const player = R.values(initialGameState.players)[0];
+
+UserInput.handleUserInput(initialGameState, player);

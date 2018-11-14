@@ -1,4 +1,5 @@
-import { twoNumbers, BoardPosition, Status } from "@/core/@typings/BoardTypes";
+import { BoardPosition, Status, twoNumbers } from "@/core/@typings/BoardTypes";
+import Player from "@/core/player/Player";
 
 enum Command {
     MoveUp = "MoveUp",
@@ -18,6 +19,16 @@ interface InitialGameSetupData {
     size: twoNumbers;
     startPoint: BoardPosition;
     endPoint: BoardPosition;
+}
+
+interface InputEventData {
+    command: Command;
+    player: Player;
+}
+
+interface DirectionEventData {
+    direction: Direction;
+    player: Player;
 }
 
 interface SuccessfulMovementEventData {
@@ -41,4 +52,5 @@ interface ToggleWallEventData {
     positionToToggle: BoardPosition;
 }
 
-export { Command, Direction, SuccessfulMovementEventData, InitialGameSetupData, PlayerNameChangeEventData, StatusChangeEventData, ToggleWallEventData };
+export { Command, Direction, SuccessfulMovementEventData, InitialGameSetupData, InputEventData, DirectionEventData, PlayerNameChangeEventData, StatusChangeEventData, ToggleWallEventData };
+
