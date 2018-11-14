@@ -1,14 +1,11 @@
-import { BoardPosition, BoardType, Place, twoNumbers, Status } from "@/core/@typings/BoardTypes";
+import { Place, Status } from "@/core/@typings/BoardTypes";
 import Board from "@/core/board/Board";
 import TestSetup from "@/shell/TestSetup";
-import GameState from "@/core/GameState";
-import usefulFunctions from "@/core/usefulFunctions";
-
 describe("PlacingWalls", () => {
-    let size: twoNumbers;
-    let startPoint: BoardPosition;
-    let endPoint: BoardPosition;
-    let initialPlayerName: string;
+    let size;
+    let startPoint;
+    let endPoint;
+    let initialPlayerName;
     beforeEach(() => {
         const setup = new TestSetup();
         [initialPlayerName, size, startPoint, endPoint] = [
@@ -18,25 +15,16 @@ describe("PlacingWalls", () => {
             setup.getEndPoint()
         ];
     });
-
     it("gets_current_number_of_walls", () => {
-        let boardData: BoardType = [
+        let boardData = [
             [Place.Empty],
             [Place.Character],
             [Place.Wall],
             [Place.Empty],
             [Place.Empty]
         ];
-
-        let board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
+        let board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
         expect(board.currentNumberOfWalls).toEqual(1);
-
         boardData = [
             [Place.Empty],
             [Place.Character],
@@ -44,16 +32,8 @@ describe("PlacingWalls", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-
-        board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
+        board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
         expect(board.currentNumberOfWalls).toEqual(0);
-
         boardData = [
             [Place.Wall],
             [Place.Wall],
@@ -61,103 +41,58 @@ describe("PlacingWalls", () => {
             [Place.Empty],
             [Place.Wall]
         ];
-
-        board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
+        board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
         expect(board.currentNumberOfWalls).toEqual(3);
     });
-
     it("cant_toggle_wall_when_status_is_wrong", () => {
-        const boardData: BoardType = [
+        const boardData = [
             [Place.Empty],
             [Place.Character],
             [Place.Wall],
             [Place.Empty],
             [Place.Empty]
         ];
-
-        const board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
-
-        const newBoard = board.toggleWallAtPosition({x: 0, y: 0});
-
+        const board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
+        const newBoard = board.toggleWallAtPosition({ x: 0, y: 0 });
         expect(newBoard.boardData).toEqual(board.boardData);
     });
-
     it("cant_toggle_when_setting_wrong_place", () => {
-        const boardData: BoardType = [
+        const boardData = [
             [Place.Empty],
             [Place.Character],
             [Place.Wall],
             [Place.Empty],
             [Place.Empty]
         ];
-
-        const board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
+        const board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
         const newBoard = board.setStatus(Status.PlacingWalls)
-            .toggleWallAtPosition({x: 0, y: 1});
-
+            .toggleWallAtPosition({ x: 0, y: 1 });
         expect(newBoard.boardData).toEqual(board.boardData);
     });
-
     it("cant_toggle_when_max_walls", () => {
-        const boardData: BoardType = [
+        const boardData = [
             [Place.Wall],
             [Place.Wall],
             [Place.Empty],
             [Place.Empty],
             [Place.Empty]
         ];
-
-        const board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
+        const board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
         const newBoard = board.setStatus(Status.PlacingWalls)
-            .toggleWallAtPosition({x: 0, y: 2});
-
+            .toggleWallAtPosition({ x: 0, y: 2 });
         expect(newBoard.boardData).toEqual(board.boardData);
     });
-
-
     it("sets_wall", () => {
-        const boardData: BoardType = [
+        const boardData = [
             [Place.Empty],
             [Place.Character],
             [Place.Wall],
             [Place.Empty],
             [Place.Empty]
         ];
-
-        const board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
+        const board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
         const newBoard = board.setStatus(Status.PlacingWalls)
-            .toggleWallAtPosition({x: 0, y: 0});
-
+            .toggleWallAtPosition({ x: 0, y: 0 });
         const wantedBoardData = [
             [Place.Wall],
             [Place.Character],
@@ -165,29 +100,19 @@ describe("PlacingWalls", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-
         expect(newBoard.boardData).toEqual(wantedBoardData);
     });
-
     it("sets_empty_space", () => {
-        const boardData: BoardType = [
+        const boardData = [
             [Place.Empty],
             [Place.Character],
             [Place.Wall],
             [Place.Empty],
             [Place.Empty]
         ];
-
-        const board = new Board(
-            Board.idCounter++,
-            -1,
-            boardData,
-            startPoint,
-            endPoint
-        );
+        const board = new Board(Board.idCounter++, initialPlayerName, boardData, startPoint, endPoint);
         const newBoard = board.setStatus(Status.PlacingWalls)
-            .toggleWallAtPosition({x: 0, y: 2});
-
+            .toggleWallAtPosition({ x: 0, y: 2 });
         const wantedBoardData = [
             [Place.Empty],
             [Place.Character],
@@ -195,7 +120,7 @@ describe("PlacingWalls", () => {
             [Place.Empty],
             [Place.Empty]
         ];
-
         expect(newBoard.boardData).toEqual(wantedBoardData);
     });
 });
+//# sourceMappingURL=PlacingWallsTest.js.map

@@ -5,6 +5,7 @@ import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import GameState from "@/core/GameState";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
+import Player from "@/core/player/Player";
 
 describe("DirectionEvent", () => {
     const endPoint = {
@@ -19,20 +20,21 @@ describe("DirectionEvent", () => {
         const board2Data: BoardType = [ [Place.Empty], [Place.Empty], [Place.Empty], [Place.Character], [Place.Empty] ];
         const characterPosition2: BoardPosition = {x: 0, y: 3};
 
-        const board1 = new Board(Board.idCounter++, "", board1Data, characterPosition1, endPoint);
-        const board2 = new Board(Board.idCounter++, "", board2Data, characterPosition2, endPoint);
-        let gameState = new GameState (
-            usefulFunctions.makeBoardsObject([board1, board2])
-        );
+        const player1 = new Player(Player.idCounter++, "", 0);
+
+        const board1 = new Board(Board.idCounter++, -1, board1Data, characterPosition1, endPoint);
+        const board2 = new Board(Board.idCounter++, -1, board2Data, characterPosition2, endPoint);
+        let gameState = usefulFunctions.makeNewGameState({players: [player1], boards: [board1, board2]});
 
         const expectedCharacterPosition = {
             x: 0,
             y: 4
         };
-        const directionEvent = new DirectionEvent(Direction.Down);
+        const directionEvent = new DirectionEvent({direction: Direction.Down, player: player1});
         gameState = directionEvent.handle(gameState);
         R.forEach((newBoard: Board) => {
-            expect(newBoard.characterPosition).toEqual(expectedCharacterPosition);
+            const playerBoard = gameState.getPlayerBoard(player1.id, newBoard.id);
+            expect(playerBoard.characterPosition).toEqual(expectedCharacterPosition);
         }, R.values(gameState.boards));        
     });
 });

@@ -58,13 +58,13 @@ const makePlayerBoardsObject = (players: Players, boards: Boards): PlayerBoards 
     return playerBoards;
 };
 
-const makeNewGameState = (): GameState => {
+const makeNewGameState = (newGameStateData?: {players?: Player[]; boards?: Board[]; }): GameState => {
     const defaultPosition = { x: 0, y: 0 };
-    const initialPlayer = new Player(-1, "", 0);
-    const initialBoard = new Board(-1, -1, [[]], defaultPosition, defaultPosition);
+    const initialPlayers = newGameStateData && newGameStateData.players || [new Player(-1, "", 0)];
+    const initialBoards = newGameStateData && newGameStateData.boards || [new Board(-1, -1, [[]], defaultPosition, defaultPosition)];
 
-    const playersObject = makePlayersObject([initialPlayer]);
-    const boardsObject = makeBoardsObject([initialBoard]);
+    const playersObject = makePlayersObject(initialPlayers);
+    const boardsObject = makeBoardsObject(initialBoards);
     const playerBoardsObject = makePlayerBoardsObject(playersObject, boardsObject);
 
     return new GameState(playersObject, boardsObject, playerBoardsObject);
