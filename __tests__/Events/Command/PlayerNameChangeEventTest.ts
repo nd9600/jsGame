@@ -6,15 +6,15 @@ describe("PlayerNameChangeEvent", () => {
 
     it("handles_changing_player_name", () => {
         const gameState = usefulFunctions.makeNewGameState();
-        const board = R.values(gameState.boards)[0];
+        const player = R.values(gameState.players)[0];
 
-        const boardID = board.id;
+        const playerID = player.id;
         const newPlayerName = "abcdef";
-        const playerNameChangeEvent = new PlayerNameChangeEvent({boardID, newPlayerName});
+        const playerNameChangeEvent = new PlayerNameChangeEvent({playerID, newPlayerName});
 
         const newGameState = playerNameChangeEvent.handle(gameState);
-        const newBoard = R.values(newGameState.boards)[0];
+        const newPlayer = R.values(newGameState.players)[0];
 
-        expect(newBoard.player).toEqual(newPlayerName);
+        expect(newPlayer.name).toEqual(newPlayerName);
     });
 });

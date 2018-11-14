@@ -22,11 +22,11 @@ const handleUserInput = (initialGameState: GameState): void => {
             gameState = inputEvent.handle(gameState);
             board = R.values(gameState.boards)[0];
 
-            console.log(code);
-            console.log(gameState);
-            console.log(R.values(gameState.boards));
-            console.log(R.values(gameState.boards)[0]);
-            console.log("loggedEvents", window.loggedEvents);
+            // console.log(code);
+            console.log("gameState: ", gameState);
+            // console.log(R.values(gameState.boards));
+            // console.log(R.values(gameState.boards)[0]);
+            // console.log("loggedEvents", window.loggedEvents);
             console.log("");
             boardDiv.innerHTML = `<pre>${board.boardAsString()}</pre>`;
         }

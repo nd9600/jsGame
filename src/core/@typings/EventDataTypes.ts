@@ -21,12 +21,13 @@ interface InitialGameSetupData {
 }
 
 interface SuccessfulMovementEventData {
+    playerID: number;
     boardID: number;
     newCharacterPosition: BoardPosition;
 }
 
 interface PlayerNameChangeEventData {
-    boardID: number;
+    playerID: number;
     newPlayerName: string;
 }
 

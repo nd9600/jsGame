@@ -9,23 +9,20 @@ export default class Board {
     public readonly numberOfRows: number;
     public readonly numberOfColumns: number;
 
-    public readonly boardSolved: boolean;
-
     public static MAX_NUMBER_OF_WALLS_FACTOR = 0.5;
     public readonly maxNumberOfWalls: number;
     public readonly currentNumberOfWalls: number;
 
     constructor(
         public readonly id: number,
-        public readonly player: string,
+        public readonly creatorID: number,
         public readonly boardData: BoardType, 
-        public readonly characterPosition: BoardPosition, 
+        public readonly startPoint: BoardPosition, 
         public readonly endPoint: BoardPosition,
         public readonly status: Status = Status.NotStarted
     ) {
         this.numberOfRows = this.boardData.length;
         this.numberOfColumns = R.nth(0, this.boardData)!.length;
-        this.boardSolved = R.equals(this.characterPosition, this.endPoint);
 
         this.maxNumberOfWalls = Math.floor(this.numberOfRows * this.numberOfColumns * Board.MAX_NUMBER_OF_WALLS_FACTOR);
         this.currentNumberOfWalls = usefulFunctions.countNumberOf(Place.Wall, R.flatten(this.boardData));
@@ -36,7 +33,7 @@ export default class Board {
         return R.join(separator, rowsJoined);
     }
 
-    public setCharacterPosition = (characterPosition: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {characterPosition});
+    public setStartPoint = (startPoint: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {startPoint});
 
     public setStatus = (status: Status): Board => BoardBuilder.mergeWithOptions(this, {status});
 

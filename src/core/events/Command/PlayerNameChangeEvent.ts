@@ -1,9 +1,9 @@
 import { PlayerNameChangeEventData } from "@/core/@typings/EventDataTypes";
 import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
-import BoardBuilder from "@/core/board/BoardBuilder";
 import CommandEvent from "@/core/events/Command/CommandEvent";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
+import PlayerBuilder from "@/core/player/PlayerBuilder";
 import * as R from "ramda";
 
 export default class PlayerNameChangeEvent extends CommandEvent {
@@ -18,8 +18,8 @@ export default class PlayerNameChangeEvent extends CommandEvent {
     }
 
     public handle(gameState: GameState): GameState {
-        const oldBoard = gameState.boards[this.data.boardID];
-        const newBoard = BoardBuilder.mergeWithOptions(oldBoard, {player: this.data.newPlayerName});
-        return gameState.replaceBoard(newBoard);
+        const oldPlayer = gameState.players[this.data.playerID];
+        const newBoard = PlayerBuilder.mergeWithOptions(oldPlayer, {name: this.data.newPlayerName});
+        return gameState.replacePlayer(oldPlayer);
     }
 }

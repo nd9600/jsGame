@@ -1,9 +1,10 @@
-import { Place } from "@/core/@typings/BoardTypes";
+import { Status } from "@/core/@typings/BoardTypes";
 import { SuccessfulMovementEventData } from "@/core/@typings/EventDataTypes";
 import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import Event from "@/core/events/Event";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
+import PlayerBoardBuilder from "@/core/player/PlayerBoardBuilder";
 import * as R from "ramda";
 
 export default class SuccessfulMovementEvent extends MovementEvent {
@@ -18,11 +19,13 @@ export default class SuccessfulMovementEvent extends MovementEvent {
     }
 
     public handle(gameState: GameState) {
-        const newBoard = gameState.boards[this.data.boardID]
-            .setPosition(gameState.boards[this.data.boardID].characterPosition, Place.Empty)
-            .setPosition(this.data.newCharacterPosition, Place.Character)
-            .setCharacterPosition(this.data.newCharacterPosition);
+        const playerBoard = gameState.getPlayerBoard(this.data.playerID, this.data.boardID);
+        const board = gameState.boards[this.data.boardID];
+        const boardIsSolved = R.equals(this.data.newCharacterPosition, board.endPoint);
 
-        return gameState.replaceBoard(newBoard);
+        return gameState.replacePlayerBoard(PlayerBoardBuilder.mergeWithOptions(playerBoard, {
+            characterPosition: this.data.newCharacterPosition,
+            boardStatus: (boardIsSolved ? Status.Finished : Status.Playing)
+        }));
     }
 }

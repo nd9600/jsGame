@@ -2,9 +2,8 @@
  * A list of possible options that can be used to make a new board from an existing one
  */
 interface BoardOptions {
-    player?: string;
     boardData?: BoardType;
-    characterPosition?: BoardPosition;
+    startPoint?: BoardPosition;
     endPoint?: BoardPosition;
     status?: Status;
 }
