@@ -7,13 +7,15 @@ import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEv
 import GameState from "@/core/GameState";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
+import PlayerBoard from "../player/PlayerBoard";
 
 /**
  * Returns the position that could be moved in to (if any), given a list of possible positions
  * @param positionsCouldMoveInto BoardPosition[] - a list of the possible squares that could be moved in to
  * @param board Board
+ * @param playerBoard PlayerBoard
  */
-function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: BoardPosition[], board: Board): MovementEvent {
+function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: BoardPosition[], board: Board, playerBoard: PlayerBoard): MovementEvent {
     if (R.isEmpty(positionsCouldMoveInto)) {
         return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "no positions to move in to"));
     }
@@ -34,18 +36,19 @@ function getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto: BoardPosi
         newCharacterPosition = positionsCouldMoveInto[firstWallInWayOfMovementIndex - 1];
     }
 
-    return new SuccessfulMovementEvent({boardID: board.id, newCharacterPosition});
+    return new SuccessfulMovementEvent({boardID: board.id, playerID: playerBoard.playerID, newCharacterPosition});
 }
 
 /**
  * Finds last square to move to, makes a list of squares from fromPosition to that square, and finds the last empty square in that list
  * @param board Board
+ * @param playerBoard PlayerBoard
  * @param direction Direction
  * @param fromPosition BoardPosition
  */
-function getPositionToMoveInto(gameState: GameState, direction: Direction): MovementEvent[] {
+function getPositionToMoveInto(gameState: GameState, playerBoard: PlayerBoard, direction: Direction): MovementEvent[] {
     const boards = R.values(gameState.boards);
-    return R.map((board) => getPositionToMoveIntoForBoard(board, direction),
+    return R.map((board) => getPositionToMoveIntoForBoard(board, playerBoard, direction),
         boards
     );
 }
@@ -54,10 +57,11 @@ function getPositionToMoveInto(gameState: GameState, direction: Direction): Move
  * Finds last square to move to, makes a list of squares from fromPosition to that square, and finds the last empty square in that list
  * @param board Board
  * @param direction Direction
+ * @param playerBoard PlayerBoard
  * @param fromPosition BoardPosition
  */
-function getPositionToMoveIntoForBoard(board: Board, direction: Direction): MovementEvent {
-    const fromPosition = board.characterPosition;
+function getPositionToMoveIntoForBoard(board: Board, playerBoard: PlayerBoard, direction: Direction): MovementEvent {
+    const fromPosition = playerBoard.characterPosition;
     switch (direction) {
         case Direction.Up: {
             if (fromPosition.y === 0) {
@@ -71,7 +75,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
                 yRange
             );
 
-            return getPositionToMoveIntoFromPossibleList(squaresCouldMoveInto, board);
+            return getPositionToMoveIntoFromPossibleList(squaresCouldMoveInto, board, playerBoard);
         } case Direction.Down: {
             if (fromPosition.y + 1 === board.numberOfRows) {
                 return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "at bottom of board"));
@@ -84,7 +88,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
                 yRange
             );
 
-            return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board);
+            return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board, playerBoard);
         } case Direction.Left: {
             if (fromPosition.x === 0) {
                 return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "at left of board"));
@@ -95,7 +99,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
                 xRange
             );
 
-            return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board);
+            return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board, playerBoard);
         }
         case Direction.Right: {
             if (fromPosition.x + 1 === board.numberOfColumns) {
@@ -107,7 +111,7 @@ function getPositionToMoveIntoForBoard(board: Board, direction: Direction): Move
                 xRange
             );
 
-            return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board);
+            return getPositionToMoveIntoFromPossibleList(positionsCouldMoveInto, board, playerBoard);
         }
     }
     return usefulFunctions.assertUnreachable(direction);

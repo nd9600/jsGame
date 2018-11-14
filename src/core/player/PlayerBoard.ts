@@ -1,4 +1,4 @@
-import { BoardPosition, Status } from "../@typings/BoardTypes";
+import { BoardPosition, Status } from "@/core/@typings/BoardTypes";
 
 export default class PlayerBoard {
     constructor(

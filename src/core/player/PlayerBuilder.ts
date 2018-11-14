@@ -1,4 +1,4 @@
-import { PlayerOptions } from "../@typings/PlayerTypes";
+import { PlayerOptions } from "@/core/@typings/PlayerTypes";
 import Player from "./Player";
 
 /**

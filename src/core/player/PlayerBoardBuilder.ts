@@ -1,4 +1,4 @@
-import { PlayerBoardOptions } from "../@typings/PlayerTypes";
+import { PlayerBoardOptions } from "@/core/@typings/PlayerTypes";
 import PlayerBoard from "./PlayerBoard";
 
 export default class PlayerBoardBuilder {
