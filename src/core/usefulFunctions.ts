@@ -1,10 +1,11 @@
-import { Boards, Players, PlayerBoards, PlayerBoard } from "@/core/@typings/GameStateTypes";
+import { Status } from "@/core/@typings/BoardTypes";
+import { Boards, PlayerBoards, Players } from "@/core/@typings/GameStateTypes";
 import { IError } from "@/core/@typings/GeneralTypes";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
+import Player from "@/core/player/Player";
+import PlayerBoard from "@/core/player/PlayerBoard";
 import * as R from "ramda";
-import Player from "./player/Player";
-import { Status } from "./@typings/BoardTypes";
 
 const range = (start: number, end: number): number[] => {
     const rangeStart = Math.min(start, end);
@@ -42,10 +43,11 @@ const makePlayerBoardsObject = (players: Players, boards: Boards): PlayerBoards 
 
         for (const boardIDString of Object.keys(boards)) {
             const boardID = Number(boardIDString);
+            const board = R.prop(boardID, boards);
             const thisPlayerBoard: PlayerBoard = {
                 playerID,
                 boardID,
-                score: 0,
+                characterPosition: board.startPoint,
                 boardStatus: Status.NotStarted
             };
             playerBoardsForThisPlayer[boardID] = thisPlayerBoard;
@@ -58,7 +60,7 @@ const makePlayerBoardsObject = (players: Players, boards: Boards): PlayerBoards 
 
 const makeNewGameState = (): GameState => {
     const defaultPosition = { x: 0, y: 0 };
-    const initialPlayer = new Player(-1, "");
+    const initialPlayer = new Player(-1, "", 0);
     const initialBoard = new Board(-1, -1, [[]], defaultPosition, defaultPosition);
 
     const playersObject = makePlayersObject([initialPlayer]);
