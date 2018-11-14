@@ -24,23 +24,6 @@ describe("EventApplication", () => {
         ];
     });
 
-    it("creates_initial_game", () => {
-        const initialGameSetupData = { initialPlayerName, size, startPoint, endPoint };
-        const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
-        const gameState = initialSetupEvent.handle(
-            usefulFunctions.makeNewGameState()
-        );
-        const wantedBoard = [
-            [Place.Character, Place.Empty, Place.Empty, Place.Empty],
-            [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
-            [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
-            [Place.Empty, Place.Empty, Place.Empty, Place.End]
-        ];
-        
-        const board = R.values(gameState.boards)[0];
-        expect(board.boardData).toEqual(wantedBoard);
-    });
-
     it("applies_a_list_of_events", () => {
         const listOfEventObjects: DispatchedEvent[] = [
             {
