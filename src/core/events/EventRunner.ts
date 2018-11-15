@@ -3,6 +3,7 @@ import CommandEvent from "@/core/events/Command/CommandEvent";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
+import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 import Event from "@/core/events/Event";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
@@ -12,7 +13,6 @@ import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEv
 import GameState from "@/core/GameState";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
-import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 
 export default class EventRunner {
     private static handleEvent = (gameState: GameState, event: Event): GameState => event.handle(gameState);
