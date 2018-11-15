@@ -1,6 +1,6 @@
-import { InitialGameSetupData, Command, SuccessfulMovementEventData, Direction, PlayerNameChangeEventData, StatusChangeEventData, ToggleWallEventData, DirectionEventData, InputEventData } from "@/core/@typings/EventDataTypes";
-
+import { DirectionEventData, InitialGameSetupData, InputEventData, PlayerNameChangeEventData, StatusChangeEventData, SuccessfulMovementEventData, ToggleWallEventData } from "@/core/@typings/EventDataTypes";
 import { IError } from "@/core/@typings/GeneralTypes";
+
 
 interface DispatchedGeneralEvent {
     type: "Event";
@@ -14,7 +14,7 @@ interface DispatchedInitialSetupEvent {
 
 interface DispatchedInputEvent {
     type: "InputEvent";
-    data: Command;
+    data: InputEventData;
 }
 
 interface DispatchedMovementEvent {
@@ -34,7 +34,7 @@ interface DispatchedSuccessfulMovementEventEvent {
 
 interface DispatchedCommandEvent {
     type: "CommandEvent";
-    data?: Command | InputEventData | DirectionEventData | PlayerNameChangeEventData | StatusChangeEventData | ToggleWallEventData;
+    data?: InputEventData | DirectionEventData | PlayerNameChangeEventData | StatusChangeEventData | ToggleWallEventData;
 }
 
 interface DispatchedDirectionEvent {
@@ -76,3 +76,4 @@ type DispatchedEventDataTypes = DispatchedGeneralEvent["data"]
 type EventCallback = (dispatchedEvent: DispatchedEvent) => void;
 
 export { DispatchedEvent, DispatchedEventNameTypes, DispatchedEventDataTypes, EventCallback };
+
