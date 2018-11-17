@@ -5,14 +5,13 @@ import CommandEvent from "@/core/events/Command/CommandEvent";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
-import Event from "@/core/events/Event";
+import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 import EventRunner from "@/core/events/EventRunner";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
-import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 
 describe("EventApplication", () => {
 

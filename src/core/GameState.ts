@@ -1,9 +1,9 @@
 import { Status } from "@/core/@typings/BoardTypes";
+import { Boards, PlayerBoards, Players } from "@/core/@typings/GameStateTypes";
 import Board from "@/core/board/Board";
+import Player from "@/core/player/Player";
+import PlayerBoard from "@/core/player/PlayerBoard";
 import * as R from "ramda";
-import { Players, Boards, PlayerBoards } from "./@typings/GameStateTypes";
-import PlayerBoard from "./player/PlayerBoard";
-import Player from "./player/Player";
 
 export default class GameState {
 

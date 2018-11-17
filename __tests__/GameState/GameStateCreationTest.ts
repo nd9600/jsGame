@@ -1,46 +1,58 @@
-import Board from "@/core/board/Board";
-import GameState from "@/core/GameState";
-import usefulFunctions from "@/core/usefulFunctions";
 import { BoardPosition, Status } from "@/core/@typings/BoardTypes";
+import Board from "@/core/board/Board";
+import GameStateFactory from "@/core/factories/GameStateFactory";
+import Player from "@/core/player/Player";
 
 describe("GameStateCreation", () => {
     const pos: BoardPosition = { x: 0, y: 0 };
     it("creates_NotStarted_status", () => {
-        const board1 = new Board(Board.idCounter++, "", [[]], pos, pos, Status.NotStarted);
-        const board2 = new Board(Board.idCounter++, "", [[]], pos, pos, Status.PlacingWalls);
-        const gameState = new GameState(usefulFunctions.makeBoardsObject([board1, board2]));
+        const board1 = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.NotStarted);
+        const board2 = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.PlacingWalls);
+        const gameState = GameStateFactory.makeNewGameState({boards: [board1, board2]});
         expect(gameState.status).toEqual(Status.NotStarted);
     });
 
     it("creates_PlacingWall_status", () => {
-        const board = new Board(Board.idCounter++, "", [[]], pos, pos, Status.PlacingWalls);
-        const gameState = new GameState(usefulFunctions.makeBoardsObject([board, board]));
+        const board = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.PlacingWalls);
+        const gameState = GameStateFactory.makeNewGameState({boards: [board, board]});
         expect(gameState.status).toEqual(Status.PlacingWalls);
     });
 
     it("creates_Playing_status", () => {
-        const board = new Board(Board.idCounter++, "", [[]], pos, pos, Status.Playing);
-        const gameState = new GameState(usefulFunctions.makeBoardsObject([board, board]));
+        const board = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.Playing);
+        const gameState = GameStateFactory.makeNewGameState({boards: [board, board]});
         expect(gameState.status).toEqual(Status.Playing);
     });
 
     it("creates_Finished_status", () => {
-        const board = new Board(Board.idCounter++, "", [[]], pos, pos, Status.Finished);
-        const gameState = new GameState(usefulFunctions.makeBoardsObject([board, board]));
+        const board = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.Finished);
+        const gameState = GameStateFactory.makeNewGameState({boards: [board, board]});
         expect(gameState.status).toEqual(Status.Finished);
     });
 
     it("creates_players_object", () => {
-        const player1 = "abc";
-        const player2 = "def";
-        const players = {
-            0: player1, 
-            1: player2
+        const player1: Player = {
+            id: -1,
+            name: "abc",
+            score: 0
+        };
+        const player2: Player = {
+            id: -2,
+            name: "def",
+            score: 0
+        };
+        const players = [player1, player2];
+        const playersObject = {
+            "-1": {id: -1, name: "abc", score: 0}, 
+            "-2": {id: -2, name: "def", score: 0}
         };
 
-        const board1 = new Board(Board.idCounter++, player1, [[]], pos, pos, Status.NotStarted);
-        const board2 = new Board(Board.idCounter++, player2, [[]], pos, pos, Status.PlacingWalls);
-        const gameState = new GameState(usefulFunctions.makeBoardsObject([board1, board2]));
-        expect(gameState.players).toEqual(players);
+        const board1 = new Board(Board.idCounter++, player1.id, [[]], pos, pos, Status.NotStarted);
+        const board2 = new Board(Board.idCounter++, player2.id, [[]], pos, pos, Status.PlacingWalls);
+        const gameState = GameStateFactory.makeNewGameState({
+            players,
+            boards: [board1, board2]
+        });
+        expect(gameState.players).toEqual(playersObject);
     });
 });
