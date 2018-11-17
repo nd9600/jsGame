@@ -42,7 +42,7 @@ describe("ToggleWallEvent", () => {
             boardID: board.id,
             positionToToggle: {x: 0, y: 1}
         };
-        const gameState = GameStateFactory.makeNewGameState({boards: [board]});
+        const gameState = GameStateFactory.createGameState({boards: [board]});
         const toggleWallEvent = new ToggleWallEvent(eventData);
 
         const newGameState = toggleWallEvent.handle(gameState);

@@ -23,7 +23,7 @@ describe("DirectionEvent", () => {
 
         const board1 = new Board(Board.idCounter++, -1, board1Data, characterPosition1, endPoint);
         const board2 = new Board(Board.idCounter++, -1, board2Data, characterPosition2, endPoint);
-        let gameState = GameStateFactory.makeNewGameState({players: [player1], boards: [board1, board2]});
+        let gameState = GameStateFactory.createGameState({players: [player1], boards: [board1, board2]});
 
         const expectedCharacterPosition = {
             x: 0,

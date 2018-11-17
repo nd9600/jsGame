@@ -8,7 +8,7 @@ describe("ReplacingBoardInGameState", () => {
     it("replaces_board", () => {
         const board1 = new Board(Board.idCounter++, -1, [[Place.Character]], pos, pos, Status.NotStarted);
         const board2 = board1.setPosition(pos, Place.Empty);
-        const gameState = GameStateFactory.makeNewGameState({boards: [board1]});
+        const gameState = GameStateFactory.createGameState({boards: [board1]});
         const gameState2 = gameState.replaceBoard(board2);
         expect(R.values(gameState2.boards)[0]).toEqual(board2);
     });

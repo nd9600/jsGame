@@ -23,7 +23,7 @@ describe("InitialSetupEventTest", () => {
         const initialGameSetupData = { initialPlayerName, size, startPoint, endPoint };
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         const gameState = initialSetupEvent.handle(
-            GameStateFactory.makeNewGameState()
+            GameStateFactory.createGameState()
         );
         const wantedBoard = [
             [Place.Character, Place.Empty, Place.Empty, Place.Empty],

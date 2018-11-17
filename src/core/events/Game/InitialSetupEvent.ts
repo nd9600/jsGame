@@ -7,6 +7,7 @@ import GameState from "@/core/GameState";
 import Player from "@/core/player/Player";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 
 export default class InitialSetupEvent extends Event {
     public type: DispatchedEventNameTypes = "InitialSetupEvent";
@@ -47,9 +48,9 @@ export default class InitialSetupEvent extends Event {
             this.data.endPoint
         );
 
-        const players = usefulFunctions.makePlayersObject([initialPlayer1, initialPlayer2]);
-        const boards = usefulFunctions.makeBoardsObject([initialBoard1, initialBoard2]);
-        const playerBoards = usefulFunctions.makePlayerBoardsObject(players, boards);
+        const players = GameStateFactory.createPlayersObject([initialPlayer1, initialPlayer2]);
+        const boards = GameStateFactory.createBoardsObject([initialBoard1, initialBoard2]);
+        const playerBoards = GameStateFactory.createPlayerBoardsObject(players, boards);
         return new GameState(players, boards, playerBoards);
     }
 }

@@ -50,7 +50,7 @@ export default class EventRunner {
     }
 
     public static runEvents = (listOfEvents: Event[], initialState: (GameState | undefined) = undefined): GameState => {
-        initialState = initialState || GameStateFactory.makeNewGameState();
+        initialState = initialState || GameStateFactory.createGameState();
         const finalState = R.reduce(EventRunner.handleEvent, initialState, listOfEvents);
         return finalState;
     }

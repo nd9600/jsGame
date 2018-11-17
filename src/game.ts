@@ -19,7 +19,7 @@ const [initialPlayerName, size, startPoint, endPoint] = [setup.getInitialPlayerN
 
 const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint};
 const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
-const initialGameState = initialSetupEvent.handle(GameStateFactory.makeNewGameState());
+const initialGameState = initialSetupEvent.handle(GameStateFactory.createGameState());
 
 const player = R.values(initialGameState.players)[0];
 

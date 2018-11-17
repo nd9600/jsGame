@@ -6,7 +6,7 @@ import * as R from "ramda";
 describe("StatusChangeEvent", () => {
 
     it("handles_changing_status", () => {
-        const gameState = GameStateFactory.makeNewGameState();
+        const gameState = GameStateFactory.createGameState();
         const board = R.values(gameState.boards)[0];
 
         const boardID = board.id;

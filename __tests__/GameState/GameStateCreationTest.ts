@@ -8,25 +8,25 @@ describe("GameStateCreation", () => {
     it("creates_NotStarted_status", () => {
         const board1 = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.NotStarted);
         const board2 = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.PlacingWalls);
-        const gameState = GameStateFactory.makeNewGameState({boards: [board1, board2]});
+        const gameState = GameStateFactory.createGameState({boards: [board1, board2]});
         expect(gameState.status).toEqual(Status.NotStarted);
     });
 
     it("creates_PlacingWall_status", () => {
         const board = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.PlacingWalls);
-        const gameState = GameStateFactory.makeNewGameState({boards: [board, board]});
+        const gameState = GameStateFactory.createGameState({boards: [board, board]});
         expect(gameState.status).toEqual(Status.PlacingWalls);
     });
 
     it("creates_Playing_status", () => {
         const board = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.Playing);
-        const gameState = GameStateFactory.makeNewGameState({boards: [board, board]});
+        const gameState = GameStateFactory.createGameState({boards: [board, board]});
         expect(gameState.status).toEqual(Status.Playing);
     });
 
     it("creates_Finished_status", () => {
         const board = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.Finished);
-        const gameState = GameStateFactory.makeNewGameState({boards: [board, board]});
+        const gameState = GameStateFactory.createGameState({boards: [board, board]});
         expect(gameState.status).toEqual(Status.Finished);
     });
 
@@ -49,7 +49,7 @@ describe("GameStateCreation", () => {
 
         const board1 = new Board(Board.idCounter++, player1.id, [[]], pos, pos, Status.NotStarted);
         const board2 = new Board(Board.idCounter++, player2.id, [[]], pos, pos, Status.PlacingWalls);
-        const gameState = GameStateFactory.makeNewGameState({
+        const gameState = GameStateFactory.createGameState({
             players,
             boards: [board1, board2]
         });

@@ -5,7 +5,7 @@ import * as R from "ramda";
 describe("PlayerNameChangeEvent", () => {
 
     it("handles_changing_player_name", () => {
-        const gameState = GameStateFactory.makeNewGameState();
+        const gameState = GameStateFactory.createGameState();
         const player = R.values(gameState.players)[0];
 
         const playerID = player.id;
