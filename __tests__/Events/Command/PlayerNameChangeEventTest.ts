@@ -1,11 +1,11 @@
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
-import usefulFunctions from "@/core/usefulFunctions";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 import * as R from "ramda";
 
 describe("PlayerNameChangeEvent", () => {
 
     it("handles_changing_player_name", () => {
-        const gameState = usefulFunctions.makeNewGameState();
+        const gameState = GameStateFactory.makeNewGameState();
         const player = R.values(gameState.players)[0];
 
         const playerID = player.id;

@@ -1,18 +1,21 @@
 import { Command, Direction } from "@/core/@typings/EventDataTypes";
 import InputEvent from "@/core/events/Game/InputEvent";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 
 describe("InputEvent", () => {
     it("handles_moving_up", () => {
         const command = Command.MoveUp;
-        const inputEvent = new InputEvent(command);
+        const player = GameStateFactory.defaultPlayer;
+        const inputEvent = new InputEvent({command, player});
         const commandEvent = inputEvent.createEvent();
-        expect(commandEvent.data).toEqual(Direction.Up);
+        expect(commandEvent.data.direction).toEqual(Direction.Up);
     });
 
     it("handles_moving_right", () => {
         const command = Command.MoveRight;
-        const inputEvent = new InputEvent(command);
+        const player = GameStateFactory.defaultPlayer;
+        const inputEvent = new InputEvent({command, player});
         const commandEvent = inputEvent.createEvent();
-        expect(commandEvent.data).toEqual(Direction.Right);
+        expect(commandEvent.data.direction).toEqual(Direction.Right);
     });
 });

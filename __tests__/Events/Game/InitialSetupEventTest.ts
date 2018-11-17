@@ -1,6 +1,6 @@
 import { BoardPosition, Place, twoNumbers } from "@/core/@typings/BoardTypes";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
-import usefulFunctions from "@/core/usefulFunctions";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 import TestSetup from "@/shell/TestSetup";
 import * as R from "ramda";
 
@@ -23,7 +23,7 @@ describe("InitialSetupEventTest", () => {
         const initialGameSetupData = { initialPlayerName, size, startPoint, endPoint };
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         const gameState = initialSetupEvent.handle(
-            usefulFunctions.makeNewGameState()
+            GameStateFactory.makeNewGameState()
         );
         const wantedBoard = [
             [Place.Character, Place.Empty, Place.Empty, Place.Empty],

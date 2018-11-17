@@ -10,8 +10,8 @@ import InputEvent from "@/core/events/Game/InputEvent";
 import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 import GameState from "@/core/GameState";
-import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
 
 export default class EventRunner {
@@ -50,7 +50,7 @@ export default class EventRunner {
     }
 
     public static runEvents = (listOfEvents: Event[], initialState: (GameState | undefined) = undefined): GameState => {
-        initialState = initialState || usefulFunctions.makeNewGameState();
+        initialState = initialState || GameStateFactory.makeNewGameState();
         const finalState = R.reduce(EventRunner.handleEvent, initialState, listOfEvents);
         return finalState;
     }

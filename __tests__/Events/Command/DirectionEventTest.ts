@@ -1,11 +1,10 @@
-import { BoardType, Place, BoardPosition } from "@/core/@typings/BoardTypes";
+import { BoardPosition, BoardType, Place } from "@/core/@typings/BoardTypes";
 import { Direction } from "@/core/@typings/EventDataTypes";
 import Board from "@/core/board/Board";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
-import GameState from "@/core/GameState";
-import usefulFunctions from "@/core/usefulFunctions";
-import * as R from "ramda";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 import Player from "@/core/player/Player";
+import * as R from "ramda";
 
 describe("DirectionEvent", () => {
     const endPoint = {
@@ -24,7 +23,7 @@ describe("DirectionEvent", () => {
 
         const board1 = new Board(Board.idCounter++, -1, board1Data, characterPosition1, endPoint);
         const board2 = new Board(Board.idCounter++, -1, board2Data, characterPosition2, endPoint);
-        let gameState = usefulFunctions.makeNewGameState({players: [player1], boards: [board1, board2]});
+        let gameState = GameStateFactory.makeNewGameState({players: [player1], boards: [board1, board2]});
 
         const expectedCharacterPosition = {
             x: 0,

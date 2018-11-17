@@ -1,6 +1,6 @@
 import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
-import usefulFunctions from "@/core/usefulFunctions";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import UserInput from "@/shell/interaction/UserInput";
@@ -19,7 +19,7 @@ const [initialPlayerName, size, startPoint, endPoint] = [setup.getInitialPlayerN
 
 const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint};
 const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
-const initialGameState = initialSetupEvent.handle(usefulFunctions.makeNewGameState());
+const initialGameState = initialSetupEvent.handle(GameStateFactory.makeNewGameState());
 
 const player = R.values(initialGameState.players)[0];
 

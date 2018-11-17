@@ -1,12 +1,12 @@
 import { Status } from "@/core/@typings/BoardTypes";
 import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
-import usefulFunctions from "@/core/usefulFunctions";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 import * as R from "ramda";
 
 describe("StatusChangeEvent", () => {
 
     it("handles_changing_status", () => {
-        const gameState = usefulFunctions.makeNewGameState();
+        const gameState = GameStateFactory.makeNewGameState();
         const board = R.values(gameState.boards)[0];
 
         const boardID = board.id;
