@@ -19,7 +19,7 @@ export default class PlayerNameChangeEvent extends CommandEvent {
 
     public handle(gameState: GameState): GameState {
         const oldPlayer = gameState.players[this.data.playerID];
-        const newBoard = PlayerBuilder.mergeWithOptions(oldPlayer, {name: this.data.newPlayerName});
-        return gameState.replacePlayer(oldPlayer);
+        const newPlayer = PlayerBuilder.mergeWithOptions(oldPlayer, {name: this.data.newPlayerName});
+        return gameState.replacePlayer(newPlayer);
     }
 }
