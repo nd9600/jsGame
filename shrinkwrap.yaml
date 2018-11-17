@@ -6241,10 +6241,11 @@ packages:
     dev: true
     name: '@types/ramda'
     resolution:
+      registry: 'https://registry.npmjs.org/'
       tarball: 'https://codeload.github.com/types/npm-ramda/tar.gz/9529aa3c8ff70ff84afcbc0be83443c00f30ea90'
     version: 0.25.0
 registry: 'https://registry.npmjs.org/'
-shrinkwrapMinorVersion: 9
+shrinkwrapMinorVersion: 8
 shrinkwrapVersion: 3
 specifiers:
   '@tweenjs/tween.js': ^17.2.0
