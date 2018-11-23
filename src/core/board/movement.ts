@@ -5,10 +5,10 @@ import FailedMovementEvent from "@/core/events/Movement/FailedMovementEvent";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEvent";
 import GameState from "@/core/GameState";
+import Player from "@/core/player/Player";
 import PlayerBoard from "@/core/player/PlayerBoard";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
-import Player from "../player/Player";
 
 /**
  * Returns the position that could be moved in to (if any), given a list of possible positions
@@ -68,6 +68,10 @@ function getPositionToMoveIntoForBoard(board: Board, playerBoard: PlayerBoard, d
     const fromPosition = playerBoard.characterPosition;
     switch (direction) {
         case Direction.Up: {
+
+            // ###########################################
+            // todo: test these FailedMovementEvents
+            // ###########################################
             if (fromPosition.y === 0) {
                 return new FailedMovementEvent(usefulFunctions.makeError("MovementError", "at top of board"));
             }
