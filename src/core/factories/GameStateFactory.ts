@@ -37,7 +37,7 @@ export default class GameStateFactory {
                     playerID,
                     boardID,
                     characterPosition: board.startPoint,
-                    boardStatus: Status.NotStarted
+                    boardStatus: board.status
                 };
                 playerBoardsForThisPlayer[boardID] = thisPlayerBoard;
             }
