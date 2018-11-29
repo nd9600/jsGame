@@ -1,9 +1,10 @@
 import { Status } from "@/core/@typings/BoardTypes";
 import { Command, Direction } from "@/core/@typings/EventDataTypes";
 import { DispatchedEvent } from "@/core/@typings/EventTypes";
-import CommandEvent from "@/core/events/Command/CommandEvent";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
+import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
+import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
 import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
 import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 import EventRunner from "@/core/events/EventRunner";
@@ -16,7 +17,7 @@ import GameStateFactory from "@/core/factories/GameStateFactory";
 
 describe("EventApplication", () => {
 
-    it("applies_a_list_of_events", () => {
+    it("makes_a_list_of_events", () => {
         const listOfEventObjects: DispatchedEvent[] = [
             { type: "InitialSetupEvent", data: {initialPlayerName: "x", size: [4, 4], startPoint: { x: 0, y: 0 }, endPoint: { x: 3, y: 3 }} },
             { type: "InputEvent", data: {command: Command.MoveDown, player: GameStateFactory.defaultPlayer}},
@@ -26,6 +27,8 @@ describe("EventApplication", () => {
             { type: "DirectionEvent", data: {direction: Direction.Down, player: GameStateFactory.defaultPlayer} },
             { type: "PlayerNameChangeEvent", data: {playerID: 0, newPlayerName: "x"} },
             { type: "StatusChangeEvent", data: {boardID: 0, newStatus: Status.Finished} },
+            { type: "StartPointChangeEvent", data: {boardID: 0, newStartPoint: {x: 0, y: 0}} },
+            { type: "EndPointChangeEvent", data: {boardID: 0, newEndPoint: {x: 0, y: 0}} },
             { type: "ToggleWallEvent", data: {boardID: 0, positionToToggle: {x: 0, y: 0}} },
         ];
         const expectedListOfEvents: object[] = [
@@ -37,6 +40,8 @@ describe("EventApplication", () => {
             new DirectionEvent({direction: Direction.Down, player: GameStateFactory.defaultPlayer}),
             new PlayerNameChangeEvent({playerID: 0, newPlayerName: "x"}),
             new StatusChangeEvent({boardID: 0, newStatus: Status.Finished}),
+            new StartPointChangeEvent({boardID: 0, newStartPoint: {x: 0, y: 0}}),
+            new EndPointChangeEvent({boardID: 0, newEndPoint: {x: 0, y: 0}}),
             new ToggleWallEvent({boardID: 0, positionToToggle: {x: 0, y: 0}}),
         ];
 

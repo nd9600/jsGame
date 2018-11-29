@@ -13,6 +13,8 @@ import SuccessfulMovementEvent from "@/core/events/Movement/SuccessfulMovementEv
 import GameStateFactory from "@/core/factories/GameStateFactory";
 import GameState from "@/core/GameState";
 import * as R from "ramda";
+import EndPointChangeEvent from "./Command/EndPointChangeEvent";
+import StartPointChangeEvent from "./Command/StartPointChangeEvent";
 
 export default class EventRunner {
     private static handleEvent = (gameState: GameState, event: Event): GameState => event.handle(gameState);
@@ -38,6 +40,10 @@ export default class EventRunner {
                     return new PlayerNameChangeEvent(dispatchedEvent.data);
                 } case "StatusChangeEvent": {
                     return new StatusChangeEvent(dispatchedEvent.data);
+                } case "StartPointChangeEvent": {
+                    return new StartPointChangeEvent(dispatchedEvent.data);
+                } case "EndPointChangeEvent": {
+                    return new EndPointChangeEvent(dispatchedEvent.data);
                 } case "ToggleWallEvent": {
                     return new ToggleWallEvent(dispatchedEvent.data);
                 } 

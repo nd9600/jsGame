@@ -1,4 +1,4 @@
-import { DirectionEventData, InitialGameSetupData, InputEventData, PlayerNameChangeEventData, StatusChangeEventData, SuccessfulMovementEventData, ToggleWallEventData } from "@/core/@typings/EventDataTypes";
+import { DirectionEventData, EndPointChangeEventData, InitialGameSetupData, InputEventData, PlayerNameChangeEventData, StartPointChangeEventData, StatusChangeEventData, SuccessfulMovementEventData, ToggleWallEventData } from "@/core/@typings/EventDataTypes";
 import { IError } from "@/core/@typings/GeneralTypes";
 
 
@@ -34,7 +34,7 @@ interface DispatchedSuccessfulMovementEventEvent {
 
 interface DispatchedCommandEvent {
     type: "CommandEvent";
-    data?: InputEventData | DirectionEventData | PlayerNameChangeEventData | StatusChangeEventData | ToggleWallEventData;
+    data?: InputEventData | DirectionEventData | PlayerNameChangeEventData | StatusChangeEventData | StartPointChangeEventData | EndPointChangeEventData | ToggleWallEventData;
 }
 
 interface DispatchedDirectionEvent {
@@ -52,6 +52,16 @@ interface DispatchedStatusChangeEvent {
     data: StatusChangeEventData;
 }
 
+interface DispatchedStartPointChangeEvent {
+    type: "StartPointChangeEvent";
+    data: StartPointChangeEventData;
+}
+
+interface DispatchedEndPointChangeEvent {
+    type: "EndPointChangeEvent";
+    data: EndPointChangeEventData;
+}
+
 interface DispatchedToggleWallEvent {
     type: "ToggleWallEvent";
     data: ToggleWallEventData;
@@ -66,6 +76,8 @@ type DispatchedEvent = DispatchedInitialSetupEvent
     | DispatchedDirectionEvent 
     | DispatchedPlayerNameChangeEvent 
     | DispatchedStatusChangeEvent 
+    | DispatchedStartPointChangeEvent
+    | DispatchedEndPointChangeEvent
     | DispatchedToggleWallEvent;
 
 type DispatchedEventNameTypes = DispatchedGeneralEvent["type"] 

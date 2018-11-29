@@ -47,10 +47,20 @@ interface StatusChangeEventData {
     newStatus: Status;
 }
 
+interface StartPointChangeEventData {
+    boardID: number;
+    newStartPoint: BoardPosition;
+}
+
+interface EndPointChangeEventData {
+    boardID: number;
+    newEndPoint: BoardPosition;
+}
+
 interface ToggleWallEventData {
     boardID: number;
     positionToToggle: BoardPosition;
 }
 
-export { Command, Direction, SuccessfulMovementEventData, InitialGameSetupData, InputEventData, DirectionEventData, PlayerNameChangeEventData, StatusChangeEventData, ToggleWallEventData };
+export { Command, Direction, SuccessfulMovementEventData, InitialGameSetupData, InputEventData, DirectionEventData, PlayerNameChangeEventData, StatusChangeEventData, StartPointChangeEventData, EndPointChangeEventData, ToggleWallEventData };
 

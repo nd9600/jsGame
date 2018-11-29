@@ -35,6 +35,8 @@ export default class Board {
 
     public setStartPoint = (startPoint: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {startPoint});
 
+    public setEndPoint = (endPoint: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {endPoint});
+
     public setStatus = (status: Status): Board => BoardBuilder.mergeWithOptions(this, {status});
 
     public toggleWallAtPosition = (positionToToggle: BoardPosition): Board => {
