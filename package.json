@@ -81,7 +81,8 @@
     }
   },
   "jest": {
-    "verbose": true,
+    "bail": false,
+    "verbose": false,
     "globals": {
       "NODE_ENV": "test"
     },
