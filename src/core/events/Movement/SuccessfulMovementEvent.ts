@@ -1,6 +1,6 @@
-import { Status } from "@/core/@typings/BoardTypes";
 import { SuccessfulMovementEventData } from "@/core/@typings/EventDataTypes";
 import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
+import { PlayerBoardStatus } from "@/core/@typings/PlayerTypes";
 import Event from "@/core/events/Event";
 import MovementEvent from "@/core/events/Movement/MovementEvent";
 import GameState from "@/core/GameState";
@@ -25,7 +25,7 @@ export default class SuccessfulMovementEvent extends MovementEvent {
 
         return gameState.replacePlayerBoard(PlayerBoardBuilder.mergeWithOptions(playerBoard, {
             characterPosition: this.data.newCharacterPosition,
-            boardStatus: (boardIsSolved ? Status.Finished : Status.Playing)
+            boardStatus: (boardIsSolved ? PlayerBoardStatus.Finished : PlayerBoardStatus.Playing)
         }));
     }
 }

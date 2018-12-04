@@ -4,6 +4,8 @@ import GameState from "@/core/GameState";
 import Player from "@/core/player/Player";
 import PlayerBoard from "@/core/player/PlayerBoard";
 import * as R from "ramda";
+import { Status } from "@/core/@typings/BoardTypes";
+import { PlayerBoardStatus } from "@/core//@typings/PlayerTypes";
 
 export default class GameStateFactory {
     private static defaultPosition = { x: 0, y: 0 };
@@ -36,7 +38,7 @@ export default class GameStateFactory {
                     playerID,
                     boardID,
                     board.startPoint,
-                    board.status
+                    (board.status === Status.Finished) ? PlayerBoardStatus.Finished : PlayerBoardStatus.Playing
                 );
                 playerBoardsForThisPlayer[boardID] = thisPlayerBoard;
             }

@@ -1,4 +1,9 @@
-import { BoardPosition, Status } from "./BoardTypes";
+import { BoardPosition } from "./BoardTypes";
+
+enum PlayerBoardStatus {
+    Playing = "Playing",
+    Finished = "Finished"
+}
 
 /**
  * A list of possible options that can be used to make a new player from an existing one
@@ -10,7 +15,7 @@ interface PlayerOptions {
 
 interface PlayerBoardOptions {
     characterPosition?: BoardPosition;
-    boardStatus?: Status;
+    boardStatus?: PlayerBoardStatus;
 }
 
-export { PlayerOptions, PlayerBoardOptions };
+export { PlayerBoardStatus, PlayerOptions, PlayerBoardOptions };
