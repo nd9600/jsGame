@@ -42,7 +42,8 @@ export default class Board {
     }
 
     public getCurrentInfo = (): string => {
-        return `Start point: ${JSON.stringify(this.startPoint)}
+        return `Board #${this.id}
+Start point: ${JSON.stringify(this.startPoint)}
 End point: ${JSON.stringify(this.endPoint)}
 Board:
 ${this.boardAsString()}`;
@@ -60,12 +61,6 @@ ${this.boardAsString()}`;
         if (this.status !== Status.PlacingWalls) {
             return this;
         }
-
-        console.log({
-            positionToToggle,
-            startPoint: this.startPoint,
-            endPoint: this.endPoint
-        });
 
         // you can't put a wall at the start or end point
         if (R.equals(positionToToggle, this.startPoint) || R.equals(positionToToggle, this.endPoint)) {

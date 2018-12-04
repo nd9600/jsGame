@@ -1,4 +1,3 @@
-import { Status } from "@/core/@typings/BoardTypes";
 import { Boards, PlayerBoards, Players } from "@/core/@typings/GameStateTypes";
 import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
@@ -33,12 +32,12 @@ export default class GameStateFactory {
             for (const boardIDString of Object.keys(boards)) {
                 const boardID = Number(boardIDString);
                 const board = R.prop(boardID, boards);
-                const thisPlayerBoard: PlayerBoard = {
+                const thisPlayerBoard = new PlayerBoard(
                     playerID,
                     boardID,
-                    characterPosition: board.startPoint,
-                    boardStatus: board.status
-                };
+                    board.startPoint,
+                    board.status
+                );
                 playerBoardsForThisPlayer[boardID] = thisPlayerBoard;
             }
             playerBoards[playerID] = playerBoardsForThisPlayer;
