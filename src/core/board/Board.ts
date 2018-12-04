@@ -28,9 +28,17 @@ export default class Board {
         this.currentNumberOfWalls = usefulFunctions.countNumberOf(Place.Wall, R.flatten(this.boardData));
     }
 
-    public boardAsString = (separator: string = "\n"): string => {
-        const rowsJoined = R.map(R.join(" ", ), this.boardData);
-        return R.join(separator, rowsJoined);
+    public boardAsString = (rowSeparator: string = "\n"): string => {
+        const rowNumbers = usefulFunctions.range(0, this.numberOfRows);
+        const columnNumbers = usefulFunctions.range(0, this.numberOfColumns);
+
+        const rowZipper = (rowNumber: number, row: Place[]) => R.prepend(String(rowNumber), row);
+        const rowsWithRowNumbers = R.zipWith(rowZipper, rowNumbers, this.boardData);
+        const rowsAsStrings = R.map(R.join(" "), rowsWithRowNumbers);
+        const boardString = R.join(rowSeparator, rowsAsStrings);
+
+        const top = `  ${R.join(" ", columnNumbers)}\n`;
+        return R.join("", [top, boardString]);
     }
 
     public setStartPoint = (startPoint: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {startPoint});

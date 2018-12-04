@@ -19,7 +19,7 @@ export default class StartPointChangeEvent extends CommandEvent {
 
     public handle(gameState: GameState): GameState {
         const oldBoard = gameState.boards[this.data.boardID];
-        const newBoard = BoardBuilder.mergeWithOptions(oldBoard, {startPoint: this.data.newStartPoint});
+        const newBoard = oldBoard.setStartPoint(this.data.newStartPoint);
         return gameState.replaceBoard(newBoard);
     }
 }

@@ -19,7 +19,7 @@ export default class EndPointChangeEvent extends CommandEvent {
 
     public handle(gameState: GameState): GameState {
         const oldBoard = gameState.boards[this.data.boardID];
-        const newBoard = BoardBuilder.mergeWithOptions(oldBoard, {endPoint: this.data.newEndPoint});
+        const newBoard = oldBoard.setEndPoint(this.data.newEndPoint);
         return gameState.replaceBoard(newBoard);
     }
 }

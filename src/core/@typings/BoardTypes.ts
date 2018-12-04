@@ -9,13 +9,17 @@ interface BoardOptions {
 }
 
 type BoardType = Place[][];
+
+/**
+ * number of rows X number of columns
+ */
 type twoNumbers = [number, number];
 
 enum Place {
     Character = "c",
     Wall = "x",
     Empty = " ",
-    End = "end"
+    End = "e"
 }
 
 interface BoardPosition {

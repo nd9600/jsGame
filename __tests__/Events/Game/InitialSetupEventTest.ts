@@ -26,10 +26,10 @@ describe("InitialSetupEventTest", () => {
             GameStateFactory.createGameState()
         );
         const wantedBoard = [
-            [Place.Character, Place.Empty, Place.Empty, Place.Empty],
             [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
             [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
-            [Place.Empty, Place.Empty, Place.Empty, Place.End]
+            [Place.Empty, Place.Empty, Place.Empty, Place.Empty],
+            [Place.Empty, Place.Empty, Place.Empty, Place.Empty]
         ];
         
         const board = R.values(gameState.boards)[0];
