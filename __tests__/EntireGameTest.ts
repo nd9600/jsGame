@@ -76,7 +76,7 @@ describe("TheEntireGame", () => {
         expect(board1.endPoint).toBe(newBoard1EndPoint);
 
         // ####################
-        // players change statuses
+        // players change statuses to PlacingWalls
         // ####################
 
         gameState = EventRunner.runEvents([
@@ -120,5 +120,18 @@ describe("TheEntireGame", () => {
             [Place.Empty, Place.Empty, Place.Wall, Place.Empty],
             [Place.Empty, Place.Wall, Place.Empty, Place.Empty],
         ]);
+
+        // ####################
+        // players change statuses to Playing
+        // ####################
+
+        gameState = EventRunner.runEvents([
+            new StatusChangeEvent({boardID: board0.id, newStatus: Status.Playing}),
+            new StatusChangeEvent({boardID: board1.id, newStatus: Status.Playing})
+        ], gameState);
+        [board0, board1] = getBoardsFromGameState(gameState);
+
+        expect(board0.status).toBe(Status.Playing);
+        expect(board1.status).toBe(Status.Playing);
     });
 });
