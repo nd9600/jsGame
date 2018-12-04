@@ -46,7 +46,7 @@ export default class Board {
 Start point: ${JSON.stringify(this.startPoint)}
 End point: ${JSON.stringify(this.endPoint)}
 Board:
-${this.boardAsString()}`;
+${this.boardAsString()}\n\n`;
     }
 
     public setStartPoint = (startPoint: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {startPoint});

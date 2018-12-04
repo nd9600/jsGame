@@ -10,12 +10,10 @@ interface Boards {
     [id: number]: Board;
 }
 
-interface PlayerBoardsInternalObject {
-    [boardID: number]: PlayerBoard;
-}
-
 interface PlayerBoards {
-    [playerID: number]: PlayerBoardsInternalObject;
+    [playerID: number]: {
+        [boardID: number]: PlayerBoard;
+    };
 }
 
 export { Players, Boards, PlayerBoards };

@@ -12,6 +12,8 @@ import GameState from "@/core/GameState";
 import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import * as R from "ramda";
+import DirectionEvent from "@/core/events/Command/DirectionEvent";
+import { Direction } from "@/core/@typings/EventDataTypes";
 
 describe("TheEntireGame", () => {
 
@@ -133,5 +135,17 @@ describe("TheEntireGame", () => {
 
         expect(board0.status).toBe(Status.Playing);
         expect(board1.status).toBe(Status.Playing);
+
+        // ####################
+        // players try to get to the end
+        // ####################
+
+        throw new Error(JSON.stringify(gameState.playerBoards));
+        throw new Error(gameState.getCurrentInfo());
+
+        gameState = EventRunner.runEvents([
+            new DirectionEvent({ direction: Direction.Right, player: player0}),
+        ], gameState);
+        [board0, board1] = getBoardsFromGameState(gameState);
     });
 });

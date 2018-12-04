@@ -49,4 +49,13 @@ export default class GameState {
         const newPlayerBoards = R.assocPath([playerID, boardID], newPlayerBoard, this.playerBoards);
         return new GameState(this.players, this.boards, newPlayerBoards);
     }
+
+    public getCurrentInfo(): string {
+        let info = "";
+        for (const board of R.values(this.boards)) {
+            info = info + board.getCurrentInfo();
+        }
+
+        return info;
+    }
 }
