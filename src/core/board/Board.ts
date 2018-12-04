@@ -61,6 +61,17 @@ ${this.boardAsString()}`;
             return this;
         }
 
+        console.log({
+            positionToToggle,
+            startPoint: this.startPoint,
+            endPoint: this.endPoint
+        });
+
+        // you can't put a wall at the start or end point
+        if (R.equals(positionToToggle, this.startPoint) || R.equals(positionToToggle, this.endPoint)) {
+            return this;
+        }
+
         const thingAtPosition = this.getPosition(positionToToggle);
         if (thingAtPosition !== Place.Wall && thingAtPosition !== Place.Empty) {
             return this;

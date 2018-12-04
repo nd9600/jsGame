@@ -138,6 +138,28 @@ describe("PlacingWalls", () => {
         expect(newBoard.boardData).toEqual(board.boardData);
     });
 
+    it("cant_toggle_when_start_or_end_point", () => {
+        const boardData: BoardType = [
+            [Place.Wall],
+            [Place.Wall],
+            [Place.Empty],
+            [Place.Empty],
+            [Place.Wall]
+        ];
+
+        const board = new Board(
+            Board.idCounter++,
+            -1,
+            boardData,
+            startPoint,
+            endPoint
+        );
+        const newBoard = board.setStatus(Status.PlacingWalls)
+            .toggleWallAtPosition(startPoint)
+            .toggleWallAtPosition(endPoint);
+
+        expect(newBoard.boardData).toEqual(board.boardData);
+    });
 
     it("sets_wall", () => {
         const boardData: BoardType = [
@@ -156,13 +178,13 @@ describe("PlacingWalls", () => {
             endPoint
         );
         const newBoard = board.setStatus(Status.PlacingWalls)
-            .toggleWallAtPosition({x: 0, y: 0});
+            .toggleWallAtPosition({x: 0, y: 3});
 
         const wantedBoardData = [
-            [Place.Wall],
+            [Place.Empty],
             [Place.Character],
             [Place.Wall],
-            [Place.Empty],
+            [Place.Wall],
             [Place.Empty]
         ];
 
