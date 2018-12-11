@@ -3,6 +3,7 @@ import CommandEvent from "@/core/events/Command/CommandEvent";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
+import SetPlayerBoardStatusToFinishedEvent from "@/core/events/Command/SetPlayerBoardStatusToFinishedEvent";
 import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
 import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
 import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
@@ -40,6 +41,8 @@ export default class EventRunner {
                     return new PlayerNameChangeEvent(dispatchedEvent.data);
                 } case "StatusChangeEvent": {
                     return new StatusChangeEvent(dispatchedEvent.data);
+                } case "SetPlayerBoardStatusToFinishedEvent": {
+                    return new SetPlayerBoardStatusToFinishedEvent(dispatchedEvent.data);
                 } case "StartPointChangeEvent": {
                     return new StartPointChangeEvent(dispatchedEvent.data);
                 } case "EndPointChangeEvent": {

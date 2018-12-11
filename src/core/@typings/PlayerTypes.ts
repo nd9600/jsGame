@@ -2,7 +2,8 @@ import { BoardPosition } from "./BoardTypes";
 
 enum PlayerBoardStatus {
     Playing = "Playing",
-    Finished = "Finished"
+    Solved = "Solved",
+    Finished = "Finished",
 }
 
 /**

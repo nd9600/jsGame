@@ -181,9 +181,9 @@ describe("TheEntireGame", () => {
 
         ], gameState);
         let [player0Board0, player0Board1, player1Board0, player1Board1] = getPlayerBoardsFromGameState(gameState);
-        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Solved);
         expect(player0Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
-        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Solved);
         expect(player1Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
         throw new Error(gameState.getCurrentInfo());
 

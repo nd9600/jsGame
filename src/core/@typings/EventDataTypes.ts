@@ -49,6 +49,11 @@ interface StatusChangeEventData {
     newStatus: Status;
 }
 
+interface SetPlayerBoardStatusToFinishedEventData {
+    playerID: number;
+    boardID: number;
+}
+
 interface StartPointChangeEventData {
     boardID: number;
     newStartPoint: BoardPosition;
@@ -64,5 +69,5 @@ interface ToggleWallEventData {
     positionToToggle: BoardPosition;
 }
 
-export { Command, Direction, SuccessfulMovementEventData, InitialGameSetupData, InputEventData, DirectionEventData, PlayerNameChangeEventData, StatusChangeEventData, StartPointChangeEventData, EndPointChangeEventData, ToggleWallEventData };
+export { Command, Direction, SuccessfulMovementEventData, InitialGameSetupData, InputEventData, DirectionEventData, PlayerNameChangeEventData, StatusChangeEventData, SetPlayerBoardStatusToFinishedEventData, StartPointChangeEventData, EndPointChangeEventData, ToggleWallEventData };
 

@@ -25,7 +25,7 @@ export default class SuccessfulMovementEvent extends MovementEvent {
 
         return gameState.replacePlayerBoard(PlayerBoardBuilder.mergeWithOptions(playerBoard, {
             characterPosition: this.data.newCharacterPosition,
-            boardStatus: (boardIsSolved ? PlayerBoardStatus.Finished : PlayerBoardStatus.Playing)
+            boardStatus: (boardIsSolved ? PlayerBoardStatus.Solved : PlayerBoardStatus.Playing)
         }));
     }
 }
