@@ -26,9 +26,9 @@ describe("EventApplication", () => {
     it("applies_a_list_of_events", () => {
         const player0 = GameStateFactory.defaultPlayer();
         const player1 = GameStateFactory.defaultPlayer();
-        const board0 = GameStateFactory.defaultBoard();
-        const board1 = GameStateFactory.defaultBoard();
-
+        const board0 = GameStateFactory.defaultBoard(player0.id);
+        const board1 = GameStateFactory.defaultBoard(player1.id);
+        
         const listOfEventObjects: DispatchedEvent[] = [
             {
                 type: "InitialSetupEvent",

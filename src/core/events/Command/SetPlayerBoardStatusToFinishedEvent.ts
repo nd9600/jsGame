@@ -57,6 +57,9 @@ export default class SetPlayerBoardStatusToFinishedEvent extends CommandEvent {
             for (const board of R.values(newGameState.boards)) {
                 const creatorID = board.creatorID;
                 const opponentID = Number(R.difference(playerIDs, [String(creatorID)])[0]);
+
+                // throw new Error(JSON.stringify(newGameState.playerBoards));
+
                 const creatorFinishedBoard = newGameState.getPlayerBoard(creatorID, board.id).characterPosition === board.endPoint;
                 const opponentFinishedBoard = newGameState.getPlayerBoard(opponentID, board.id).characterPosition === board.endPoint;
 

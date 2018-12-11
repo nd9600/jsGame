@@ -14,13 +14,17 @@ export default class GameStateFactory {
         return new Player(Player.idCounter++, "", 0);
     }
 
-    public static defaultBoard() {
-        return new Board(Board.idCounter++, GameStateFactory.defaultPlayer().id, [[]], GameStateFactory.defaultPosition, GameStateFactory.defaultPosition);
+    public static defaultBoard(playerID: number) {
+        return new Board(Board.idCounter++, playerID, [[]], GameStateFactory.defaultPosition, GameStateFactory.defaultPosition);
     }
 
     public static createGameState(newGameStateData?: {players?: Player[]; boards?: Board[]; }): GameState {
-        const initialPlayers = newGameStateData && newGameStateData.players || [GameStateFactory.defaultPlayer()];
-        const initialBoards = newGameStateData && newGameStateData.boards || [GameStateFactory.defaultBoard()];
+        const initialPlayers = newGameStateData && newGameStateData.players 
+            ? newGameStateData.players 
+            : [this.defaultPlayer()];
+        const initialBoards = newGameStateData && newGameStateData.boards
+            ? newGameStateData.boards
+            : [this.defaultBoard(initialPlayers[0].id)];
 
         const playersObject = GameStateFactory.createPlayersObject(initialPlayers);
         const boardsObject = GameStateFactory.createBoardsObject(initialBoards);
