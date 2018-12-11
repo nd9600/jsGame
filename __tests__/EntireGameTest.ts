@@ -14,6 +14,7 @@ import GameState from "@/core/GameState";
 import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import * as R from "ramda";
+import PlayerBoard from "@/core/player/PlayerBoard";
 
 describe("TheEntireGame", () => {
 
@@ -23,6 +24,17 @@ describe("TheEntireGame", () => {
 
     function getBoardsFromGameState(gameState: GameState): Board[] {
         return R.values(gameState.boards);
+    }
+
+    function getPlayerBoardsFromGameState(gameState: GameState): PlayerBoard[] {
+        const playerBoards: PlayerBoard[] = [];
+        for (const player of R.values(gameState.players)) {
+            const playerBoardsForThisPlayer = R.prop(player.id, gameState.playerBoards);
+            for (const playerBoard of R.values(playerBoardsForThisPlayer)) {
+                playerBoards.push(playerBoard);
+            }
+        }
+        return playerBoards;
     }
 
     it("plays a whole round", () => {
@@ -167,7 +179,8 @@ describe("TheEntireGame", () => {
             new DirectionEvent({direction: Direction.Up, player: player1}),
 
         ], gameState);
-        [board0, board1] = getBoardsFromGameState(gameState);
+        let [player0Board0, player0Board1, player1Board0, player1Board1] = getPlayerBoardsFromGameState(gameState);
+        throw new Error(JSON.stringify([player0Board0, player0Board1, player1Board0, player1Board1]));
 
         throw new Error(gameState.getCurrentInfo());
         throw new Error(JSON.stringify(gameState.playerBoards));
