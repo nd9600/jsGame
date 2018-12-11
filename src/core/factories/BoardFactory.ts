@@ -2,7 +2,7 @@ import { BoardPosition, BoardType, Place, twoNumbers } from "@/core/@typings/Boa
 import * as R from "ramda";
 
 export default class BoardFactory {
-    public static makeInitialBoard(size: twoNumbers, startPoint: BoardPosition, endPoint: BoardPosition): BoardType {
+    public static makeInitialBoard(size: twoNumbers): BoardType {
         const numberOfRows = size[0];
         const numberOfColumns = size[1];
         const initialRow = R.map(R.always(Place.Empty), [...Array(numberOfColumns)]);

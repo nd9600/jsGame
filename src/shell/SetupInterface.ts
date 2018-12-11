@@ -13,4 +13,7 @@ export interface SetupInterface {
 
     getStartPoint(): BoardPosition;
     getEndPoint(): BoardPosition;
+
+    getPlayerIDs(): [number, number];
+    getBoardIDs(): [number, number];
 }

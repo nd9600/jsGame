@@ -18,31 +18,36 @@ import GameStateFactory from "@/core/factories/GameStateFactory";
 describe("EventApplication", () => {
 
     it("makes_a_list_of_events", () => {
+        const player0 = GameStateFactory.defaultPlayer();
+        const player1 = GameStateFactory.defaultPlayer();
+        const board0 = GameStateFactory.defaultBoard();
+        const board1 = GameStateFactory.defaultBoard();
+
         const listOfEventObjects: DispatchedEvent[] = [
-            { type: "InitialSetupEvent", data: {initialPlayerName: "x", size: [4, 4], startPoint: { x: 0, y: 0 }, endPoint: { x: 3, y: 3 }} },
-            { type: "InputEvent", data: {command: Command.MoveDown, player: GameStateFactory.defaultPlayer}},
+            { type: "InitialSetupEvent", data: {initialPlayerName: "x", size: [4, 4], startPoint: { x: 0, y: 0 }, endPoint: { x: 3, y: 3 }, playerIDs: [player0.id, player1.id], boardIDs: [board0.id, board1.id]} },
+            { type: "InputEvent", data: {command: Command.MoveDown, player: player0}},
             { type: "FailedMovementEvent", data: {name: "error", message: "msg"} },
             { type: "MovementEvent" },
-            { type: "SuccessfulMovementEvent", data: {boardID: 0, playerID: 0, newCharacterPosition: {x: 0, y: 0}} },
-            { type: "DirectionEvent", data: {direction: Direction.Down, player: GameStateFactory.defaultPlayer} },
+            { type: "SuccessfulMovementEvent", data: {boardID: board0.id, playerID: 0, newCharacterPosition: {x: 0, y: 0}} },
+            { type: "DirectionEvent", data: {direction: Direction.Down, player: player0} },
             { type: "PlayerNameChangeEvent", data: {playerID: 0, newPlayerName: "x"} },
-            { type: "StatusChangeEvent", data: {boardID: 0, newStatus: Status.Finished} },
-            { type: "StartPointChangeEvent", data: {boardID: 0, newStartPoint: {x: 0, y: 0}} },
-            { type: "EndPointChangeEvent", data: {boardID: 0, newEndPoint: {x: 0, y: 0}} },
-            { type: "ToggleWallEvent", data: {boardID: 0, positionToToggle: {x: 0, y: 0}} },
+            { type: "StatusChangeEvent", data: {boardID: board0.id, newStatus: Status.Finished} },
+            { type: "StartPointChangeEvent", data: {boardID: board0.id, newStartPoint: {x: 0, y: 0}} },
+            { type: "EndPointChangeEvent", data: {boardID: board0.id, newEndPoint: {x: 0, y: 0}} },
+            { type: "ToggleWallEvent", data: {boardID: board0.id, positionToToggle: {x: 0, y: 0}} },
         ];
         const expectedListOfEvents: object[] = [
-            new InitialSetupEvent({initialPlayerName: "x", size: [4, 4], startPoint: { x: 0, y: 0 }, endPoint: { x: 3, y: 3 }}),
-            new InputEvent({command: Command.MoveDown, player: GameStateFactory.defaultPlayer}),
+            new InitialSetupEvent({initialPlayerName: "x", size: [4, 4], startPoint: { x: 0, y: 0 }, endPoint: { x: 3, y: 3 }, playerIDs: [player0.id, player1.id], boardIDs: [board0.id, board1.id]}),
+            new InputEvent({command: Command.MoveDown, player: player0}),
             new FailedMovementEvent({ name: "error", message: "msg" }),
             new MovementEvent(),
-            new SuccessfulMovementEvent({boardID: 0, playerID: 0, newCharacterPosition: {x: 0, y: 0}}),
-            new DirectionEvent({direction: Direction.Down, player: GameStateFactory.defaultPlayer}),
+            new SuccessfulMovementEvent({boardID: board0.id, playerID: 0, newCharacterPosition: {x: 0, y: 0}}),
+            new DirectionEvent({direction: Direction.Down, player: player0}),
             new PlayerNameChangeEvent({playerID: 0, newPlayerName: "x"}),
-            new StatusChangeEvent({boardID: 0, newStatus: Status.Finished}),
-            new StartPointChangeEvent({boardID: 0, newStartPoint: {x: 0, y: 0}}),
-            new EndPointChangeEvent({boardID: 0, newEndPoint: {x: 0, y: 0}}),
-            new ToggleWallEvent({boardID: 0, positionToToggle: {x: 0, y: 0}}),
+            new StatusChangeEvent({boardID: board0.id, newStatus: Status.Finished}),
+            new StartPointChangeEvent({boardID: board0.id, newStartPoint: {x: 0, y: 0}}),
+            new EndPointChangeEvent({boardID: board0.id, newEndPoint: {x: 0, y: 0}}),
+            new ToggleWallEvent({boardID: board0.id, positionToToggle: {x: 0, y: 0}}),
         ];
 
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);

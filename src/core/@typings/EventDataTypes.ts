@@ -19,6 +19,8 @@ interface InitialGameSetupData {
     size: twoNumbers;
     startPoint: BoardPosition;
     endPoint: BoardPosition;
+    playerIDs: [number, number];
+    boardIDs: [number, number];
 }
 
 interface InputEventData {

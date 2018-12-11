@@ -9,18 +9,22 @@ describe("InitialSetupEventTest", () => {
     let startPoint: BoardPosition;
     let endPoint: BoardPosition;
     let initialPlayerName: string;
+    let playerIDs: [number, number];
+    let boardIDs: [number, number];
     beforeEach(() => {
         const setup = new TestSetup();
-        [initialPlayerName, size, startPoint, endPoint] = [
+        [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [
             setup.getInitialPlayerName(),
             setup.getSize(),
             setup.getStartPoint(),
-            setup.getEndPoint()
+            setup.getEndPoint(),
+            setup.getPlayerIDs(),
+            setup.getBoardIDs(),
         ];
     });
 
     it("creates_initial_game", () => {
-        const initialGameSetupData = { initialPlayerName, size, startPoint, endPoint };
+        const initialGameSetupData = { initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs };
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         const gameState = initialSetupEvent.handle(
             GameStateFactory.createGameState()

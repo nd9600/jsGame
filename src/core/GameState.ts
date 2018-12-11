@@ -63,7 +63,7 @@ export default class GameState {
             for (const playerBoard of R.values(playerBoardsForThisPlayer)) {
                 info = `${info}${playerBoard.getCurrentInfo()}\n`;
             }
-        } 
+        }
 
         return info;
     }

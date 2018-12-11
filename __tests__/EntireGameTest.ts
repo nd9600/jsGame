@@ -27,9 +27,16 @@ describe("TheEntireGame", () => {
 
     it("plays a whole round", () => {
         const setup = new DefaultGameSetup();
-        const [initialPlayerName, size, startPoint, endPoint] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
+        const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [
+            setup.getInitialPlayerName(),
+            setup.getSize(),
+            setup.getStartPoint(),
+            setup.getEndPoint(),
+            setup.getPlayerIDs(),
+            setup.getBoardIDs(),
+        ];
 
-        const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint};
+        const initialGameSetupData = { initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs };
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         let gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
 
@@ -141,11 +148,15 @@ describe("TheEntireGame", () => {
         // ####################
 
         throw new Error(gameState.getCurrentInfo());
-        throw new Error(JSON.stringify(gameState.playerBoards));
 
         gameState = EventRunner.runEvents([
-            new DirectionEvent({ direction: Direction.Right, player: player0}),
+            new DirectionEvent({direction: Direction.Up, player: player0}),
+            new DirectionEvent({direction: Direction.Left, player: player0}),
+            new DirectionEvent({direction: Direction.Up, player: player0}),
         ], gameState);
         [board0, board1] = getBoardsFromGameState(gameState);
+
+        throw new Error(gameState.getCurrentInfo());
+        throw new Error(JSON.stringify(gameState.playerBoards));
     });
 });

@@ -15,9 +15,9 @@ const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
 window.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "InputEvent"], eventLogger);
 
 const setup = new DefaultGameSetup();
-const [initialPlayerName, size, startPoint, endPoint] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint()];
+const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint(), setup.getPlayerIDs(), setup.getBoardIDs()];
 
-const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint};
+const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
 const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
 const initialGameState = initialSetupEvent.handle(GameStateFactory.createGameState());
 

@@ -5,6 +5,7 @@ import CommandEvent from "@/core/events/Command/CommandEvent";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
 import * as R from "ramda";
+import PlayerBoardBuilder from "@/core/player/PlayerBoardBuilder";
 
 export default class StartPointChangeEvent extends CommandEvent {
     public type: DispatchedEventNameTypes = "StartPointChangeEvent";
@@ -20,6 +21,21 @@ export default class StartPointChangeEvent extends CommandEvent {
     public handle(gameState: GameState): GameState {
         const oldBoard = gameState.boards[this.data.boardID];
         const newBoard = oldBoard.setStartPoint(this.data.newStartPoint);
-        return gameState.replaceBoard(newBoard);
+        let newGameState = gameState
+            .replaceBoard(newBoard);
+
+        // we need to change the playerBoards' first character position's too
+        for (const player of R.values(newGameState.players)) {
+            const playerBoardsForThisPlayer = R.prop(player.id, newGameState.playerBoards);
+            for (const playerBoard of R.values(playerBoardsForThisPlayer)) {
+                if (R.equals(playerBoard.boardID, this.data.boardID)) {
+                    newGameState = newGameState.replacePlayerBoard(PlayerBoardBuilder.mergeWithOptions(playerBoard, {
+                        characterPosition: this.data.newStartPoint
+                    }));
+                }
+            }
+        }
+
+        return newGameState;
     }
 }

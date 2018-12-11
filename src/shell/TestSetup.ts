@@ -22,4 +22,12 @@ export default class TestSetup implements SetupInterface {
             y: 3
         };
     }
+
+    public getPlayerIDs(): [number, number] {
+        return [0, 1];
+    }
+    
+    public getBoardIDs(): [number, number] {
+        return [0, 1];
+    }
 }

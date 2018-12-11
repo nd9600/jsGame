@@ -9,12 +9,18 @@ import { PlayerBoardStatus } from "@/core//@typings/PlayerTypes";
 
 export default class GameStateFactory {
     private static defaultPosition = { x: 0, y: 0 };
-    public static defaultPlayer = new Player(0, "", 0);
-    public static defaultBoard = new Board(0, GameStateFactory.defaultPlayer.id, [[]], GameStateFactory.defaultPosition, GameStateFactory.defaultPosition);
+    
+    public static defaultPlayer() {
+        return new Player(Player.idCounter++, "", 0);
+    }
+
+    public static defaultBoard() {
+        return new Board(Board.idCounter++, GameStateFactory.defaultPlayer().id, [[]], GameStateFactory.defaultPosition, GameStateFactory.defaultPosition);
+    }
 
     public static createGameState(newGameStateData?: {players?: Player[]; boards?: Board[]; }): GameState {
-        const initialPlayers = newGameStateData && newGameStateData.players || [GameStateFactory.defaultPlayer];
-        const initialBoards = newGameStateData && newGameStateData.boards || [GameStateFactory.defaultBoard];
+        const initialPlayers = newGameStateData && newGameStateData.players || [GameStateFactory.defaultPlayer()];
+        const initialBoards = newGameStateData && newGameStateData.boards || [GameStateFactory.defaultBoard()];
 
         const playersObject = GameStateFactory.createPlayersObject(initialPlayers);
         const boardsObject = GameStateFactory.createBoardsObject(initialBoards);
@@ -25,6 +31,7 @@ export default class GameStateFactory {
 
     public static createPlayerBoardsObject(players: Players, boards: Boards): PlayerBoards {
         const playerBoards: PlayerBoards = {};
+
         for (const playerIDString of Object.keys(players)) {
             const playerID = Number(playerIDString);
             const playerBoardsForThisPlayer: {

@@ -21,26 +21,26 @@ export default class InitialSetupEvent extends Event {
 
     public handle(gameState: GameState): GameState {
         const initialPlayer1 = new Player(
-            Player.idCounter++,
+            this.data.playerIDs[0],
             this.data.initialPlayerName,
             0
         );
         const initialPlayer2 = new Player(
-            Player.idCounter++,
+            this.data.playerIDs[1],
             this.data.initialPlayerName,
             0
         );
 
-        const initialBoardData = BoardFactory.makeInitialBoard(this.data.size, this.data.startPoint, this.data.endPoint);
+        const initialBoardData = BoardFactory.makeInitialBoard(this.data.size);
         const initialBoard1 = new Board(
-            Board.idCounter++,
+            this.data.boardIDs[0],
             initialPlayer1.id, 
             initialBoardData, 
             this.data.startPoint, 
             this.data.endPoint
         );
         const initialBoard2 = new Board(
-            Board.idCounter++,
+            this.data.boardIDs[1],
             initialPlayer2.id, 
             initialBoardData, 
             this.data.startPoint, 

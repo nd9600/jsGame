@@ -23,4 +23,12 @@ export default class DefaultGameSetup implements SetupInterface {
             y: 3
         };
     }
+
+    public getPlayerIDs(): [number, number] {
+        return [0, 1];
+    }
+    
+    public getBoardIDs(): [number, number] {
+        return [0, 1];
+    }
 }
