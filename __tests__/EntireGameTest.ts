@@ -15,6 +15,7 @@ import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import * as R from "ramda";
 import PlayerBoard from "@/core/player/PlayerBoard";
+import { PlayerBoardStatus } from "@/core/@typings/PlayerTypes";
 
 describe("TheEntireGame", () => {
 
@@ -180,9 +181,12 @@ describe("TheEntireGame", () => {
 
         ], gameState);
         let [player0Board0, player0Board1, player1Board0, player1Board1] = getPlayerBoardsFromGameState(gameState);
-        throw new Error(JSON.stringify([player0Board0, player0Board1, player1Board0, player1Board1]));
-
+        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player0Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
+        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player1Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
         throw new Error(gameState.getCurrentInfo());
+
         throw new Error(JSON.stringify(gameState.playerBoards));
     });
 });
