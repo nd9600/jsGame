@@ -9,4 +9,10 @@ export default class PlayerBoard {
         public readonly boardStatus: PlayerBoardStatus,
     ) {
     }
+
+    public getCurrentInfo(): string {
+        return `Player #${this.playerID}, Board #${this.boardID}
+Character position: ${JSON.stringify(this.characterPosition)}
+Board Status: ${this.boardStatus}\n`;
+    }
 }

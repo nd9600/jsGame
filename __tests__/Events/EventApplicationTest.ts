@@ -1,12 +1,12 @@
-import { BoardPosition, Place, Status, twoNumbers } from "@/core/@typings/BoardTypes";
+import { BoardPosition, Place, twoNumbers } from "@/core/@typings/BoardTypes";
 import { Command } from "@/core/@typings/EventDataTypes";
 import { DispatchedEvent } from "@/core/@typings/EventTypes";
+import { PlayerBoardStatus } from "@/core/@typings/PlayerTypes";
 import Board from "@/core/board/Board";
 import EventRunner from "@/core/events/EventRunner";
 import GameStateFactory from "@/core/factories/GameStateFactory";
 import PlayerBoard from "@/core/player/PlayerBoard";
 import TestSetup from "@/shell/TestSetup";
-import * as R from "ramda";
 
 describe("EventApplication", () => {
     let size: twoNumbers;
@@ -41,7 +41,7 @@ describe("EventApplication", () => {
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);
         const finalState = EventRunner.runEvents(listOfEvents);
         const finalPlayerBoard = finalState.getPlayerBoard(0, 0);
-        const wantedPlayerBoard =  new PlayerBoard(0, 0, {x: 3, y: 3}, Status.Finished);
+        const wantedPlayerBoard =  new PlayerBoard(0, 0, {x: 3, y: 3}, PlayerBoardStatus.Finished);
         expect(wantedPlayerBoard).toEqual(finalPlayerBoard);
     });
 
@@ -68,7 +68,7 @@ describe("EventApplication", () => {
         const listOfEvents = EventRunner.makeListOfEvents(listOfEventObjects);
         const finalState = EventRunner.runEvents(listOfEvents, initialState);
         const finalPlayerBoard = finalState.getPlayerBoard(0, initialBoard.id);
-        const wantedPlayerBoard =  new PlayerBoard(0, initialBoard.id, {x: 3, y: 3}, Status.Finished);
+        const wantedPlayerBoard = new PlayerBoard(0, initialBoard.id, {x: 3, y: 3}, PlayerBoardStatus.Finished);
         expect(wantedPlayerBoard).toEqual(finalPlayerBoard);
     });
 });

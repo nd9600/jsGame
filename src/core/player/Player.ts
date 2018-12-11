@@ -8,4 +8,8 @@ export default class Player {
     ) {
 
     }
+
+    public getCurrentInfo(): string {
+        return `Player #${this.id}, ${this.name}, ${this.score} points\n`;
+    }
 }

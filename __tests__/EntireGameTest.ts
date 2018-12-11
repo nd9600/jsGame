@@ -1,5 +1,7 @@
 import { Place, Status } from "@/core/@typings/BoardTypes";
+import { Direction } from "@/core/@typings/EventDataTypes";
 import Board from "@/core/board/Board";
+import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
@@ -12,8 +14,6 @@ import GameState from "@/core/GameState";
 import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import * as R from "ramda";
-import DirectionEvent from "@/core/events/Command/DirectionEvent";
-import { Direction } from "@/core/@typings/EventDataTypes";
 
 describe("TheEntireGame", () => {
 
@@ -140,8 +140,8 @@ describe("TheEntireGame", () => {
         // players try to get to the end
         // ####################
 
-        throw new Error(JSON.stringify(gameState.playerBoards));
         throw new Error(gameState.getCurrentInfo());
+        throw new Error(JSON.stringify(gameState.playerBoards));
 
         gameState = EventRunner.runEvents([
             new DirectionEvent({ direction: Direction.Right, player: player0}),

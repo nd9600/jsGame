@@ -41,12 +41,12 @@ export default class Board {
         return R.join("", [top, boardString]);
     }
 
-    public getCurrentInfo = (): string => {
+    public getCurrentInfo(): string {
         return `Board #${this.id}
 Start point: ${JSON.stringify(this.startPoint)}
 End point: ${JSON.stringify(this.endPoint)}
 Board:
-${this.boardAsString()}\n\n`;
+${this.boardAsString()}\n`;
     }
 
     public setStartPoint = (startPoint: BoardPosition): Board => BoardBuilder.mergeWithOptions(this, {startPoint});

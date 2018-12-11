@@ -53,8 +53,17 @@ export default class GameState {
     public getCurrentInfo(): string {
         let info = "";
         for (const board of R.values(this.boards)) {
-            info = info + board.getCurrentInfo();
+            info = `${info}${board.getCurrentInfo()}\n`;
         }
+
+        for (const player of R.values(this.players)) {
+            info = `${info}#####\n${player.getCurrentInfo()}\n`;
+
+            const playerBoardsForThisPlayer = R.prop(player.id, this.playerBoards);
+            for (const playerBoard of R.values(playerBoardsForThisPlayer)) {
+                info = `${info}${playerBoard.getCurrentInfo()}\n`;
+            }
+        } 
 
         return info;
     }
