@@ -19,7 +19,8 @@ function makeError(name: string, message: string): IError {
 }
 
 function errorHandler(error: IError): void {
-     console.log(error);
+    //  console.log(error);
+     abyss(error);
 }
 
 function assertUnreachable(x: never): never {

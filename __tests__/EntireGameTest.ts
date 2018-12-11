@@ -1,9 +1,11 @@
 import { Place, Status } from "@/core/@typings/BoardTypes";
 import { Direction } from "@/core/@typings/EventDataTypes";
+import { PlayerBoardStatus } from "@/core/@typings/PlayerTypes";
 import Board from "@/core/board/Board";
 import DirectionEvent from "@/core/events/Command/DirectionEvent";
 import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
+import SetPlayerBoardStatusToFinishedEvent from "@/core/events/Command/SetPlayerBoardStatusToFinishedEvent";
 import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
 import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
 import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
@@ -12,10 +14,9 @@ import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import GameStateFactory from "@/core/factories/GameStateFactory";
 import GameState from "@/core/GameState";
 import Player from "@/core/player/Player";
+import PlayerBoard from "@/core/player/PlayerBoard";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import * as R from "ramda";
-import PlayerBoard from "@/core/player/PlayerBoard";
-import { PlayerBoardStatus } from "@/core/@typings/PlayerTypes";
 
 describe("TheEntireGame", () => {
 
@@ -160,7 +161,6 @@ describe("TheEntireGame", () => {
         // players try to get to the end
         // ####################
 
-
         gameState = EventRunner.runEvents([
             new DirectionEvent({direction: Direction.Up, player: player0}),
             new DirectionEvent({direction: Direction.Left, player: player0}),
@@ -185,8 +185,24 @@ describe("TheEntireGame", () => {
         expect(player0Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
         expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Solved);
         expect(player1Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
-        throw new Error(gameState.getCurrentInfo());
 
-        throw new Error(JSON.stringify(gameState.playerBoards));
+        // ####################
+        // players change PlayerBoard statuses
+        // ####################
+
+        gameState = EventRunner.runEvents([
+            new SetPlayerBoardStatusToFinishedEvent({playerID: player0.id, boardID: board0.id}),
+            new SetPlayerBoardStatusToFinishedEvent({playerID: player0.id, boardID: board1.id}),
+            new SetPlayerBoardStatusToFinishedEvent({playerID: player1.id, boardID: board0.id}),
+            new SetPlayerBoardStatusToFinishedEvent({playerID: player1.id, boardID: board1.id}),
+        ], gameState);
+        [player0Board0, player0Board1, player1Board0, player1Board1] = getPlayerBoardsFromGameState(gameState);
+
+        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player0Board1.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player1Board1.boardStatus).toEqual(PlayerBoardStatus.Finished);
+
+        // throw new Error(gameState.getCurrentInfo());
     });
 });
