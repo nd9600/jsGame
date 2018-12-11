@@ -147,12 +147,25 @@ describe("TheEntireGame", () => {
         // players try to get to the end
         // ####################
 
-        throw new Error(gameState.getCurrentInfo());
 
         gameState = EventRunner.runEvents([
             new DirectionEvent({direction: Direction.Up, player: player0}),
             new DirectionEvent({direction: Direction.Left, player: player0}),
             new DirectionEvent({direction: Direction.Up, player: player0}),
+            new DirectionEvent({direction: Direction.Right, player: player0}),
+            new DirectionEvent({direction: Direction.Up, player: player0}),
+            new DirectionEvent({direction: Direction.Left, player: player0}),
+
+            new DirectionEvent({direction: Direction.Up, player: player1}),
+            new DirectionEvent({direction: Direction.Left, player: player1}),
+            new DirectionEvent({direction: Direction.Up, player: player1}),
+            new DirectionEvent({direction: Direction.Right, player: player1}),
+            new DirectionEvent({direction: Direction.Up, player: player1}),
+            new DirectionEvent({direction: Direction.Left, player: player1}),
+            new DirectionEvent({direction: Direction.Down, player: player1}),
+            new DirectionEvent({direction: Direction.Left, player: player1}),
+            new DirectionEvent({direction: Direction.Up, player: player1}),
+
         ], gameState);
         [board0, board1] = getBoardsFromGameState(gameState);
 
