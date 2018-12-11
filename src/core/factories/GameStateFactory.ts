@@ -12,7 +12,7 @@ export default class GameStateFactory {
     public static defaultPlayer = new Player(0, "", 0);
     public static defaultBoard = new Board(0, GameStateFactory.defaultPlayer.id, [[]], GameStateFactory.defaultPosition, GameStateFactory.defaultPosition);
 
-    public static createGameState = (newGameStateData?: {players?: Player[]; boards?: Board[]; }): GameState => {
+    public static createGameState(newGameStateData?: {players?: Player[]; boards?: Board[]; }): GameState {
         const initialPlayers = newGameStateData && newGameStateData.players || [GameStateFactory.defaultPlayer];
         const initialBoards = newGameStateData && newGameStateData.boards || [GameStateFactory.defaultBoard];
 
@@ -23,7 +23,7 @@ export default class GameStateFactory {
         return new GameState(playersObject, boardsObject, playerBoardsObject);
     }
 
-    public static createPlayerBoardsObject = (players: Players, boards: Boards): PlayerBoards => {
+    public static createPlayerBoardsObject(players: Players, boards: Boards): PlayerBoards {
         const playerBoards: PlayerBoards = {};
         for (const playerIDString of Object.keys(players)) {
             const playerID = Number(playerIDString);
@@ -48,7 +48,11 @@ export default class GameStateFactory {
         return playerBoards;
     }
 
-    public static createBoardsObject = (boards: Board[]): Boards => R.indexBy((board: Board) => board.id, boards);
+    public static createBoardsObject(boards: Board[]): Boards {
+        return R.indexBy((board: Board) => board.id, boards);
+    }
 
-    public static createPlayersObject = (players: Player[]): Players => R.indexBy((player: Player) => player.id, players);
+    public static createPlayersObject(players: Player[]): Players {
+        return R.indexBy((player: Player) => player.id, players);
+    }
 }

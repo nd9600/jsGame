@@ -11,6 +11,14 @@ describe("InputEvent", () => {
         expect(commandEvent.data.direction).toEqual(Direction.Up);
     });
 
+    it("handles_moving_left", () => {
+        const command = Command.MoveLeft;
+        const player = GameStateFactory.defaultPlayer;
+        const inputEvent = new InputEvent({command, player});
+        const commandEvent = inputEvent.createEvent();
+        expect(commandEvent.data.direction).toEqual(Direction.Left);
+    });
+
     it("handles_moving_right", () => {
         const command = Command.MoveRight;
         const player = GameStateFactory.defaultPlayer;
