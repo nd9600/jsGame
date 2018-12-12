@@ -5,9 +5,11 @@ import * as R from "ramda";
 describe("StartPointChangeEvent", () => {
 
     it("handles_changing_start_point", () => {
+        const player0 = GameStateFactory.defaultPlayer();
+        const player1 = GameStateFactory.defaultPlayer();
         const gameState = GameStateFactory.createGameState({
-            players: [GameStateFactory.defaultPlayer(), GameStateFactory.defaultPlayer()],
-            boards: [GameStateFactory.defaultBoard(), GameStateFactory.defaultBoard()],
+            players: [player0, player1],
+            boards: [GameStateFactory.defaultBoard(player0.id), GameStateFactory.defaultBoard(player1.id)],
         });
 
         const board0 = R.values(gameState.boards)[0];

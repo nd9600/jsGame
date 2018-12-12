@@ -31,16 +31,8 @@ describe("GameStateCreation", () => {
     });
 
     it("creates_players_object", () => {
-        const player1: Player = {
-            id: -1,
-            name: "abc",
-            score: 0
-        };
-        const player2: Player = {
-            id: -2,
-            name: "def",
-            score: 0
-        };
+        const player1 = new Player(-1, "abc", 0);
+        const player2 = new Player(-2, "def", 0);
         const players = [player1, player2];
         const playersObject = {
             "-1": {id: -1, name: "abc", score: 0}, 

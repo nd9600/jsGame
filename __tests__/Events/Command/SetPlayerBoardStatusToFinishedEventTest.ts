@@ -27,7 +27,7 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
         expect(newPlayerBoard.boardStatus).toEqual(newStatus);
     });
 
-    it("handles_increasing_score", () => {
+    it("handles both players solving player0 board", () => {
         let player0 = GameStateFactory.defaultPlayer();
         let player1 = GameStateFactory.defaultPlayer();
         const board0 = GameStateFactory.defaultBoard(player0.id);
