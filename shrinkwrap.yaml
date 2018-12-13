@@ -3,7 +3,7 @@ dependencies:
   ramda: 0.26.1
 devDependencies:
   '@types/jest': 23.3.10
-  '@types/node': 10.12.12
+  '@types/node': 10.12.15
   '@types/ramda': github.com/types/npm-ramda/9529aa3c8ff70ff84afcbc0be83443c00f30ea90
   '@types/tweenjs': 1.0.0
   babel-core: 6.26.3
@@ -54,10 +54,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-DC8xTuW/6TYgvEg3HEXS7cu9OijFqprVDXXiOcdOKZCU/5PJNLZU37VVvmZHdtMiGOa8wAA/We+JzbdxFzQTRQ==
-  /@types/node/10.12.12:
+  /@types/node/10.12.15:
     dev: true
     resolution:
-      integrity: sha512-Pr+6JRiKkfsFvmU/LK68oBRCQeEg36TyAbPhc2xpez24OOZZCuoIhWGTd39VZy6nGafSbxzGouFPTFD/rR1A0A==
+      integrity: sha512-9kROxduaN98QghwwHmxXO2Xz3MaWf+I1sLVAA6KJDF5xix+IyXVhds0MAfdNwtcpSrzhaTsNB0/jnL86fgUhqA==
   /@types/tweenjs/1.0.0:
     dependencies:
       '@types/createjs-lib': 0.0.29
@@ -1226,7 +1226,7 @@ packages:
   /browserslist/3.2.8:
     dependencies:
       caniuse-lite: 1.0.30000918
-      electron-to-chromium: 1.3.90
+      electron-to-chromium: 1.3.91
     dev: true
     hasBin: true
     resolution:
@@ -1991,10 +1991,10 @@ packages:
     dev: true
     resolution:
       integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
-  /electron-to-chromium/1.3.90:
+  /electron-to-chromium/1.3.91:
     dev: true
     resolution:
-      integrity: sha512-IjJZKRhFbWSOX1w0sdIXgp4CMRguu6UYcTckyFF/Gjtemsu/25eZ+RXwFlV+UWcIueHyQA1UnRJxocTpH5NdGA==
+      integrity: sha512-wOWwM4vQpmb97VNkExnwE5e/sUMUb7NXurlEnhE89JOarUp6FOOMKjtTGgj9bmqskZkeRA7u+p0IztJ/y2OP5Q==
   /elliptic/6.4.1:
     dependencies:
       bn.js: 4.11.8
