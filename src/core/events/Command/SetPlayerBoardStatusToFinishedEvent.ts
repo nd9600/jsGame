@@ -26,14 +26,6 @@ export default class SetPlayerBoardStatusToFinishedEvent extends CommandEvent {
             boardStatus: PlayerBoardStatus.Finished
         }));
 
-        /*
-         When all PlayerBoards are Finished, if
-            - you complete your maze & opponent doesn't, you get 10 points
-            - both complete a maze, both get 5 points
-            - neither complete maze, 0 points
-            - you don't complete your maze & opponent does, they get 20 points
-        */
-
         let allPlayerBoardsFinished = true;
         for (const player of R.values(newGameState.players)) {
             const playerBoardsForThisPlayer = R.prop(player.id, newGameState.playerBoards);
@@ -46,6 +38,14 @@ export default class SetPlayerBoardStatusToFinishedEvent extends CommandEvent {
 
         if (allPlayerBoardsFinished) {
             const playerIDs = R.keys(newGameState.players);
+            
+            /*
+             When all PlayerBoards are Finished, if
+                - you complete your maze & opponent doesn't, you get 10 points
+                - both complete a maze, both get 5 points
+                - neither complete maze, 0 points
+                - you don't complete your maze & opponent does, they get 20 points
+            */
 
             // get players
             // for each board
@@ -57,8 +57,6 @@ export default class SetPlayerBoardStatusToFinishedEvent extends CommandEvent {
             for (const board of R.values(newGameState.boards)) {
                 const creatorID = board.creatorID;
                 const opponentID = Number(R.difference(playerIDs, [String(creatorID)])[0]);
-
-                // throw new Error(JSON.stringify(newGameState.playerBoards));
 
                 const creatorFinishedBoard = newGameState.getPlayerBoard(creatorID, board.id).characterPosition === board.endPoint;
                 const opponentFinishedBoard = newGameState.getPlayerBoard(opponentID, board.id).characterPosition === board.endPoint;
