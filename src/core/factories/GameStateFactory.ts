@@ -9,13 +9,14 @@ import * as R from "ramda";
 
 export default class GameStateFactory {
     private static defaultPosition = { x: 0, y: 0 };
+    private static defaultEndPosition = { x: 1, y: 1 };
     
     public static defaultPlayer() {
         return new Player(Player.idCounter++, "", 0);
     }
 
     public static defaultBoard(playerID: number) {
-        return new Board(Board.idCounter++, playerID, [[]], GameStateFactory.defaultPosition, GameStateFactory.defaultPosition);
+        return new Board(Board.idCounter++, playerID, [[]], GameStateFactory.defaultPosition, GameStateFactory.defaultEndPosition);
     }
 
     public static createGameState(newGameStateData?: {players?: Player[]; boards?: Board[]; }): GameState {

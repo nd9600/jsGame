@@ -142,14 +142,6 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
 
         player0 = R.values(gameState.players)[0];
         player1 = R.values(gameState.players)[1];
-        
-        /*
-         When all PlayerBoards are Finished, if
-            - you complete your maze & opponent doesn't, you get 10 points
-            - both complete a maze, both get 5 points
-            - neither complete maze, 0 points
-            - you don't complete your maze & opponent does, they get 20 points
-        */
 
         expect(player0.score).toEqual(5);
         expect(player1.score).toEqual(5);
@@ -195,14 +187,6 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
         player0 = R.values(gameState.players)[0];
         player1 = R.values(gameState.players)[1];
         
-        /*
-         When all PlayerBoards are Finished, if
-            - you complete your maze & opponent doesn't, you get 10 points
-            - both complete a maze, both get 5 points
-            - neither complete maze, 0 points
-            - you don't complete your maze & opponent does, they get 20 points
-        */
-
         expect(player0.score).toEqual(0);
         expect(player1.score).toEqual(0);
     });
@@ -246,14 +230,6 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
 
         player0 = R.values(gameState.players)[0];
         player1 = R.values(gameState.players)[1];
-        
-        /*
-         When all PlayerBoards are Finished, if
-            - you complete your maze & opponent doesn't, you get 10 points
-            - both complete a maze, both get 5 points
-            - neither complete maze, 0 points
-            - you don't complete your maze & opponent does, they get 20 points
-        */
 
         expect(player0.score).toEqual(20);
         expect(player1.score).toEqual(0);

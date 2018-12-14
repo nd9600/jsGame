@@ -63,30 +63,26 @@ export default class SetPlayerBoardStatusToFinishedEvent extends CommandEvent {
                 const creatorFinishedBoard = newGameState.getPlayerBoard(creatorID, board.id).characterPosition === board.endPoint;
                 const opponentFinishedBoard = newGameState.getPlayerBoard(opponentID, board.id).characterPosition === board.endPoint;
 
-                const addedCreatorScore = creatorFinishedBoard && (! opponentFinishedBoard)
+                const addedCreatorScore = (creatorFinishedBoard && (! opponentFinishedBoard))
                     ? 10
-                    : creatorFinishedBoard && opponentFinishedBoard
+                    : (creatorFinishedBoard && opponentFinishedBoard)
                         ? 5
                         : 0;
 
                 if (addedCreatorScore > 0) {
-                    console.log(`hello creator ${creatorID}`);
-
                     const oldCreator = R.prop(creatorID, newGameState.players);
                     newGameState = newGameState.replacePlayer(PlayerBuilder.mergeWithOptions(oldCreator, {
                         score: oldCreator.score + addedCreatorScore
                     }));
                 }
 
-                const addedOpponentScore = creatorFinishedBoard && opponentFinishedBoard
+                const addedOpponentScore = (creatorFinishedBoard && opponentFinishedBoard)
                     ? 5
-                    : (! creatorFinishedBoard) && opponentFinishedBoard
+                    : ((! creatorFinishedBoard) && opponentFinishedBoard)
                         ? 20
                         : 0;
 
                 if (addedOpponentScore > 0) {
-                    console.log(`hello opponent ${opponentID}`);
-
                     const oldOpponent = R.prop(opponentID, newGameState.players);
                     newGameState = newGameState.replacePlayer(PlayerBuilder.mergeWithOptions(oldOpponent, {
                         score: oldOpponent.score + addedOpponentScore

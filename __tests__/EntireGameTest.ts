@@ -202,9 +202,13 @@ describe("TheEntireGame", () => {
         expect(player0Board1.boardStatus).toEqual(PlayerBoardStatus.Finished);
         expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
         expect(player1Board1.boardStatus).toEqual(PlayerBoardStatus.Finished);
-
-        // todo: check score
-
+        
+        player0 = R.values(gameState.players)[0];
+        player1 = R.values(gameState.players)[1];
         throw new Error(gameState.getCurrentInfo());
+
+        expect(player0.score).toEqual(30);
+        expect(player1.score).toEqual(0);
+
     });
 });
