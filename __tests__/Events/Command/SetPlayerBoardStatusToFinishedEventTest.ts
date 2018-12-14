@@ -112,9 +112,11 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
     
     //p0b0 p0b1 p1b0 p1b1 10 10
     
-    it("both players get 0 points when solving no maze", () => {
+    it("____ ____ ____ ____", () => {
         assertScores(false, false, false, false, 0, 0);
     });
+    
+    // ########################################
     
     it("p0b0 ____ ____ ____: 10 0", () => {            
         assertScores(true, false, false, false, 10, 0);
@@ -129,6 +131,8 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
         assertScores(false, false, false, true, 0, 10);
     });
     
+    // ########################################
+        
     it("p0b0 p0b1 ____ ____: 30 0", () => {            
         assertScores(true, true, false, false, 30, 0);
     });
@@ -138,18 +142,39 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
     it("p0b0 ____ ____ p1b1: 10 10", () => {            
         assertScores(true, false, false, true, 10, 10);
     });
-    // ################################
-    it("p0b0 ____ ____ ____: 10 0", () => {            
-        assertScores(true, false, false, false, 10, 0);
+    it("____ p0b1 p1b0 ____: 20 20", () => {            
+        assertScores(false, true, true, false, 20, 20);
     });
-    it("p0b0 ____ ____ ____: 10 0", () => {            
-        assertScores(true, false, false, false, 10, 0);
+    it("____ p0b1 ____ p1b1: 5 5", () => {            
+        assertScores(false, true, false, true, 5, 5);
     });
-    it("p0b0 ____ ____ ____: 10 0", () => {            
-        assertScores(true, false, false, false, 10, 0);
+    it("____ ____ p1b0 p1b1: 0 30", () => {            
+        assertScores(false, false, true, true, 0, 30);
     });
     
+    // ########################################
+    
+    it("p0b0 p1b0 p0b1 ____: 25 5", () => {            
+        assertScores(true, true, true, false, 25, 5);
+    });
+    it("____ p1b0 p0b1 p1b1: 5 25", () => {            
+        assertScores(false, true, true, true, 5, 25);
+    });
+    it("p0b0 ____ p0b1 p1b1: 5 15", () => {            
+        assertScores(true, false, true, true, 5, 15);
+    });
+    it("p0b0 p1b0 ____ p1b1: 15 5", () => {            
+        assertScores(true, true, false, true, 15, 5);
+    });
+    
+    // ########################################
+
     it("p0b0 p1b0 p0b1 p1b1: 10 10", () => {            
         assertScores(true, true, true, true, 10, 10);
     });
+    
+    //p0b0 p0b1 p1b0 ____ 25 5
+    //____ p0b1 p1b0 p1b1 5 25
+    //p0b0 ____ p1b0 p1b1 5 15
+    //p0b0 p0b1 ____ p1b1 15 5
 });
