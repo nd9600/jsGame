@@ -58,9 +58,15 @@ export default class SetPlayerBoardStatusToFinishedEvent extends CommandEvent {
                 const creatorID = board.creatorID;
                 const opponentID = Number(R.difference(playerIDs, [String(creatorID)])[0]);
 
-                const creatorFinishedBoard = newGameState.getPlayerBoard(creatorID, board.id).characterPosition === board.endPoint;
-                const opponentFinishedBoard = newGameState.getPlayerBoard(opponentID, board.id).characterPosition === board.endPoint;
-
+                const creatorFinishedBoard = R.equals(
+                    newGameState.getPlayerBoard(creatorID, board.id).characterPosition,
+                    board.endPoint
+                );
+                const opponentFinishedBoard = R.equals(
+                    newGameState.getPlayerBoard(opponentID, board.id).characterPosition,
+                    board.endPoint
+                );
+                
                 const addedCreatorScore = (creatorFinishedBoard && (! opponentFinishedBoard))
                     ? 10
                     : (creatorFinishedBoard && opponentFinishedBoard)

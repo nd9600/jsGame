@@ -183,7 +183,7 @@ describe("TheEntireGame", () => {
         let [player0Board0, player0Board1, player1Board0, player1Board1] = getPlayerBoardsFromGameState(gameState);
         expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Solved);
         expect(player0Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
-        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Solved);
+        expect(player1Board0.boardStatus).toEqual(PlayerBoardStatus.Solved);
         expect(player1Board1.boardStatus).toEqual(PlayerBoardStatus.Playing);
 
         // ####################
@@ -200,15 +200,13 @@ describe("TheEntireGame", () => {
 
         expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
         expect(player0Board1.boardStatus).toEqual(PlayerBoardStatus.Finished);
-        expect(player0Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
+        expect(player1Board0.boardStatus).toEqual(PlayerBoardStatus.Finished);
         expect(player1Board1.boardStatus).toEqual(PlayerBoardStatus.Finished);
         
         player0 = R.values(gameState.players)[0];
         player1 = R.values(gameState.players)[1];
-        throw new Error(gameState.getCurrentInfo());
 
-        expect(player0.score).toEqual(30);
-        expect(player1.score).toEqual(0);
-
+        expect(player0.score).toEqual(5);
+        expect(player1.score).toEqual(5);
     });
 });
