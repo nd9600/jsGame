@@ -89,28 +89,53 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
         expect(newPlayerBoard.boardStatus).toEqual(newStatus);
     });
     
-    // player 0 completes board 0, player 1 completes board 0, etc
+    // player 0 completes board 0, player 0 completes board 1, etc  
+      
+    //____ ____ ____ ____ 0 0
     
-    //p0b0 p1b0 p0b1 p1b1
+    //p0b0 ____ ____ ____ 10 0
+    //____ p0b1 ____ ____ 20 0
+    //____ ____ p1b0 ____ 0 20
+    //____ ____ ____ p1b1 0 10
     
-    //p0b0 p1b0 p0b1 ____
-    //p0b0 p1b0 ____ p1b1
-    //p0b0 ____ p0b1 p1b1
-    //____ p1b0 p0b1 p1b1
+    //p0b0 p0b1 ____ ____ 30 0
+    //p0b0 ____ p1b0 ____ 5 5
+    //p0b0 ____ ____ p1b1 10 10
+    //____ p0b1 p1b0 ____ 20 20
+    //____ p0b1 ____ p1b1 5 5
+    //____ ____ p1b0 p1b1 0 30
     
-    //p0b0 p1b0 ____ ____
-    //p0b0 ____ p0b1 ____
-    //____ p1b0 p0b1 ____
-    //p0b0 ____ ____ p1b1
-    //____ p1b0 ____ p1b1
-    //____ ____ p0b1 p1b1
+    //p0b0 p0b1 p1b0 ____ 25 5
+    //____ p0b1 p1b0 p1b1 5 25
+    //p0b0 ____ p1b0 p1b1 5 15
+    //p0b0 p0b1 ____ p1b1 15 5 
     
-    //p0b0 ____ ____ ____
-    //____ ____ ____ p1b1
-    //____ ____ p0b1 ____
-    //____ p1b0 ____ ____
+    //p0b0 p0b1 p1b0 p1b1 10 10
     
-    //____ ____ ____ ____
+    it("both players get 0 points when solving no maze", () => {
+        assertScores(false, false, false, false, 0, 0);
+    });
+    
+    it("p0b0 ____ ____ ____: 10 0", () => {            
+        assertScores(true, false, false, false, 10, 0);
+    });
+    it("____ p0b1 ____ ____: 20 0", () => {            
+        assertScores(true, false, false, false, 20, 0);
+    });
+    it("____ ____ p1b0 ____: 0 20", () => {            
+        assertScores(true, false, false, false, 0, 20);
+    });
+    it("____ ____ ____ p1b1: 0 10", () => {            
+        assertScores(true, false, false, false, 0, 10);
+    });
+    
+    it("p0b0 p0b1 p1b0 p1b1: 10 10", () => {            
+        assertScores(true, true, true, true, 10, 10);
+    });
+    
+    it("p0b0 p1b0 p0b1 p1b1: 10 10", () => {            
+        assertScores(true, true, true, false, 10, 10);
+    });
     
     it("player 0 gets 10 points when solving player0 board only", () => {            
         assertScores(true, false, false, false, 10, 0);
@@ -123,9 +148,4 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
     it("player 0 gets 20 points when solving player 1's maze only", () => {
         assertScores(false, true, false, false, 20, 0);
     });
-
-    it("both players get 0 points when solving no maze", () => {
-        assertScores(false, false, false, false, 0, 0);
-    });
-
 });
