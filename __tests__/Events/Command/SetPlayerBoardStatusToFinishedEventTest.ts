@@ -120,32 +120,36 @@ describe("SetPlayerBoardStatusToFinishedEvent", () => {
         assertScores(true, false, false, false, 10, 0);
     });
     it("____ p0b1 ____ ____: 20 0", () => {            
-        assertScores(true, false, false, false, 20, 0);
+        assertScores(false, true, false, false, 20, 0);
     });
     it("____ ____ p1b0 ____: 0 20", () => {            
-        assertScores(true, false, false, false, 0, 20);
+        assertScores(false, false, true, false, 0, 20);
     });
     it("____ ____ ____ p1b1: 0 10", () => {            
-        assertScores(true, false, false, false, 0, 10);
+        assertScores(false, false, false, true, 0, 10);
     });
     
-    it("p0b0 p0b1 p1b0 p1b1: 10 10", () => {            
-        assertScores(true, true, true, true, 10, 10);
+    it("p0b0 p0b1 ____ ____: 30 0", () => {            
+        assertScores(true, true, false, false, 30, 0);
+    });
+    it("p0b0 ____ p1b0 ____: 5 5", () => {            
+        assertScores(true, false, true, false, 5, 5);
+    });
+    it("p0b0 ____ ____ p1b1: 10 10", () => {            
+        assertScores(true, false, false, true, 10, 10);
+    });
+    // ################################
+    it("p0b0 ____ ____ ____: 10 0", () => {            
+        assertScores(true, false, false, false, 10, 0);
+    });
+    it("p0b0 ____ ____ ____: 10 0", () => {            
+        assertScores(true, false, false, false, 10, 0);
+    });
+    it("p0b0 ____ ____ ____: 10 0", () => {            
+        assertScores(true, false, false, false, 10, 0);
     });
     
     it("p0b0 p1b0 p0b1 p1b1: 10 10", () => {            
-        assertScores(true, true, true, false, 10, 10);
-    });
-    
-    it("player 0 gets 10 points when solving player0 board only", () => {            
-        assertScores(true, false, false, false, 10, 0);
-    });
-
-    it("both players get 5 points when solving player0 board only", () => {
-        assertScores(true, false, true, false, 5, 5);
-    });
-    
-    it("player 0 gets 20 points when solving player 1's maze only", () => {
-        assertScores(false, true, false, false, 20, 0);
+        assertScores(true, true, true, true, 10, 10);
     });
 });
