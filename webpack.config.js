@@ -2,6 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: './src/game.ts',
@@ -63,7 +64,8 @@ module.exports = {
         ]
     },
     plugins: [
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        //new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: ['.ts', '.js', '.vue', '.json'],
