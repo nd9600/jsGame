@@ -1,22 +1,43 @@
 <template>
     <div>
-        helloa
+        <div class="font-serif">My game</div>
+         <div class="flex">
+            <div class="whitespace-pre-line font-sans text-left bg-grey-lighter border border-grey m-4 p-4">
+                {{ gameState.getCurrentInfo() }}
+            </div>
+            <div class="flex flex-col border border-grey mt-4 ml-4 p-4">
+                <span>Change name</span>
+                <input 
+                    class="border border-grey-dark my-2 p-2"
+                    type="text"
+                    placeholder="new name"
+                    v-model="newPlayerName"
+                    @keydown.enter="changePlayerName"
+                >
+                <button
+                    class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                    type="submit" 
+                    @click="changePlayerName"
+                >
+                    Change name
+                </button>
 
-        <div class="whitespace-pre-line font-sans">
-            {{ gameState.getCurrentInfo() }}
-        </div>
+                <hr class="border border-grey-dark">
+            </div>
+         </div>
     </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import * as R from "ramda";
+import { InputEventData, Command } from "@/core/@typings/EventDataTypes";
+import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
+import InputEvent from "@/core/events/Game/InputEvent";
 import GameState from "@/core/GameState";
 import GameStateFactory from "@/core/factories/GameStateFactory";
 import Player from "@/core/player/Player";
-import { InputEventData, Command } from "@/core/@typings/EventDataTypes";
-import InputEvent from "@/core/events/Game/InputEvent";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 
@@ -27,14 +48,23 @@ export default Vue.extend({
     data(): {
         gameState: GameState | null;
         playerID: number | null;
+
+        newPlayerName: string
     } {
         return {
             gameState: null,
-            playerID: null
+            playerID: null,
+
+            newPlayerName: ""
         };
     },
     watch: {
 
+    },
+    computed: {
+        player(): Player {
+            return this.gameState!.players[this.playerID!];
+        }
     },
     created() {
         const setup = new DefaultGameSetup();
@@ -57,11 +87,15 @@ export default Vue.extend({
                 ArrowRight: Command.MoveRight
             };
 
-            const gameState = vm.gameState!;
-            const player = gameState.players[this.playerID!];
-
             window.addEventListener("keydown", (event) => {
+                if (! R.contains(event.code, R.keys(KEYS_TO_COMMANDS))) {
+                    return;
+                }
                 event.preventDefault();
+
+                const gameState = vm.gameState!;
+                const player = gameState.players[this.playerID!];
+
                 if (KEYS_TO_COMMANDS.hasOwnProperty(event.code)) {
                     const inputEventData: InputEventData = {
                         command: KEYS_TO_COMMANDS[event.code],
@@ -72,7 +106,12 @@ export default Vue.extend({
                     this.gameState = inputEvent.handle(gameState);
                     console.log("gameState: ", gameState);
                 }
-        });
+            });
+        },
+
+        changePlayerName(): void {
+            const playerNameChangeEvent = new PlayerNameChangeEvent({playerID: this.playerID!, newPlayerName: this.newPlayerName});
+            this.gameState = playerNameChangeEvent.handle(this.gameState!);
         }
     }
 });
