@@ -99,8 +99,8 @@ module.exports = {
     optimization: {
         minimize: true
     },
-    devtool: '#source-map'
-}
+    devtool: '#eval-source-map'
+};
 
 if (process.env.NODE_ENV === 'production') {
     module.exports.devtool = '#source-map'
