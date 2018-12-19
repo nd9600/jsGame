@@ -1,8 +1,8 @@
 <template>
     <div>
-        hello
+        helloa
 
-        <div class="whitespace-pre-line">
+        <div class="whitespace-pre-line font-sans">
             {{ gameState.getCurrentInfo() }}
         </div>
     </div>
@@ -26,11 +26,11 @@ export default Vue.extend({
     name: "game",
     data(): {
         gameState: GameState | null;
-        player: Player | null;
+        playerID: number | null;
     } {
         return {
             gameState: null,
-            player: null
+            playerID: null
         };
     },
     watch: {
@@ -43,7 +43,7 @@ export default Vue.extend({
         const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
-        this.player = R.values(this.gameState.players)[0];
+        this.playerID = R.values(this.gameState.players)[0].id;
 
         this.registerCommandListeners();
     },
@@ -58,19 +58,20 @@ export default Vue.extend({
             };
 
             const gameState = vm.gameState!;
-            const player = vm.player!;
+            const player = gameState.players[this.playerID!];
 
-            window.addEventListener("keyup", ({code}) => {
-            if (KEYS_TO_COMMANDS.hasOwnProperty(code)) {
-                const inputEventData: InputEventData = {
-                    command: KEYS_TO_COMMANDS[code],
-                    player
-                };
+            window.addEventListener("keydown", (event) => {
+                event.preventDefault();
+                if (KEYS_TO_COMMANDS.hasOwnProperty(event.code)) {
+                    const inputEventData: InputEventData = {
+                        command: KEYS_TO_COMMANDS[event.code],
+                        player
+                    };
 
-                const inputEvent = new InputEvent(inputEventData);
-                this.gameState = inputEvent.handle(gameState);
-                console.log("gameState: ", gameState);
-            }
+                    const inputEvent = new InputEvent(inputEventData);
+                    this.gameState = inputEvent.handle(gameState);
+                    console.log("gameState: ", gameState);
+                }
         });
         }
     }
