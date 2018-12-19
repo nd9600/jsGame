@@ -2,7 +2,7 @@
     <div>
         hello
 
-        <div style="white-space: pre-line;">
+        <div class="whitespace-pre-line">
             {{ gameState.getCurrentInfo() }}
         </div>
     </div>
@@ -19,6 +19,8 @@ import { InputEventData, Command } from "@/core/@typings/EventDataTypes";
 import InputEvent from "@/core/events/Game/InputEvent";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
+
+import "@/assets/css/game.css";
 
 export default Vue.extend({
     name: "game",
