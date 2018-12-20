@@ -1,11 +1,10 @@
 <template>
     <div>
         <div class="font-serif">My game</div>
-         <div class="flex flex-shrink m-8">
+         <div class="flex items-start m-8">
             <div class="whitespace-pre-line font-sans text-left bg-grey-lighter border border-grey m-4 p-4">
                 {{ gameState.getCurrentInfo() }}
             </div>
-            <div>
             <div class="flex flex-col border border-grey mt-4 ml-4 p-4">
                 <span>Change name</span>
                 <input 
@@ -24,7 +23,6 @@
                 </button>
 
                 <hr class="border border-grey-dark">
-            </div>
             </div>
          </div>
     </div>
