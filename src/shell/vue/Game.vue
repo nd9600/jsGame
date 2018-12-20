@@ -31,10 +31,13 @@
 <script lang="ts">
 import Vue from "vue";
 import * as R from "ramda";
+
 import { InputEventData, Command } from "@/core/@typings/EventDataTypes";
+import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
+
 import GameState from "@/core/GameState";
 import GameStateFactory from "@/core/factories/GameStateFactory";
 import Player from "@/core/player/Player";
@@ -67,6 +70,14 @@ export default Vue.extend({
         }
     },
     created() {
+        window.eventBus = new EventBus();
+        window.loggedEvents  = [];
+        const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+            window.loggedEvents.push(dispatchedEvent);
+            console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data );
+        };
+        window.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "InputEvent"], eventLogger);
+
         const setup = new DefaultGameSetup();
         const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint(), setup.getPlayerIDs(), setup.getBoardIDs()];
 
