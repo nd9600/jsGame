@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div class="font-serif">My game</div>
+    <div class="m-8">
+        <div class="font-serif text-2xl font-bold">My game</div>
          <div class="flex items-start m-8">
-            <div class="whitespace-pre-line font-sans text-left bg-grey-lighter border border-grey m-4 p-4">
-                {{ gameState.getCurrentInfo() }}
+            <div class="bg-grey-lighter border border-grey m-4 p-4">
+                <p class="whitespace-pre-line font-sans text-left ">{{ gameState.getCurrentInfo() }}</p>
             </div>
             <div class="flex flex-col border border-grey mt-4 ml-4 p-4">
                 <span>Change name</span>
@@ -22,7 +22,7 @@
                     Change name
                 </button>
 
-                <hr class="border border-grey-dark">
+                <div class="h-1 w-full border-t border-grey-light my-2 "></div>
             </div>
          </div>
     </div>
@@ -38,6 +38,7 @@ import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
 
+import Board from "@/core/board/Board";
 import GameState from "@/core/GameState";
 import GameStateFactory from "@/core/factories/GameStateFactory";
 import Player from "@/core/player/Player";
@@ -57,16 +58,24 @@ export default Vue.extend({
         return {
             gameState: null,
             playerID: null,
-
+            
             newPlayerName: ""
         };
     },
     watch: {
-
+        playerID() {
+            this.newPlayerName = this.player.name;
+        }
     },
     computed: {
         player(): Player {
             return this.gameState!.players[this.playerID!];
+        },
+        ownedBoardID(): number {
+            return R.find(R.propEq("creatorID", this.playerID), R.values(this.gameState!.boards))!.id;
+        },
+        ownedBoard(): Board {
+            return this.gameState!.boards[this.ownedBoardID];
         }
     },
     created() {
@@ -85,7 +94,7 @@ export default Vue.extend({
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
         this.playerID = R.values(this.gameState.players)[0].id;
-
+        
         this.registerCommandListeners();
     },
     methods: {

@@ -3,7 +3,7 @@ import { SetupInterface } from "@/shell/SetupInterface";
 
 export default class DefaultGameSetup implements SetupInterface {
     public getInitialPlayerName(): string {
-        return "";
+        return "player";
     }
 
     public getSize(): twoNumbers {

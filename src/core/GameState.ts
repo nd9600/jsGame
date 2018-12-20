@@ -51,7 +51,7 @@ export default class GameState {
     }
 
     public getCurrentInfo(): string {
-        let info = "";
+        let info = `Status: ${this.status}\n\n`;
         for (const board of R.values(this.boards)) {
             info = `${info}${board.getCurrentInfo()}\n`;
         }
