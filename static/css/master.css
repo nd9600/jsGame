@@ -14,21 +14,35 @@ html {
     background-color: #db0000;
 }
 
+@keyframes rotateCube {
+    0% {
+        transform: rotate(0deg);
+    }
+    
+    33%, 66% {
+        transform: rotate(180deg);
+    }
+    
+    100% {
+        transform: rotate(180deg);
+    }
+}
+
 .neckerCube {
     /* 
     transition: [property] [duration] [timing-function] [delay];
     transform: translateX(-50%) scale3d(0.5, 0.5, 0.5) rotateX(0deg) rotateY(-4770deg) rotateZ(0deg)
+    animation: [animation-name] [animation-duration] [animation-timing-function] [animation-delay] [animation-iteration-count] [animation-direction] [animation-fill-mode];
     */
-    
-    transition: all 3s;
 }
 .neckerCube:hover {
-    transform: rotate(360deg);
+    /* transform: rotate(360deg); */
+    animation-play-state: paused;
 }
 
 .neckerCube--1 {
-    transition-delay: 1s;
+    animation: rotateCube 4s ease-in-out 4s infinite normal forwards;
 }
 .neckerCube--2 {
-    transition-delay: 2s;
+    animation: rotateCube 5s ease-in-out 4s infinite reverse forwards;
 }
