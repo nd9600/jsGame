@@ -10,10 +10,22 @@
 
 <body>
     <div class="cubeContainer" >
-        <!--<img class="neckerCube" src="./static/images/necker1.svg">
-        <img class="neckerCube" src="./static/images/necker2.svg">-->
-        <img class="neckerCube neckerCube--1" src="./static/images/necker1transparent.svg">
-        <img class="neckerCube neckerCube--2" src="./static/images/necker2transparent.svg">
+        <svg class="neckerCube neckerCube--1" height="140px" width="140px" viewBox="0 0 140 140">
+            <rect x="0" y="40" width="100" height="100" fill="none" stroke="#000000" />
+            <rect x="40" y="0" width="100" height="100" fill="none" stroke="#000000" />
+            <path d="M 0 40 l 40 -40" fill="none" stroke="#000000" />
+            <path d="M 100 40 l 40 -40" fill="none" stroke="#000000" />
+            <path d="M 100 140 l 40 -40" fill="none" stroke="#000000" />
+            <path d="M 0 140 l 40 -40" fill="none" stroke="#000000" />
+        </svg>
+        <svg class="neckerCube neckerCube--2" height="140px" width="140px" viewBox="0 0 140 140">
+            <rect x="40" y="40" width="100" height="100" fill="none" stroke="#000000"/>
+            <rect x="0" y="0" width="100" height="100" fill="none" stroke="#000000"/>
+            <path d="M 40 40 l -40 -40" fill="none" stroke="#000000"/>
+            <path d="M 140 40 l -40 -40" fill="none" stroke="#000000" />
+            <path d="M 140 140 l -40 -40" fill="none" stroke="#000000" />
+            <path d="M 40 140 l -40 -40" fill="none" stroke="#000000" />
+        </svg>
     </div>
     
     <div id="app"></div>

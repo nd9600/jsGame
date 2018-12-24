@@ -15,11 +15,11 @@ html {
 }
 
 @keyframes rotateCube {
-    0% {
+    0%, 33% {
         transform: rotate(0deg);
     }
     
-    33%, 66% {
+    66% {
         transform: rotate(180deg);
     }
     
