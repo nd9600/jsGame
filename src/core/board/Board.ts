@@ -99,12 +99,14 @@ ${this.boardAsString()}\n`;
             posArray => R.zipObj(["x", "y"], posArray);
 
         const posIsOnBoard: (pos: BoardPosition) => boolean = R.where({
-            x: R.and(R.gte(R.__, 0), R.lt(R.__, maxX)),
-            y: R.and(R.gte(R.__, 0), R.lt(R.__, maxY)),
+            x: R.both(R.gte(R.__, 0), R.lt(R.__, maxX)),
+            y: R.both(R.gte(R.__, 0), R.lt(R.__, maxY)),
         });
 
         let queue = new Queue<BoardPosition>();
         queue.enqueue(this.startPoint);
+        let seenPositions = [this.startPoint];
+
         while (! queue.isEmpty()) {
             let firstPosition = queue.dequeue()!;
 
@@ -112,20 +114,22 @@ ${this.boardAsString()}\n`;
                 return true;
             }
               
-            const possibleNeighbours = R.xprod(R.range(firstPosition.x - 1, firstPosition.x + 2), R.range(firstPosition.y - 1, firstPosition.y + 2));
+            const possibleNeighbours = R.xprod(
+                R.range(firstPosition.x - 1, firstPosition.x + 2), 
+                R.range(firstPosition.y - 1, firstPosition.y + 2)
+            );
+            const possibleNeighbourObjects = R.map(makePosFromArray, possibleNeighbours);
 
-            console.log([maxX, maxY]);
-            console.log(possibleNeighbours);
-            console.log(R.filter(posIsOnBoard,
-                R.map(makePosFromArray, possibleNeighbours)));
-
-            const neighboursOnBoard: BoardPosition[] =
+            const neighboursOnBoard =
                 R.filter(boardPosition => this.getPosition(boardPosition) === Place.Empty,
                 R.filter(posIsOnBoard,
-                R.map(makePosFromArray, possibleNeighbours)));
+                    possibleNeighbourObjects));
 
             R.forEach((neighbour: BoardPosition) => {
-                queue.enqueue(neighbour);
+                if (! R.contains(neighbour, seenPositions)) {
+                    queue.enqueue(neighbour);
+                    seenPositions.push(neighbour);
+                }
             }, neighboursOnBoard);
         }
         return false;
