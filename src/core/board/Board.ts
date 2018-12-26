@@ -2,6 +2,7 @@ import { BoardPosition, BoardType, Place, Status } from "@/core/@typings/BoardTy
 import BoardBuilder from "@/core/board/BoardBuilder";
 import usefulFunctions from "@/core/usefulFunctions";
 import * as R from "ramda";
+import Queue from "../Queue";
 
 export default class Board {
     public static idCounter: number = 0;
@@ -88,6 +89,46 @@ ${this.boardAsString()}\n`;
         }
 
         return this;
+    }
+
+    public endPointIsReachableFromStart(): boolean {
+        const maxX = this.numberOfColumns;
+        const maxY = this.numberOfRows;
+
+        const makePosFromArray: (posArray: [number, number]) => BoardPosition = 
+            posArray => R.zipObj(["x", "y"], posArray);
+
+        const posIsOnBoard: (pos: BoardPosition) => boolean = R.where({
+            x: R.and(R.gte(R.__, 0), R.lt(R.__, maxX)),
+            y: R.and(R.gte(R.__, 0), R.lt(R.__, maxY)),
+        });
+
+        let queue = new Queue<BoardPosition>();
+        queue.enqueue(this.startPoint);
+        while (! queue.isEmpty()) {
+            let firstPosition = queue.dequeue()!;
+
+            if (R.equals(firstPosition, this.endPoint)) {
+                return true;
+            }
+              
+            const possibleNeighbours = R.xprod(R.range(firstPosition.x - 1, firstPosition.x + 2), R.range(firstPosition.y - 1, firstPosition.y + 2));
+
+            console.log([maxX, maxY]);
+            console.log(possibleNeighbours);
+            console.log(R.filter(posIsOnBoard,
+                R.map(makePosFromArray, possibleNeighbours)));
+
+            const neighboursOnBoard: BoardPosition[] =
+                R.filter(boardPosition => this.getPosition(boardPosition) === Place.Empty,
+                R.filter(posIsOnBoard,
+                R.map(makePosFromArray, possibleNeighbours)));
+
+            R.forEach((neighbour: BoardPosition) => {
+                queue.enqueue(neighbour);
+            }, neighboursOnBoard);
+        }
+        return false;
     }
     
     private uncurriedGetPosition(position: BoardPosition): Place {   

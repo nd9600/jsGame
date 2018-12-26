@@ -1,8 +1,6 @@
 import { BoardPosition, BoardType, Place, twoNumbers, Status } from "@/core/@typings/BoardTypes";
 import Board from "@/core/board/Board";
 import TestSetup from "@/shell/TestSetup";
-import GameState from "@/core/GameState";
-import usefulFunctions from "@/core/usefulFunctions";
 
 describe("PlacingWalls", () => {
     let size: twoNumbers;
