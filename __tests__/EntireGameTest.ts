@@ -15,7 +15,7 @@ import GameStateFactory from "@/core/factories/GameStateFactory";
 import GameState from "@/core/GameState";
 import Player from "@/core/player/Player";
 import PlayerBoard from "@/core/player/PlayerBoard";
-import DefaultGameSetup from "@/shell/DefaultGameSetup";
+import TestSetup from "@/shell/TestSetup";
 import * as R from "ramda";
 
 describe("TheEntireGame", () => {
@@ -40,7 +40,7 @@ describe("TheEntireGame", () => {
     }
 
     it("plays a whole round", () => {
-        const setup = new DefaultGameSetup();
+        const setup = new TestSetup();
         const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [
             setup.getInitialPlayerName(),
             setup.getSize(),
@@ -57,7 +57,7 @@ describe("TheEntireGame", () => {
         let [player0, player1] = getPlayersFromGameState(gameState);
         let [board0, board1] = getBoardsFromGameState(gameState);
 
-        expect(player0.name).toBe("");
+        expect(player0.name).toBe("player");
         expect(player1.score).toBe(0);
 
         expect(board0.status).toBe(Status.NotStarted);
