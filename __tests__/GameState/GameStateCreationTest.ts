@@ -47,4 +47,25 @@ describe("GameStateCreation", () => {
         });
         expect(gameState.players).toEqual(playersObject);
     });
+
+    it("gets current info", () => {
+        const wantedString = `Status: NotStarted
+
+Board #7
+Start point: {\"x\":0,\"y\":0}
+End point: {\"x\":1,\"y\":1}
+Board:
+  
+0
+
+#####
+Player #4, , 0 points
+
+Player #4, Board #7
+Character position: {\"x\":0,\"y\":0}
+Board Status: Playing
+
+`;
+        expect(GameStateFactory.createGameState().getCurrentInfo()).toEqual(wantedString);
+    })
 });
