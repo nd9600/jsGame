@@ -1,10 +1,10 @@
 <template>
-    <div class="m-8">
+    <div class="w-screen m-8">
         <!-- <div class="font-serif text-2xl font-bold">My game</div> -->
-         <div class="flex items-start m-8">
+         <div class="flex items-start">
             <player-display
-                :player_id="playerID"
                 :game-state="gameState"
+                :player_id="playerID"
             />
             <div class="flex flex-col border border-grey mt-4 ml-4 p-4">
                 <game-status :game-state="gameState"/>
