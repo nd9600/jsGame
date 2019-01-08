@@ -1,3 +1,4 @@
+import { Status } from "@/core/@typings/BoardTypes";
 import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
 import GameStateFactory from "@/core/factories/GameStateFactory";
 import * as R from "ramda";
@@ -34,5 +35,21 @@ describe("StartPointChangeEvent", () => {
                 }
             }
         }
+    });
+
+    it("wont change start point if wrong status", () => {
+        let gameState = GameStateFactory.createGameState();
+        let board = R.values(gameState.boards)[0];
+        board = board.setStatus(Status.PlacingWalls);
+        gameState = gameState.replaceBoard(board);
+
+        const boardID = board.id;
+        const newStartPoint = {x: 1, y: 1};
+        const startPointChangeEvent = new StartPointChangeEvent({boardID, newStartPoint});
+
+        const newGameState = startPointChangeEvent.handle(gameState);
+        const newBoard = R.values(newGameState.boards)[0];
+
+        expect(newBoard.startPoint).toEqual(board.startPoint);
     });
 });

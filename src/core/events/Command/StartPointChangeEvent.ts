@@ -1,11 +1,11 @@
+import { Status } from "@/core/@typings/BoardTypes";
 import { StartPointChangeEventData } from "@/core/@typings/EventDataTypes";
 import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
-import BoardBuilder from "@/core/board/BoardBuilder";
 import CommandEvent from "@/core/events/Command/CommandEvent";
 import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
-import * as R from "ramda";
 import PlayerBoardBuilder from "@/core/player/PlayerBoardBuilder";
+import * as R from "ramda";
 
 export default class StartPointChangeEvent extends CommandEvent {
     public type: DispatchedEventNameTypes = "StartPointChangeEvent";
@@ -19,6 +19,10 @@ export default class StartPointChangeEvent extends CommandEvent {
     }
 
     public handle(gameState: GameState): GameState {
+        if (gameState.status !== Status.NotStarted) {
+            return gameState;
+        }
+
         const oldBoard = gameState.boards[this.data.boardID];
         const newBoard = oldBoard.setStartPoint(this.data.newStartPoint);
         let newGameState = gameState
