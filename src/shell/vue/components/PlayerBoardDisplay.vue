@@ -16,14 +16,14 @@
                         class="h-full w-full p-2 bg-blue hover:bg-blue-dark"
                         @click="toggleWall(x, y)"
                     >
-                        start
+                        
                     </span>
                     <span
                         v-else-if="isEndPoint(x, y)"
                         class="h-full w-full p-2 bg-green hover:bg-green-dark"
                         @click="toggleWall(x, y)"
                     >
-                        end
+                        
                     </span>
                     <span
                         v-else
@@ -81,6 +81,9 @@ export default Vue.extend({
         toggleWall(x: number, y: number): void {
             const position: BoardPosition = {x, y};
             console.log(position);
+
+            // won't work, the $root is in game.ts, not Game.vue
+            // (this.$root as any).toggleWall(this.board_id, position);
         }
     }
 })

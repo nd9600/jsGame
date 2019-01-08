@@ -90,6 +90,7 @@ import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
 import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
+import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
 
@@ -217,6 +218,11 @@ export default Vue.extend({
             const newEndPoint: BoardPosition = JSON.parse(this.newEndPoint);
             const endPointChangeEvent = new EndPointChangeEvent({boardID: this.ownedBoardID, newEndPoint});
             this.gameState = endPointChangeEvent.handle(this.gameState!);
+        },
+
+        toggleWall(boardID: number, positionToToggle: BoardPosition): void {
+            const toggleWallEvent = new ToggleWallEvent({boardID, positionToToggle});
+            this.gameState = toggleWallEvent.handle(this.gameState!);
         }
     }
 });
