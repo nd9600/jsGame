@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-grey-lighter border border-grey m-4 p-4">
+    <div class="bg-grey-lightest border border-grey m-4 p-4">
         <!-- <p class="whitespace-pre-line font-sans text-left ">{{ gameState.getCurrentInfo() }}</p> -->
         <player-board-display
             v-for="board in boards"

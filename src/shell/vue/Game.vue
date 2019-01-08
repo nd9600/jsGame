@@ -1,31 +1,80 @@
 <template>
-    <div class="w-screen m-8">
+    <div class="m-8">
         <!-- <div class="font-serif text-2xl font-bold">My game</div> -->
          <div class="flex items-start">
             <player-display
+                id="playerDisplay"
+                class="w-3/4"
+                tabindex="-1"
                 :game-state="gameState"
                 :player_id="playerID"
             />
-            <div class="flex flex-col border border-grey mt-4 ml-4 p-4">
+            <div class="flex flex-col w-1/4 border border-grey mt-4 ml-4 p-4">
                 <game-status :game-state="gameState"/>
 
                 <div class="h-1 w-full border-t border-grey-light my-2"></div>
 
-                <span>Change name</span>
-                <input 
-                    class="border border-grey-dark my-2 p-2"
-                    type="text"
-                    placeholder="new name"
-                    v-model="newPlayerName"
-                    @keydown.enter="changePlayerName"
-                >
-                <button
-                    class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-                    type="submit" 
-                    @click="changePlayerName"
-                >
-                    Change name
-                </button>
+                <div class="flex flex-col">
+                    <span>Change name</span>
+                    <input 
+                        class="border border-grey-dark my-2 p-2"
+                        type="text"
+                        placeholder="new name"
+                        v-model="newPlayerName"
+                        @keydown.enter="changePlayerName"
+                    >
+                    <button
+                        class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                        type="submit" 
+                        @click="changePlayerName"
+                    >
+                        Change name
+                    </button>
+                </div>
+
+                <template v-if="canChangeStartOrEndPoint">
+                    <div class="h-1 w-full border-t border-grey-light my-2"></div>
+
+                    <div class="flex flex-col">
+                        <span>Change start point</span>
+                        <input 
+                            class="border border-grey-dark my-2 p-2"
+                            type="text"
+                            placeholder="new start point"
+                            v-model="newStartPoint"
+                            @keydown.enter="changeStartPoint"
+                        >
+                        <button
+                            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                            type="submit" 
+                            @click="changeStartPoint"
+                        >
+                            Change start point
+                        </button>
+                    </div>
+                </template>
+
+                <template v-if="canChangeStartOrEndPoint">
+                    <div class="h-1 w-full border-t border-grey-light my-2"></div>
+
+                    <div class="flex flex-col">
+                        <span>Change end point</span>
+                        <input 
+                            class="border border-grey-dark my-2 p-2"
+                            type="text"
+                            placeholder="new end point"
+                            v-model="newEndPoint"
+                            @keydown.enter="changeEndPoint"
+                        >
+                        <button
+                            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                            type="submit" 
+                            @click="changeEndPoint"
+                        >
+                            Change end point
+                        </button>
+                    </div>
+                </template>
             </div>
          </div>
     </div>
@@ -35,9 +84,12 @@
 import Vue from "vue";
 import * as R from "ramda";
 
+import { BoardPosition, Status } from "@/core/@typings/BoardTypes";
 import { InputEventData, Command } from "@/core/@typings/EventDataTypes";
 import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
+import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
+import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
 
@@ -62,13 +114,17 @@ export default Vue.extend({
         gameState: GameState | null;
         playerID: number | null;
 
-        newPlayerName: string
+        newPlayerName: string,
+        newStartPoint: string,
+        newEndPoint: string,
     } {
         return {
             gameState: null,
             playerID: null,
             
-            newPlayerName: ""
+            newPlayerName: "",
+            newStartPoint: "",
+            newEndPoint: ""
         };
     },
     watch: {
@@ -85,6 +141,9 @@ export default Vue.extend({
         },
         ownedBoard(): Board {
             return this.gameState!.boards[this.ownedBoardID];
+        },
+        canChangeStartOrEndPoint(): boolean {
+            return this.gameState!.status === Status.NotStarted;
         }
     },
     created() {
@@ -103,7 +162,11 @@ export default Vue.extend({
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
         this.playerID = R.values(this.gameState.players)[0].id;
-        
+
+        this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
+        this.newEndPoint = JSON.stringify(this.ownedBoard.endPoint);
+    },
+    mounted() {
         this.registerCommandListeners();
     },
     methods: {
@@ -116,7 +179,8 @@ export default Vue.extend({
                 ArrowRight: Command.MoveRight
             };
 
-            window.addEventListener("keydown", (event) => {
+            const playerDisplay = document.getElementById("playerDisplay")!;
+            playerDisplay.addEventListener("keydown", (event) => {
                 if (! R.contains(event.code, R.keys(KEYS_TO_COMMANDS))) {
                     return;
                 }
@@ -141,6 +205,18 @@ export default Vue.extend({
         changePlayerName(): void {
             const playerNameChangeEvent = new PlayerNameChangeEvent({playerID: this.playerID!, newPlayerName: this.newPlayerName});
             this.gameState = playerNameChangeEvent.handle(this.gameState!);
+        },
+
+        changeStartPoint(): void {
+            const newStartPoint: BoardPosition = JSON.parse(this.newStartPoint);
+            const startPointChangeEvent = new StartPointChangeEvent({boardID: this.ownedBoardID, newStartPoint});
+            this.gameState = startPointChangeEvent.handle(this.gameState!);
+        },
+
+        changeEndPoint(): void {
+            const newEndPoint: BoardPosition = JSON.parse(this.newEndPoint);
+            const endPointChangeEvent = new EndPointChangeEvent({boardID: this.ownedBoardID, newEndPoint});
+            this.gameState = endPointChangeEvent.handle(this.gameState!);
         }
     }
 });
