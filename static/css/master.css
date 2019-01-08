@@ -41,8 +41,8 @@ html {
 }
 
 .neckerCube--1 {
-    animation: rotateCube 4s ease-in-out 4s infinite normal forwards;
+    animation: rotateCube 4s ease-in-out 4s 3 normal forwards;
 }
 .neckerCube--2 {
-    animation: rotateCube 5s ease-in-out 4s infinite reverse forwards;
+    animation: rotateCube 5s ease-in-out 4s 7 reverse forwards;
 }
