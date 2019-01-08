@@ -10,14 +10,10 @@
         "moduleResolution": "node",
         "target": "es6",
         "lib": ["es2017", "dom"],
-        "baseUrl": ".",
+        "baseUrl": "./src",
         "paths": {
-            "@/*": [
-                "src/*"
-            ],
-            "components/*": [
-                "src/shell/vue/components/*"
-            ]
+            "@vue/*": ["shell/vue/*"],
+            "@/*": ["*"],
         },
         "types": [
             "node",
@@ -33,6 +29,6 @@
         "./__tests__/**/*"
     ],
     "exclude": [
-      "node_modules"
+      "node_modules", "static/js"
     ]
 }

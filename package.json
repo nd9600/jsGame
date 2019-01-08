@@ -102,8 +102,8 @@
       "node"
     ],
     "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1",
-      "^@vue/(.*)$": "<rootDir>/src/shell/vue/$1"
+        "^@vue/(.*)$": "<rootDir>/src/shell/vue/$1",
+        "^@/(.*)$": "<rootDir>/src/$1"
     },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
