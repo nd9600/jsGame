@@ -102,7 +102,7 @@
       "node"
     ],
     "moduleNameMapper": {
-        "^@vue/(.*)$": "<rootDir>/src/shell/vue/$1",
+        "^@components/(.*)$": "<rootDir>/src/shell/vue/components/$1",
         "^@/(.*)$": "<rootDir>/src/$1"
     },
     "transform": {

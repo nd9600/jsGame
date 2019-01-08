@@ -1,11 +1,16 @@
 <template>
     <div class="m-8">
-        <div class="font-serif text-2xl font-bold">My game</div>
+        <!-- <div class="font-serif text-2xl font-bold">My game</div> -->
          <div class="flex items-start m-8">
-            <div class="bg-grey-lighter border border-grey m-4 p-4">
-                <p class="whitespace-pre-line font-sans text-left ">{{ gameState.getCurrentInfo() }}</p>
-            </div>
+            <player-display
+                :player_id="playerID"
+                :game-state="gameState"
+            />
             <div class="flex flex-col border border-grey mt-4 ml-4 p-4">
+                <game-status :game-state="gameState"/>
+
+                <div class="h-1 w-full border-t border-grey-light my-2"></div>
+
                 <span>Change name</span>
                 <input 
                     class="border border-grey-dark my-2 p-2"
@@ -21,8 +26,6 @@
                 >
                     Change name
                 </button>
-
-                <div class="h-1 w-full border-t border-grey-light my-2 "></div>
             </div>
          </div>
     </div>
@@ -45,10 +48,16 @@ import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 
+import GameStatus from "@components/GameStatus.vue";
+import PlayerDisplay from "@components/PlayerDisplay.vue";
 import "@/assets/css/game.css";
 
 export default Vue.extend({
     name: "game",
+    components: {
+        GameStatus,
+        PlayerDisplay
+    },
     data(): {
         gameState: GameState | null;
         playerID: number | null;

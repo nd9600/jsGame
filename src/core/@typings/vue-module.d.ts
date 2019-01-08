@@ -1,4 +1,4 @@
 // vue-module.d.ts
 declare module "*.vue" {
-    import Vue from 'vue'
+    import Vue from 'vue';
 }
