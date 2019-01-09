@@ -82,7 +82,7 @@ export default Vue.extend({
             const position: BoardPosition = {x, y};
             console.log(position);
 
-            // won't work, the $root is in game.ts, not Game.vue
+            // won't work, the $root is in game.ts, not Game.vue - use the eventbus instead
             // (this.$root as any).toggleWall(this.board_id, position);
         }
     }
