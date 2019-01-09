@@ -34,4 +34,18 @@ describe("EndPointChangeEvent", () => {
 
         expect(newBoard.endPoint).toEqual(board.endPoint);
     });
+
+    it("wont change end point if same as start point", () => {
+        const gameState = GameStateFactory.createGameState();
+        const board = R.values(gameState.boards)[0];
+
+        const boardID = board.id;
+        const newEndPoint = board.startPoint;
+        const endPointChangeEvent = new EndPointChangeEvent({boardID, newEndPoint});
+
+        const newGameState = endPointChangeEvent.handle(gameState);
+        const newBoard = R.values(newGameState.boards)[0];
+
+        expect(newBoard.endPoint).toEqual(board.endPoint);
+    });
 });

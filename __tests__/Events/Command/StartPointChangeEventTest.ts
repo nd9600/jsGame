@@ -17,7 +17,7 @@ describe("StartPointChangeEvent", () => {
         const board1 = R.values(gameState.boards)[1];
 
         const board0ID = board0.id;
-        const newStartPoint = {x: 1, y: 1};
+        const newStartPoint = {x: 0, y: 1};
         const startPointChangeEvent = new StartPointChangeEvent({boardID: board0ID, newStartPoint});
 
         const newGameState = startPointChangeEvent.handle(gameState);
@@ -45,6 +45,20 @@ describe("StartPointChangeEvent", () => {
 
         const boardID = board.id;
         const newStartPoint = {x: 1, y: 1};
+        const startPointChangeEvent = new StartPointChangeEvent({boardID, newStartPoint});
+
+        const newGameState = startPointChangeEvent.handle(gameState);
+        const newBoard = R.values(newGameState.boards)[0];
+
+        expect(newBoard.startPoint).toEqual(board.startPoint);
+    });
+
+    it("wont change start point if same as end point", () => {
+        const gameState = GameStateFactory.createGameState();
+        const board = R.values(gameState.boards)[0];
+
+        const boardID = board.id;
+        const newStartPoint = board.endPoint;
         const startPointChangeEvent = new StartPointChangeEvent({boardID, newStartPoint});
 
         const newGameState = startPointChangeEvent.handle(gameState);

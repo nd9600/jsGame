@@ -82,15 +82,17 @@ describe("TheEntireGame", () => {
         
         const newBoard0StartPoint = { x: 3, y: 3 };
         const newBoard0EndPoint = { x: 0, y: 0 };
-        const player0StartPointChangeEvent = new StartPointChangeEvent({boardID: board0.id, newStartPoint: newBoard0StartPoint});
-        const player0EndPointChangeEvent = new EndPointChangeEvent({boardID: board0.id, newEndPoint: newBoard0EndPoint});
 
         const newBoard1StartPoint = { x: 0, y: 3 };
         const newBoard1EndPoint = { x: 3, y: 0 };
-        const player1StartPointChangeEvent = new StartPointChangeEvent({boardID: board1.id, newStartPoint: newBoard1StartPoint});
-        const player1EndPointChangeEvent = new EndPointChangeEvent({boardID: board1.id, newEndPoint: newBoard1EndPoint});
 
-        gameState = EventRunner.runEvents([player0StartPointChangeEvent, player0EndPointChangeEvent, player1StartPointChangeEvent, player1EndPointChangeEvent], gameState);
+        gameState = EventRunner.runEvents([
+            new EndPointChangeEvent({boardID: board0.id, newEndPoint: {x: 1, y: 1}}), // so we can change the start point below; otherwise, it would try to make the start point the same as the current end point
+            new StartPointChangeEvent({boardID: board0.id, newStartPoint: newBoard0StartPoint}), 
+            new EndPointChangeEvent({boardID: board0.id, newEndPoint: newBoard0EndPoint}),
+            new StartPointChangeEvent({boardID: board1.id, newStartPoint: newBoard1StartPoint}), 
+            new EndPointChangeEvent({boardID: board1.id, newEndPoint: newBoard1EndPoint})
+        ], gameState);
         [board0, board1] = getBoardsFromGameState(gameState);
 
         expect(board0.startPoint).toBe(newBoard0StartPoint);

@@ -23,6 +23,10 @@ export default class EndPointChangeEvent extends CommandEvent {
         }
         
         const oldBoard = gameState.boards[this.data.boardID];
+        if (R.equals(this.data.newEndPoint, oldBoard.startPoint)) {
+            return gameState;
+        }
+
         const newBoard = oldBoard.setEndPoint(this.data.newEndPoint);
         return gameState
             .replaceBoard(newBoard);
