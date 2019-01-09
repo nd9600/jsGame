@@ -2,8 +2,7 @@
     <div class="bg-grey-lightest border border-grey m-4 p-4">
         <!-- <p class="whitespace-pre-line font-sans text-left ">{{ gameState.getCurrentInfo() }}</p> -->
         <player-board-display
-            v-for="board in boards"
-            v-if="shouldShowBoard(board.id)"
+            v-for="board in boardsToShow"
             :key="board.id"
             :game-state="gameState"
             :player_id="player_id"
@@ -37,17 +36,18 @@ export default Vue.extend({
         }
     },
     computed: {
-        boards() : Board[] {
-            return R.values(this.gameState.boards);
+        // a board should always be shown if the game's been started, or if the player owns the board
+        boardsToShow(): Board[] {
+            const shouldShowBoard = (board: Board): boolean => {
+                if (this.gameState.status === Status.Playing || this.gameState.status === Status.Finished) {
+                    return true;
+                }
+                return this.gameState.boards[board.id].creatorID === this.player_id;
+            };
+            return R.filter(shouldShowBoard, R.values(this.gameState.boards));
         }
     },
     methods: {
-        shouldShowBoard(boardID: number): boolean {
-            if (this.gameState.status !== Status.NotStarted) {
-                return true;
-            }
-            return this.gameState.boards[boardID].creatorID === this.player_id;
-        }
     }
 })
 </script>
