@@ -66,7 +66,6 @@ export default Vue.extend({
             return R.equals({x, y}, this.board.endPoint);
         },
         isWall(x: number, y: number): boolean {
-            console.log(this.board.getPosition({x, y}));
             return R.equals(Place.Wall, this.board.getPosition({x, y}));
         },
         getClassesForPosition(x: number, y: number) {
@@ -81,7 +80,7 @@ export default Vue.extend({
                     "bg-green": true,
                     "hover:bg-green-dark": true
                 });
-            }  else if (this.isWall(x, y)) {
+            } else if (this.isWall(x, y)) {
                 classObject = R.merge(classObject, {
                     "bg-red": true,
                     "hover:bg-red-dark": true
@@ -94,8 +93,6 @@ export default Vue.extend({
                 });
             }
             
-            console.log(x, y, classObject);
-
             return classObject;
         },
         toggleWall(x: number, y: number): void {
