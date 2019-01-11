@@ -16,7 +16,6 @@
                         :class="getClassesForPosition(x, y)"
                         @click="toggleWall(x, y)"
                     >
-                        {{position}}
                     </span>
                 </div>
             </div>
@@ -32,12 +31,14 @@
 import Vue from 'vue'
 import * as R from "ramda";
 
+import { BoardPosition, Place, Status } from '@/core/@typings/BoardTypes';
 import GameState from '@/core/GameState';
 import Board from '@/core/board/Board';
-import { BoardPosition, Status } from '@/core/@typings/BoardTypes';
+import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 
 export default Vue.extend({
     name: "PlayerBoardDisplay",
+    inject: ["eventBus"],
     props: {
         gameState: {
             required: true,
@@ -64,6 +65,10 @@ export default Vue.extend({
         isEndPoint(x: number, y: number): boolean {
             return R.equals({x, y}, this.board.endPoint);
         },
+        isWall(x: number, y: number): boolean {
+            console.log(this.board.getPosition({x, y}));
+            return R.equals(Place.Wall, this.board.getPosition({x, y}));
+        },
         getClassesForPosition(x: number, y: number) {
             let classObject = {};
             if (this.isStartPoint(x, y)) {
@@ -76,6 +81,11 @@ export default Vue.extend({
                     "bg-green": true,
                     "hover:bg-green-dark": true
                 });
+            }  else if (this.isWall(x, y)) {
+                classObject = R.merge(classObject, {
+                    "bg-red": true,
+                    "hover:bg-red-dark": true
+                });
             }
 
             if (this.gameState.status === Status.PlacingWalls) {
@@ -83,18 +93,19 @@ export default Vue.extend({
                     "hover:bg-grey-light": true
                 });
             }
+            
+            console.log(x, y, classObject);
 
             return classObject;
         },
         toggleWall(x: number, y: number): void {
-            if (this.gameState.status !== Status.PlacingWalls) {
-                return;
-            }
+            //if (this.gameState.status !== Status.PlacingWalls) {
+            //    return;
+            //}
             const position: BoardPosition = {x, y};
-            console.log(position);
+            const event = new ToggleWallEvent({boardID: this.board_id, positionToToggle: position});
 
-            // won't work, the $root is in game.ts, not Game.vue - use the eventbus instead
-            // (this.$root as any).toggleWall(this.board_id, position);
+            this.eventBus.dispatchToAllListeners(event);
         }
     }
 })

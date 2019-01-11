@@ -13,7 +13,6 @@ export default class ToggleWallEvent extends CommandEvent {
         super(toggleWallEventData);
         this.types = R.append(this.type, this.types);
         this.data = toggleWallEventData;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState): GameState {

@@ -14,7 +14,6 @@ export default class StatusChangeEvent extends CommandEvent {
         super(statusChangeEventData);
         this.types = R.append(this.type, this.types);
         this.data = statusChangeEventData;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState): GameState {

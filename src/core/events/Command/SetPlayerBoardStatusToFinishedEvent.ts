@@ -17,7 +17,6 @@ export default class SetPlayerBoardStatusToFinishedEvent extends CommandEvent {
         super(setPlayerBoardStatusToFinishedEventData);
         this.types = R.append(this.type, this.types);
         this.data = setPlayerBoardStatusToFinishedEventData;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState): GameState {

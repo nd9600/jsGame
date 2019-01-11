@@ -15,7 +15,6 @@ export default class StartPointChangeEvent extends CommandEvent {
         super(startPointChangeEventData);
         this.types = R.append(this.type, this.types);
         this.data = startPointChangeEventData;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState): GameState {

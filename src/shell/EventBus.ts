@@ -1,12 +1,6 @@
 import { DispatchedEvent, DispatchedEventNameTypes, EventCallback } from "@/core/@typings/EventTypes";
+import Event from "@/core/events/Event.ts";
 import * as R from "ramda";
-
-declare global {
-    interface Window { 
-        eventBus: EventBus; 
-        loggedEvents: DispatchedEvent[];
-    }
-}
 
 export default class EventBus {
     private unCaughtEvents: DispatchedEvent[] = [];
@@ -51,9 +45,10 @@ export default class EventBus {
         this.listeners = R.assoc(event, newListOfListeners, this.listeners);
     }
 
-    private dispatch(event: string, dispatchedEvent: DispatchedEvent): void {
-        if (R.has(event, this.listeners)) {
-            const eventsListOfListeners: EventCallback[] = this.listeners[event];
+    private dispatch(eventType: string, dispatchedEvent: DispatchedEvent): void {
+        console.log(eventType, R.keys(this.listeners));
+        if (R.has(eventType, this.listeners)) {
+            const eventsListOfListeners: EventCallback[] = this.listeners[eventType];
             const callListener = (listener: EventCallback) => {
                 listener(dispatchedEvent);
             };
@@ -75,15 +70,15 @@ export default class EventBus {
         return this.unCaughtEvents;
     }
 
-    public dispatchToAllListeners(types: string[], originalEventType: DispatchedEventNameTypes, data?: any): void {
-        if (window.eventBus) {
-            // we need to cast originalEventType to the any-type so TS doesn't complain
-            R.forEach(
-                (type: string) => {
-                    this.dispatch(type, {type: originalEventType as any, data});
-                },
-            types);
-        }
+    public dispatchToAllListeners(event: Event): void {
+        const originalEventType = event.type;
+        
+        // we need to cast originalEventType to the any-type so TS doesn't complain
+        R.forEach(
+            (type: string) => {
+                this.dispatch(type, {type: originalEventType as any, data: event.data});
+            },
+        event.types);
     }
 
     public addListenerToMultipleEvents(eventNames: string[], callback: EventCallback): void {

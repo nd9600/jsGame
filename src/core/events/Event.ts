@@ -16,10 +16,4 @@ export default class Event {
     public handle(gameState: GameState): GameState {
         return gameState;
     }
-
-    public static dispatch(types: string[], originalEventType: DispatchedEventNameTypes, data?: any): void {
-        if (window.eventBus) {
-            window.eventBus.dispatchToAllListeners(types, originalEventType, data);
-        }
-    }
 }

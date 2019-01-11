@@ -15,7 +15,6 @@ export default class FailedMovementEvent extends MovementEvent {
         super();
         this.types = R.append(this.type, this.types);
         this.data = error;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
 public handle(gameState: GameState): GameState {

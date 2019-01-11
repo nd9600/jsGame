@@ -14,7 +14,6 @@ export default class PlayerNameChangeEvent extends CommandEvent {
         super(playerNameChangeEventData);
         this.types = R.append(this.type, this.types);
         this.data = playerNameChangeEventData;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState): GameState {

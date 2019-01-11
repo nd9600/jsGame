@@ -87,6 +87,7 @@ import * as R from "ramda";
 import { BoardPosition, Status } from "@/core/@typings/BoardTypes";
 import { InputEventData, Command } from "@/core/@typings/EventDataTypes";
 import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
+import EventRunner from "@/core/events/EventRunner";
 import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
@@ -105,23 +106,34 @@ import GameStatus from "@components/GameStatus.vue";
 import PlayerDisplay from "@components/PlayerDisplay.vue";
 import "@/assets/css/game.css";
 
+const eventBus = new EventBus();
+
 export default Vue.extend({
     name: "game",
     components: {
         GameStatus,
         PlayerDisplay
     },
+    provide() {
+        return {
+            eventBus: eventBus
+        };
+    },
     data(): {
         gameState: GameState | null;
         playerID: number | null;
+        eventBus: EventBus;
+        loggedEvents: DispatchedEvent[];
 
-        newPlayerName: string,
-        newStartPoint: string,
-        newEndPoint: string,
+        newPlayerName: string;
+        newStartPoint: string;
+        newEndPoint: string;
     } {
         return {
             gameState: null,
             playerID: null,
+            eventBus: eventBus,
+            loggedEvents: [],
             
             newPlayerName: "",
             newStartPoint: "",
@@ -148,13 +160,20 @@ export default Vue.extend({
         }
     },
     created() {
-        window.eventBus = new EventBus();
-        window.loggedEvents  = [];
+        const vm = this;
+        
         const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
-            window.loggedEvents.push(dispatchedEvent);
-            console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data );
+            vm.loggedEvents.push(dispatchedEvent);
+            console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
         };
-        window.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "InputEvent"], eventLogger);
+        this.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "CommandEvent"], eventLogger);
+        
+        const toggleWallListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+            console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
+            const event = EventRunner.makeEventFromDispatchedEvent(dispatchedEvent);
+            vm.gameState = event.handle(vm.gameState!);
+        };
+        this.eventBus.addListener("ToggleWallEvent", toggleWallListener);
 
         const setup = new DefaultGameSetup();
         const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint(), setup.getPlayerIDs(), setup.getBoardIDs()];

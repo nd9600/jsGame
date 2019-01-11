@@ -15,7 +15,6 @@ export default class DirectionEvent extends CommandEvent {
         super(data);
         this.types = R.append(this.type, this.types);
         this.data = data;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
     /**

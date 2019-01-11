@@ -19,9 +19,8 @@ import * as R from "ramda";
 
 export default class EventRunner {
     private static handleEvent = (gameState: GameState, event: Event): GameState => event.handle(gameState);
-
-    public static makeListOfEvents = (listOfEventObjects: DispatchedEvent[]): Event[] => {
-        const makeEventFromDispatchedEvent = (dispatchedEvent: DispatchedEvent): Event => {
+    
+    public static makeEventFromDispatchedEvent = (dispatchedEvent: DispatchedEvent): Event => {
             switch (dispatchedEvent.type) {
                 case "InitialSetupEvent": {
                     return new InitialSetupEvent(dispatchedEvent.data);
@@ -55,7 +54,9 @@ export default class EventRunner {
                 // }
             }
         };
-        return R.map(makeEventFromDispatchedEvent, listOfEventObjects);
+
+    public static makeListOfEvents = (listOfEventObjects: DispatchedEvent[]): Event[] => {
+        return R.map(EventRunner.makeEventFromDispatchedEvent, listOfEventObjects);
     }
 
     public static runEvents = (listOfEvents: Event[], initialState?: GameState): GameState => {

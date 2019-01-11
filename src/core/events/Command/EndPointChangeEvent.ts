@@ -14,7 +14,6 @@ export default class EndPointChangeEvent extends CommandEvent {
         super(endPointChangeEventData);
         this.types = R.append(this.type, this.types);
         this.data = endPointChangeEventData;
-        Event.dispatch(this.types, this.type, this.data);
     }
 
     public handle(gameState: GameState): GameState {
