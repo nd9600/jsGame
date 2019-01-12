@@ -75,6 +75,24 @@
                         </button>
                     </div>
                 </template>
+                
+                <template
+                    v-if="this.ownedBoard.status === 'NotStarted'"
+                >
+                    <div class="h-1 w-full border-t border-grey-light my-2"></div>
+
+                    <div class="flex flex-col">
+                        <span class="mb-2">Start making the maze</span>
+                        <button
+                            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                            type="submit" 
+                            @click="changeBoardStatus('PlacingWalls')"
+                        >
+                            (by adding walls)
+                        </button>
+                    </div>
+                
+                </template>
             </div>
          </div>
     </div>
@@ -91,6 +109,7 @@ import EventRunner from "@/core/events/EventRunner";
 import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
 import StartPointChangeEvent from "@/core/events/Command/StartPointChangeEvent";
+import StatusChangeEvent from "@/core/events/Command/StatusChangeEvent";
 import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 import InitialSetupEvent from "@/core/events/Game/InitialSetupEvent";
 import InputEvent from "@/core/events/Game/InputEvent";
@@ -217,6 +236,7 @@ export default Vue.extend({
 
                     const inputEvent = new InputEvent(inputEventData);
                     this.gameState = inputEvent.handle(gameState);
+                    this.eventBus.dispatchToAllListeners(inputEvent);
                     console.log("gameState: ", gameState);
                 }
             });
@@ -225,23 +245,29 @@ export default Vue.extend({
         changePlayerName(): void {
             const playerNameChangeEvent = new PlayerNameChangeEvent({playerID: this.playerID!, newPlayerName: this.newPlayerName});
             this.gameState = playerNameChangeEvent.handle(this.gameState!);
+            this.eventBus.dispatchToAllListeners(playerNameChangeEvent);
         },
 
         changeStartPoint(): void {
             const newStartPoint: BoardPosition = JSON.parse(this.newStartPoint);
             const startPointChangeEvent = new StartPointChangeEvent({boardID: this.ownedBoardID, newStartPoint});
             this.gameState = startPointChangeEvent.handle(this.gameState!);
+            this.eventBus.dispatchToAllListeners(startPointChangeEvent);
         },
 
         changeEndPoint(): void {
             const newEndPoint: BoardPosition = JSON.parse(this.newEndPoint);
             const endPointChangeEvent = new EndPointChangeEvent({boardID: this.ownedBoardID, newEndPoint});
             this.gameState = endPointChangeEvent.handle(this.gameState!);
+            this.eventBus.dispatchToAllListeners(endPointChangeEvent);
         },
-
-        toggleWall(boardID: number, positionToToggle: BoardPosition): void {
-            const toggleWallEvent = new ToggleWallEvent({boardID, positionToToggle});
-            this.gameState = toggleWallEvent.handle(this.gameState!);
+        
+        changeBoardStatus(newStatus: Status): void {
+            const statusChangeEvent = new StatusChangeEvent({boardID: this.ownedBoardID, newStatus});
+            this.gameState = statusChangeEvent.handle(this.gameState!);
+            console.log(statusChangeEvent);
+            console.log(this.gameState);
+            this.eventBus.dispatchToAllListeners(statusChangeEvent);
         }
     }
 });

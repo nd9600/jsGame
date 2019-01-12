@@ -44,6 +44,7 @@ export default class Board {
 
     public getCurrentInfo(): string {
         return `Board #${this.id}
+Status: ${this.status}
 Start point: ${JSON.stringify(this.startPoint)}
 End point: ${JSON.stringify(this.endPoint)}
 Board:
@@ -65,9 +66,9 @@ ${this.boardAsString()}\n`;
     public toggleWallAtPosition(positionToToggle: BoardPosition): Board {
 
         // you can only toggle somewhere if the board is the PlacingWalls state, and you're trying to toggle somewhere that's empty or already has a wall
-        //if (this.status !== Status.PlacingWalls) {
-        //    return this;
-        //}
+        if (this.status !== Status.PlacingWalls) {
+            return this;
+        }
 
         // you can't put a wall at the start or end point
         if (R.equals(positionToToggle, this.startPoint) || R.equals(positionToToggle, this.endPoint)) {

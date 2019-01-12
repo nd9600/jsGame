@@ -52,6 +52,7 @@ describe("GameStateCreation", () => {
         const wantedString = `Status: NotStarted
 
 Board #7
+Status: NotStarted
 Start point: {\"x\":0,\"y\":0}
 End point: {\"x\":1,\"y\":1}
 Board:

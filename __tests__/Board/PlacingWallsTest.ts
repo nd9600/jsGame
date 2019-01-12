@@ -74,7 +74,7 @@ describe("PlacingWalls", () => {
         const boardData: BoardType = [
             [Place.Empty],
             [Place.Character],
-            [Place.Wall],
+            [Place.Empty],
             [Place.Empty],
             [Place.Empty]
         ];
@@ -87,7 +87,7 @@ describe("PlacingWalls", () => {
             endPoint
         );
 
-        const newBoard = board.toggleWallAtPosition({x: 0, y: 0});
+        const newBoard = board.toggleWallAtPosition({x: 0, y: 2});
 
         expect(newBoard.boardData).toEqual(board.boardData);
     });

@@ -1,18 +1,18 @@
 <template>
     <div class="max-w-full">
-        <div class="flex flex-col" style="height: 66vh;">
+        <div class="flex flex-col" style="height: 40vh;">
             <div
                 class="flex flex-row flex-grow"
-                v-for="(row, y)  in board.boardData"
+                v-for="(row, y) in board.boardData"
                 :key="y"
             >
                 <div
                     class="flex flex-col flex-grow cursor-pointer border border-grey-light"
-                    v-for="(position, x)  in row"
+                    v-for="(position, x) in row"
                     :key="x"
                 >
                     <span
-                        class="h-full w-full p-2"
+                        class="h-full w-full"
                         :class="getClassesForPosition(x, y)"
                         @click="toggleWall(x, y)"
                     >
@@ -100,9 +100,9 @@ export default Vue.extend({
             //    return;
             //}
             const position: BoardPosition = {x, y};
-            const event = new ToggleWallEvent({boardID: this.board_id, positionToToggle: position});
+            const toggleWallEvent = new ToggleWallEvent({boardID: this.board_id, positionToToggle: position});
 
-            this.eventBus.dispatchToAllListeners(event);
+            this.eventBus.dispatchToAllListeners(toggleWallEvent);
         }
     }
 })
