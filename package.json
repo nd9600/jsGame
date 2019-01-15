@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@tweenjs/tween.js": "^17.2.0",
+    "firebase": "^5.7.3",
     "ramda": "^0.26.1",
     "vue": "^2.5.21"
   },
@@ -102,8 +103,8 @@
       "node"
     ],
     "moduleNameMapper": {
-        "^@components/(.*)$": "<rootDir>/src/shell/vue/components/$1",
-        "^@/(.*)$": "<rootDir>/src/$1"
+      "^@components/(.*)$": "<rootDir>/src/shell/vue/components/$1",
+      "^@/(.*)$": "<rootDir>/src/$1"
     },
     "transform": {
       "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
