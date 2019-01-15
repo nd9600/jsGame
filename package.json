@@ -67,7 +67,12 @@
       [
         "env",
         {
-          "modules": false
+          "modules": false,
+          "targets": {
+            "browsers": [
+              "last 2 Chrome versions"
+            ]
+          }
         }
       ],
       "stage-3"

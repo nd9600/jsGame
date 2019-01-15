@@ -138,6 +138,7 @@ import GameStateFactory from "@/core/factories/GameStateFactory";
 import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
+import FirebaseAPI from "@/shell/firebase/FirebaseAPI";
 
 import GameStatus from "@components/GameStatus.vue";
 import PlayerDisplay from "@components/PlayerDisplay.vue";
@@ -157,6 +158,7 @@ export default Vue.extend({
         };
     },
     data(): {
+        gameID: string,
         gameState: GameState | null;
         playerID: number | null;
         eventBus: EventBus;
@@ -167,6 +169,7 @@ export default Vue.extend({
         newEndPoint: string;
     } {
         return {
+            gameID: "",
             gameState: null,
             playerID: null,
             eventBus: eventBus,
@@ -198,12 +201,22 @@ export default Vue.extend({
     },
     created() {
         const vm = this;
+        this.gameID = "1";
         
         const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             vm.loggedEvents.push(dispatchedEvent);
+
+            const asyncWriter = async function() {
+                const currentEventsInFirebase = (await FirebaseAPI.readFrom(vm.gameID)) || [];
+                const eventsToWriteToFirebase = currentEventsInFirebase.concat(dispatchedEvent);
+                console.log(eventsToWriteToFirebase);
+                FirebaseAPI.writeTo(vm.gameID, eventsToWriteToFirebase);
+            };
+            asyncWriter();
+            
             //console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
         };
-        this.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "CommandEvent"], eventLogger);
+        this.eventBus.addListenerToMultipleEvents(["CommandEvent"], eventLogger);
         
         const toggleWallListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             //console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
@@ -212,24 +225,23 @@ export default Vue.extend({
         };
         this.eventBus.addListener("ToggleWallEvent", toggleWallListener);
 
-        const setup = new DefaultGameSetup();
-        const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint(), setup.getPlayerIDs(), setup.getBoardIDs()];
+        const loadGameFromFirebase = async function() {
+            const currentEventsInFirebase = (await FirebaseAPI.readFrom(vm.gameID)) || [];
+            const listOfEvents = EventRunner.makeListOfEvents(currentEventsInFirebase);
+            const newState = EventRunner.runEvents(listOfEvents);
+            console.log(newState);
+            vm.gameState = newState;
+        };
 
-        const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
-        const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
-        this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
-        this.eventBus.dispatchToAllListeners(initialSetupEvent);
-
-        this.playerID = R.values(this.gameState.players)[0].id;
-
-        this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
-        this.newEndPoint = JSON.stringify(this.ownedBoard.endPoint);
+        //gameState will be null if we dpn't call this, and everything will break
+        this.startNewGame();
+        loadGameFromFirebase();
     },
     mounted() {
         this.registerCommandListeners();
     },
     methods: {
-        registerCommandListeners() {
+        registerCommandListeners(): void {
             const vm = this;
             const KEYS_TO_COMMANDS: { [index: string]: Command } = {
                 ArrowUp: Command.MoveUp,
@@ -290,7 +302,7 @@ export default Vue.extend({
             this.eventBus.dispatchToAllListeners(statusChangeEvent);
         },
 
-        importEvents(event: Event) {
+        importEvents(event: Event): void {
             const element = event.target as HTMLInputElement;
             const eventListText = element.value;
             const vm = this;
@@ -305,6 +317,21 @@ export default Vue.extend({
             }, listOfEvents);
 
             this.gameState = newState;
+        },
+
+        startNewGame(): void {
+            const setup = new DefaultGameSetup();
+            const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint(), setup.getPlayerIDs(), setup.getBoardIDs()];
+
+            const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
+            const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
+            this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
+            this.eventBus.dispatchToAllListeners(initialSetupEvent);
+
+            this.playerID = R.values(this.gameState.players)[0].id;
+
+            this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
+            this.newEndPoint = JSON.stringify(this.ownedBoard.endPoint);
         }
     }
 });
