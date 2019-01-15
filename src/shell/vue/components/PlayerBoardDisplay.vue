@@ -7,7 +7,8 @@
                 :key="y"
             >
                 <div
-                    class="flex flex-col flex-grow cursor-pointer border border-grey-light"
+                    class="flex flex-col flex-grow border border-grey-light"
+                    :class="{'cursor-pointer': gameState.status === 'PlacingWalls'}"
                     v-for="(position, x) in row"
                     :key="x"
                 >
