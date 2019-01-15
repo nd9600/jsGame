@@ -73,3 +73,5 @@ yarn-error.log
 *.njsproj
 *.sln
 .vscode
+
+firebaseConfig.ts
