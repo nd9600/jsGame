@@ -46,7 +46,6 @@ export default class EventBus {
     }
 
     private dispatch(eventType: string, dispatchedEvent: DispatchedEvent): void {
-        console.log(eventType, R.keys(this.listeners));
         if (R.has(eventType, this.listeners)) {
             const eventsListOfListeners: EventCallback[] = this.listeners[eventType];
             const callListener = (listener: EventCallback) => {

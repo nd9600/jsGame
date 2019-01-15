@@ -201,12 +201,12 @@ export default Vue.extend({
         
         const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             vm.loggedEvents.push(dispatchedEvent);
-            console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
+            //console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
         };
         this.eventBus.addListenerToMultipleEvents(["InitialSetupEvent", "CommandEvent"], eventLogger);
         
         const toggleWallListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
-            console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
+            //console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
             const event = EventRunner.makeEventFromDispatchedEvent(dispatchedEvent);
             vm.gameState = event.handle(vm.gameState!);
         };
