@@ -1,7 +1,7 @@
 <template>
     <div class="m-8">
         <!-- <div class="font-serif text-2xl font-bold">My game</div> -->
-         <div class="flex items-start">
+        <div class="flex items-start">
             <player-display
                 id="playerDisplay"
                 class="w-3/4"
@@ -94,7 +94,24 @@
                 
                 </template>
             </div>
-         </div>
+        </div>
+        <div class="flex flex-col">
+            <div class="mb-2">
+                <span class="text-sm text-grey-light">Event log</span>
+                <p class="text-transparent hover:text-grey-light">
+                    {{loggedEvents}}
+                </p>
+            </div>
+            <div class="flex flex-col w-1/2">
+                <span class="text-sm text-grey-light">Import events</span>  
+                <input 
+                    type="text"
+                    class="border border-transparent hover:border-grey-light text-transparent hover:text-grey p-1"
+                    placeholder="events JSON"
+                    @keyup.enter.prevent="importEvents"
+                >
+            </div>
+        </div>
     </div>
 </template>
 
@@ -105,6 +122,7 @@ import * as R from "ramda";
 import { BoardPosition, Status } from "@/core/@typings/BoardTypes";
 import { InputEventData, Command } from "@/core/@typings/EventDataTypes";
 import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
+import BaseEvent from "core/events/Event";
 import EventRunner from "@/core/events/EventRunner";
 import EndPointChangeEvent from "@/core/events/Command/EndPointChangeEvent";
 import PlayerNameChangeEvent from "@/core/events/Command/PlayerNameChangeEvent";
@@ -200,6 +218,8 @@ export default Vue.extend({
         const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
         const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
         this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
+        this.eventBus.dispatchToAllListeners(initialSetupEvent);
+
         this.playerID = R.values(this.gameState.players)[0].id;
 
         this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
@@ -268,6 +288,23 @@ export default Vue.extend({
             console.log(statusChangeEvent);
             console.log(this.gameState);
             this.eventBus.dispatchToAllListeners(statusChangeEvent);
+        },
+
+        importEvents(event: Event) {
+            const element = event.target as HTMLInputElement;
+            const eventListText = element.value;
+            const vm = this;
+
+            const dispatchedEvents: DispatchedEvent[] = JSON.parse(eventListText);
+            const listOfEvents = EventRunner.makeListOfEvents(dispatchedEvents);
+            const newState = EventRunner.runEvents(listOfEvents);
+            
+            vm.loggedEvents = [];
+            R.forEach((event: BaseEvent) => {
+                vm.eventBus.dispatchToAllListeners(event);
+            }, listOfEvents);
+
+            this.gameState = newState;
         }
     }
 });
