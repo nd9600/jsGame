@@ -91,7 +91,42 @@
                             (by adding walls)
                         </button>
                     </div>
-                
+                </template>
+
+                <template>
+                    <div class="h-1 w-full border-t border-grey-light my-2"></div>
+
+                    <div class="flex flex-col">
+                        <button
+                            class="bg-red hover:bg-red-dark text-white font-bold py-2 px-4 rounded"
+                            type="submit" 
+                            @click="saveGameToFirebase"
+                        >
+                            Save game
+                        </button>
+
+                        <div>
+                            <input 
+                                class="inline w-1/3 border border-r-0 border-grey-dark my-2 p-2"
+                                type="text"
+                                value="game ID: "
+                                disabled="disabled"
+                            ><input 
+                                class="inline w-1/3 border border-grey-dark my-2 p-2"
+                                type="text"
+                                v-model="gameID"
+                                @keydown.enter="loadGameFromFirebase"
+                            >
+                        </div>
+
+                        <button
+                            class="bg-red hover:bg-red-dark text-white font-bold py-2 px-4 rounded"
+                            type="submit" 
+                            @click="loadGameFromFirebase"
+                        >
+                            Load game
+                        </button>
+                    </div>
                 </template>
             </div>
         </div>
@@ -139,6 +174,7 @@ import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import FirebaseAPI from "@/shell/firebase/FirebaseAPI";
+import { ElementToStoreInFirebase } from "@/shell/firebase/FirebaseTypes";
 
 import GameStatus from "@components/GameStatus.vue";
 import PlayerDisplay from "@components/PlayerDisplay.vue";
@@ -159,6 +195,7 @@ export default Vue.extend({
     },
     data(): {
         gameID: string,
+        initialGameState: GameState | null;
         gameState: GameState | null;
         playerID: number | null;
         eventBus: EventBus;
@@ -170,6 +207,7 @@ export default Vue.extend({
     } {
         return {
             gameID: "",
+            initialGameState: null,
             gameState: null,
             playerID: null,
             eventBus: eventBus,
@@ -205,16 +243,7 @@ export default Vue.extend({
         
         const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             vm.loggedEvents.push(dispatchedEvent);
-
-            const asyncWriter = async function() {
-                const currentEventsInFirebase = (await FirebaseAPI.readFrom(vm.gameID)) || [];
-                const eventsToWriteToFirebase = currentEventsInFirebase.concat(dispatchedEvent);
-                console.log(eventsToWriteToFirebase);
-                FirebaseAPI.writeTo(vm.gameID, eventsToWriteToFirebase);
-            };
-            asyncWriter();
-            
-            //console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
+            console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
         };
         this.eventBus.addListenerToMultipleEvents(["CommandEvent"], eventLogger);
         
@@ -225,17 +254,9 @@ export default Vue.extend({
         };
         this.eventBus.addListener("ToggleWallEvent", toggleWallListener);
 
-        const loadGameFromFirebase = async function() {
-            const currentEventsInFirebase = (await FirebaseAPI.readFrom(vm.gameID)) || [];
-            const listOfEvents = EventRunner.makeListOfEvents(currentEventsInFirebase);
-            const newState = EventRunner.runEvents(listOfEvents);
-            console.log(newState);
-            vm.gameState = newState;
-        };
-
         //gameState will be null if we dpn't call this, and everything will break
         this.startNewGame();
-        loadGameFromFirebase();
+        //this.loadGameFromFirebase();
     },
     mounted() {
         this.registerCommandListeners();
@@ -326,12 +347,43 @@ export default Vue.extend({
             const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
             const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
             this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
+            this.initialGameState = JSON.parse(JSON.stringify(this.gameState));
+
             this.eventBus.dispatchToAllListeners(initialSetupEvent);
 
             this.playerID = R.values(this.gameState.players)[0].id;
 
             this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
             this.newEndPoint = JSON.stringify(this.ownedBoard.endPoint);
+        },
+
+        loadGameFromFirebase(): void {
+            const vm = this;
+            const gameLoader = async function() {
+                const elementLoadedFromFirebase = await FirebaseAPI.readFrom(vm.gameID);
+                if (elementLoadedFromFirebase === null) {
+                    return;
+                }
+
+                const initialGameState = elementLoadedFromFirebase.initialGameState;
+                const currentEventsInFirebase = elementLoadedFromFirebase.events;
+                console.log(currentEventsInFirebase);
+                const listOfEvents = EventRunner.makeListOfEvents(currentEventsInFirebase);
+                console.log(listOfEvents);
+                const newState = EventRunner.runEvents(listOfEvents, initialGameState);
+                console.log(newState);
+                //vm.gameState = newState;
+            };
+            gameLoader();
+        },
+
+        saveGameToFirebase(): void {
+            //todo: probably cant make it store a gamestate, since boards etc. have function in them, which won't serialize, need to store IDs instead maybe
+            const elementToStoreInFirebase: ElementToStoreInFirebase = {
+                initialGameState: this.initialGameState!,
+                events: this.loggedEvents
+            };
+            FirebaseAPI.writeTo(this.gameID, elementToStoreInFirebase);
         }
     }
 });

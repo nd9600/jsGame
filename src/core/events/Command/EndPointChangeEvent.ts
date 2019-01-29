@@ -20,6 +20,9 @@ export default class EndPointChangeEvent extends CommandEvent {
         if (gameState.status !== Status.NotStarted) {
             return gameState;
         }
+
+        console.log(this.data);
+        console.log(gameState);
         
         const oldBoard = gameState.boards[this.data.boardID];
         if (R.equals(this.data.newEndPoint, oldBoard.startPoint)) {

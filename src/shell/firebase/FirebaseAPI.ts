@@ -1,34 +1,43 @@
-import { DispatchedEvent } from "@/core/@typings/EventTypes";
 import firebaseDB from "./firebase";
+import { ElementStoredInFirebase, ElementToStoreInFirebase } from "./FirebaseTypes";
 
 export default class FirebaseAPI {
-    public static onFirebaseChange(gameID: string, f: (data: DispatchedEvent[]) => any) {
-        firebaseDB.ref(`games/${gameID}`).on("value", function(snapshot: firebase.database.DataSnapshot | null) {
-            if (snapshot === null) {
-                return;
-            }
-            const dispatchedEvents: DispatchedEvent[] = JSON.parse(snapshot.val());
-            console.log("reading from firebase:", dispatchedEvents);
-            f(dispatchedEvents);
-        });
+    private static EMPTY_ARRAY = "EMPTY_ARRAY";
+
+    public static writeTo(gameID: string, elementToStore: ElementToStoreInFirebase) {
+        let elementStoredInFirebase: ElementStoredInFirebase = elementToStore;
+        if (elementStoredInFirebase.events.length === 0) {
+            elementStoredInFirebase.events = FirebaseAPI.EMPTY_ARRAY;
+        }
+        console.log("writing to firebase:", elementStoredInFirebase);
+        firebaseDB.ref(`games/${gameID}`).set(elementStoredInFirebase);
     }
 
-    public static writeTo(gameID: string, dispatchedEvents: DispatchedEvent[]) {
-        console.log("writing to firebase:", dispatchedEvents);
-        firebaseDB.ref(`games/${gameID}`).set(JSON.stringify(dispatchedEvents));
-    }
-
-    public static async readFrom(gameID: string): Promise<DispatchedEvent[]> {
+    public static async readFrom(gameID: string): Promise<ElementToStoreInFirebase | null> {
         return firebaseDB.ref(`games/${gameID}`).once("value").then(function(snapshot: firebase.database.DataSnapshot | null) {
             if (snapshot === null) {
-                return new Promise<DispatchedEvent[]>(function(resolve) {
-                    resolve([]);
+                return new Promise<ElementToStoreInFirebase | null>(function(resolve) {
+                    resolve(null);
                 });
             }
-            const dispatchedEvents: DispatchedEvent[] = JSON.parse(snapshot.val());
-            return new Promise<DispatchedEvent[]>(function(resolve) {
-                console.log("read from firebase:", dispatchedEvents);
-                resolve(dispatchedEvents);
+            let elementStoredInFirebase: ElementStoredInFirebase = snapshot.val();
+            
+            return new Promise<ElementToStoreInFirebase>(function(resolve) {
+                console.log("read from firebase:", elementStoredInFirebase);
+                
+                if (typeof elementStoredInFirebase.events === "string") {
+                    let elementLoadedFromFirebase: ElementToStoreInFirebase = {
+                        initialGameState: elementStoredInFirebase.initialGameState,
+                        events: []
+                    };
+                    resolve(elementLoadedFromFirebase);
+                } else {
+                    let elementLoadedFromFirebase: ElementToStoreInFirebase = {
+                        initialGameState: elementStoredInFirebase.initialGameState,
+                        events: elementStoredInFirebase.events
+                    };
+                    resolve(elementLoadedFromFirebase);
+                }
             });
         });
     }
