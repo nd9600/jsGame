@@ -369,6 +369,7 @@ export default Vue.extend({
                 const eventsLoadedFromFirebase = elementLoadedFromFirebase.events;
                 const listOfEvents = EventRunner.makeListOfEvents(eventsLoadedFromFirebase);
                 const newState = EventRunner.runEvents(listOfEvents, initialGameState);
+                vm.initialGameState = initialGameState;
                 vm.loggedEvents = eventsLoadedFromFirebase;
                 vm.gameState = newState;
             };
