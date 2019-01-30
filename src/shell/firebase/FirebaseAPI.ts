@@ -1,9 +1,9 @@
 import Board from "@/core/board/Board";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 import Player from "@/core/player/Player";
 import firebaseDB from "./firebase";
-import { GameStoredInFirebase, GameFromFirebase, SerializableBoard, SerializablePlayer } from "./FirebaseTypes";
+import { GameFromFirebase, GameStoredInFirebase, SerializableBoard, SerializablePlayer } from "./FirebaseTypes";
 import * as R from "ramda";
-import GameStateFactory from "@/core/factories/GameStateFactory";
 
 export default class FirebaseAPI {
     private static EMPTY_ARRAY = "EMPTY_ARRAY";
