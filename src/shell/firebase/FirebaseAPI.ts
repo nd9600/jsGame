@@ -1,43 +1,90 @@
+import Board from "@/core/board/Board";
+import Player from "@/core/player/Player";
 import firebaseDB from "./firebase";
-import { ElementStoredInFirebase, ElementToStoreInFirebase } from "./FirebaseTypes";
+import { GameStoredInFirebase, GameFromFirebase, SerializableBoard, SerializablePlayer } from "./FirebaseTypes";
+import * as R from "ramda";
+import GameStateFactory from "@/core/factories/GameStateFactory";
 
 export default class FirebaseAPI {
     private static EMPTY_ARRAY = "EMPTY_ARRAY";
 
-    public static writeTo(gameID: string, elementToStore: ElementToStoreInFirebase) {
-        let elementStoredInFirebase: ElementStoredInFirebase = elementToStore;
-        if (elementStoredInFirebase.events.length === 0) {
-            elementStoredInFirebase.events = FirebaseAPI.EMPTY_ARRAY;
-        }
-        console.log("writing to firebase:", elementStoredInFirebase);
-        firebaseDB.ref(`games/${gameID}`).set(elementStoredInFirebase);
+    private static makeObjectStorable(gameToStore: GameFromFirebase): GameStoredInFirebase {
+        let gameState = gameToStore.initialGameState;
+        let serialisablePlayers: SerializablePlayer[] = R.map(
+            (player: Player) => ({
+                id: player.id,
+                name: player.name,
+                score: player.score,
+            }),
+            R.values(gameState.players)
+        );
+        let serializableBoards: SerializableBoard[] = R.map(
+            (board: Board) => ({
+                id: board.id,
+                creatorID: board.creatorID,
+                boardData: board.boardData,
+                startPoint: board.startPoint,
+                endPoint: board.endPoint,
+                status: board.status,
+            }),
+            R.values(gameState.boards)
+        );
+
+        let gameStoredInFirebase: GameStoredInFirebase = {
+            initialGameState: {
+                players: serialisablePlayers,
+                boards: serializableBoards,
+            },
+            events: gameToStore.events
+        };
+        return gameStoredInFirebase;
     }
 
-    public static async readFrom(gameID: string): Promise<ElementToStoreInFirebase | null> {
+    private static makeObjectLoadable(gameStoredInFirebase: GameStoredInFirebase): GameFromFirebase {
+        let serializedGameState = gameStoredInFirebase.initialGameState;
+        let players: Player[] = R.map(
+            (player: SerializablePlayer) => new Player(player.id, player.name, player.score),
+            serializedGameState.players
+        );
+        let boards: Board[] = R.map(
+            (board: SerializableBoard) => new Board(board.id, board.creatorID, board.boardData, board.startPoint, board.endPoint, board.status),
+            serializedGameState.boards
+        );
+
+        let initialGameState = GameStateFactory.createGameState({players, boards});
+        if (typeof gameStoredInFirebase.events === "string") {
+            return {
+                initialGameState,
+                events: []
+            }
+        }
+        return {
+            initialGameState,
+            events: gameStoredInFirebase.events
+        };
+    }
+
+    public static writeTo(gameID: string, gameToStore: GameFromFirebase) {
+        let gameStoredInFirebase: GameStoredInFirebase = FirebaseAPI.makeObjectStorable(gameToStore);
+        if (gameStoredInFirebase.events.length === 0) {
+            gameStoredInFirebase.events = FirebaseAPI.EMPTY_ARRAY;
+        }
+        console.log("writing to firebase:", gameStoredInFirebase);
+        firebaseDB.ref(`games/${gameID}`).set(gameStoredInFirebase);
+    }
+
+    public static async readFrom(gameID: string): Promise<GameFromFirebase | null> {
         return firebaseDB.ref(`games/${gameID}`).once("value").then(function(snapshot: firebase.database.DataSnapshot | null) {
             if (snapshot === null) {
-                return new Promise<ElementToStoreInFirebase | null>(function(resolve) {
+                return new Promise<GameFromFirebase | null>(function(resolve) {
                     resolve(null);
                 });
             }
-            let elementStoredInFirebase: ElementStoredInFirebase = snapshot.val();
-            
-            return new Promise<ElementToStoreInFirebase>(function(resolve) {
-                console.log("read from firebase:", elementStoredInFirebase);
-                
-                if (typeof elementStoredInFirebase.events === "string") {
-                    let elementLoadedFromFirebase: ElementToStoreInFirebase = {
-                        initialGameState: elementStoredInFirebase.initialGameState,
-                        events: []
-                    };
-                    resolve(elementLoadedFromFirebase);
-                } else {
-                    let elementLoadedFromFirebase: ElementToStoreInFirebase = {
-                        initialGameState: elementStoredInFirebase.initialGameState,
-                        events: elementStoredInFirebase.events
-                    };
-                    resolve(elementLoadedFromFirebase);
-                }
+            let gameStoredInFirebase: GameStoredInFirebase = snapshot.val();
+
+            return new Promise<GameFromFirebase>(function(resolve) {
+                console.log("read from firebase:", gameStoredInFirebase);
+                resolve(FirebaseAPI.makeObjectLoadable(gameStoredInFirebase));
             });
         });
     }

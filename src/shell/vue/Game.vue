@@ -174,7 +174,7 @@ import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import FirebaseAPI from "@/shell/firebase/FirebaseAPI";
-import { ElementToStoreInFirebase } from "@/shell/firebase/FirebaseTypes";
+import { GameFromFirebase } from "@/shell/firebase/FirebaseTypes";
 
 import GameStatus from "@components/GameStatus.vue";
 import PlayerDisplay from "@components/PlayerDisplay.vue";
@@ -366,24 +366,21 @@ export default Vue.extend({
                 }
 
                 const initialGameState = elementLoadedFromFirebase.initialGameState;
-                const currentEventsInFirebase = elementLoadedFromFirebase.events;
-                console.log(currentEventsInFirebase);
-                const listOfEvents = EventRunner.makeListOfEvents(currentEventsInFirebase);
-                console.log(listOfEvents);
+                const eventsLoadedFromFirebase = elementLoadedFromFirebase.events;
+                const listOfEvents = EventRunner.makeListOfEvents(eventsLoadedFromFirebase);
                 const newState = EventRunner.runEvents(listOfEvents, initialGameState);
-                console.log(newState);
-                //vm.gameState = newState;
+                vm.loggedEvents = eventsLoadedFromFirebase;
+                vm.gameState = newState;
             };
             gameLoader();
         },
 
         saveGameToFirebase(): void {
-            //todo: probably cant make it store a gamestate, since boards etc. have function in them, which won't serialize, need to store IDs instead maybe
-            const elementToStoreInFirebase: ElementToStoreInFirebase = {
+            const gameFromFirebase: GameFromFirebase = {
                 initialGameState: this.initialGameState!,
                 events: this.loggedEvents
             };
-            FirebaseAPI.writeTo(this.gameID, elementToStoreInFirebase);
+            FirebaseAPI.writeTo(this.gameID, gameFromFirebase);
         }
     }
 });
