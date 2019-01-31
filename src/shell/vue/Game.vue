@@ -244,15 +244,14 @@ export default Vue.extend({
         const vm = this;
         this.gameID = "1";
         
-        const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+        const commandEventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             vm.loggedEvents.push(dispatchedEvent);
             console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
-            socket.emit("commandEvent", dispatchedEvent);
+            vm.socket.emit("commandEvent", dispatchedEvent);
         };
-        this.eventBus.addListenerToMultipleEvents(["CommandEvent"], eventLogger);
+        this.eventBus.addListenerToMultipleEvents(["CommandEvent"], commandEventLogger);
         
         const dispatchedEventListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
-            //console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
             const event = EventRunner.makeEventFromDispatchedEvent(dispatchedEvent);
             vm.gameState = event.handle(vm.gameState!);
         };
@@ -260,7 +259,8 @@ export default Vue.extend({
 
         //gameState will be null if we dpn't call this, and everything will break
         this.startNewGame();
-        //this.loadGameFromFirebase();
+        this.loadGameFromFirebase();
+        this.initializeSockets();
     },
     mounted() {
         this.registerCommandListeners();
@@ -304,6 +304,7 @@ export default Vue.extend({
             
             const dispatchedEventListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
                 console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
+                vm.loggedEvents.push(dispatchedEvent);
                 const event = EventRunner.makeEventFromDispatchedEvent(dispatchedEvent);
                 vm.gameState = event.handle(vm.gameState!);
             };

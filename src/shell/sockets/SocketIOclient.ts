@@ -14,8 +14,9 @@ export default class SocketIOclient {
         SocketIOclient.socket = io(url);
         R.forEachObjIndexed(
             (callback: SocketFunction, eventName) => {
-                console.log(eventName + ':' + callback)
+                console.log(eventName)
                 SocketIOclient.socket.on(eventName, callback);
             }, callbacks);
+        return SocketIOclient.socket;
     }
 }

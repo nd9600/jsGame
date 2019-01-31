@@ -9,7 +9,7 @@ server.on("connection", function(socket) {
   console.log("user connected");
   
   socket.on("commandEvent", function(dispatchedEvent){
-    console.log("dispatchedEvent: " + dispatchedEvent);
+    console.log(dispatchedEvent);
     socket.broadcast.emit("commandEvent", dispatchedEvent);
   });
 });
