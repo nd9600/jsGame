@@ -92,6 +92,23 @@
                         </button>
                     </div>
                 </template>
+                
+                <template
+                    v-if="this.ownedBoard.status === 'PlacingWalls'"
+                >
+                    <div class="h-1 w-full border-t border-grey-light my-2"></div>
+
+                    <div class="flex flex-col">
+                        <span class="mb-2">Start playing</span>
+                        <button
+                            class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+                            type="submit" 
+                            @click="changeBoardStatus('Playing')"
+                        >
+                            (by completing the mazes)
+                        </button>
+                    </div>
+                </template>
 
                 <template>
                     <div class="h-1 w-full border-t border-grey-light my-2"></div>

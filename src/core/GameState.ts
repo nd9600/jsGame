@@ -14,13 +14,16 @@ export default class GameState {
         public readonly boards: Boards, 
         public readonly playerBoards: PlayerBoards
         ) {        
-        const statuses = R.pluck("status", R.values(boards));
+        const boardStatuses = R.pluck("status", R.values(boards));
+        
+        // if one status is placingWalls and one playing, gs status is placing walls
+        // maybe? if one status is playing and one finished, gs status is playing
 
-        if (R.contains(Status.NotStarted, statuses)) {
+        if (R.contains(Status.NotStarted, boardStatuses)) {
             this.status = Status.NotStarted;
-        } else if (R.all(R.equals(Status.PlacingWalls), statuses)) {
+        } else if (R.all(R.equals(Status.PlacingWalls), boardStatuses)) {
             this.status = Status.PlacingWalls;
-        } else if (R.all(R.equals(Status.Playing), statuses)) {
+        } else if (R.all(R.equals(Status.Playing), boardStatuses)) {
             this.status = Status.Playing;
         } else {
             this.status = Status.Finished;
