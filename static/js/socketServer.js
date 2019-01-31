@@ -7,7 +7,9 @@ console.log(`listening on port ${PORT}`);
 
 server.on("connection", function(socket) {
   console.log("user connected");
-  socket.emit("welcome", {
-      test: "msg"
+  
+  socket.on("commandEvent", function(dispatchedEvent){
+    console.log("dispatchedEvent: " + dispatchedEvent);
+    socket.broadcast.emit("commandEvent", dispatchedEvent);
   });
 });

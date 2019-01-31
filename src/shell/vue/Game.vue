@@ -175,7 +175,7 @@ import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import FirebaseAPI from "@/shell/firebase/FirebaseAPI";
 import { GameFromFirebase } from "@/shell/firebase/FirebaseTypes";
-import SocketIOapi from "@/shell/sockets/SocketIOapi";
+import SocketIOclient from "@/shell/sockets/SocketIOclient";
 
 import GameStatus from "@components/GameStatus.vue";
 import PlayerDisplay from "@components/PlayerDisplay.vue";
@@ -201,6 +201,7 @@ export default Vue.extend({
         playerID: number | null;
         eventBus: EventBus;
         loggedEvents: DispatchedEvent[];
+        socket: any;
 
         newPlayerName: string;
         newStartPoint: string;
@@ -213,6 +214,7 @@ export default Vue.extend({
             playerID: null,
             eventBus: eventBus,
             loggedEvents: [],
+            socket: null,
             
             newPlayerName: "",
             newStartPoint: "",
@@ -245,15 +247,16 @@ export default Vue.extend({
         const eventLogger: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             vm.loggedEvents.push(dispatchedEvent);
             console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
+            socket.emit("commandEvent", dispatchedEvent);
         };
         this.eventBus.addListenerToMultipleEvents(["CommandEvent"], eventLogger);
         
-        const toggleWallListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+        const dispatchedEventListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             //console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
             const event = EventRunner.makeEventFromDispatchedEvent(dispatchedEvent);
             vm.gameState = event.handle(vm.gameState!);
         };
-        this.eventBus.addListener("ToggleWallEvent", toggleWallListener);
+        this.eventBus.addListener("ToggleWallEvent", dispatchedEventListener);
 
         //gameState will be null if we dpn't call this, and everything will break
         this.startNewGame();
@@ -298,10 +301,15 @@ export default Vue.extend({
 
         initializeSockets(): void {
             const vm = this;
-            SocketIOapi.init({
-                welcome: (message: string) => {
-                    console.log(message);
-                }
+            
+            const dispatchedEventListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
+                console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
+                const event = EventRunner.makeEventFromDispatchedEvent(dispatchedEvent);
+                vm.gameState = event.handle(vm.gameState!);
+            };
+        
+            vm.socket = SocketIOclient.init({
+                commandEvent: dispatchedEventListener
             },
                 "http://localhost:3000"    
             );

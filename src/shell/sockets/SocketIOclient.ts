@@ -7,13 +7,15 @@ interface SocketCallbacks {
     [eventName: string]: SocketFunction
 }
 
-export default class SocketIOapi {
+export default class SocketIOclient {
+    private static socket: any;
+    
     public static init(callbacks: SocketCallbacks, url = "http://localhost"): void {
-        const socket = io(url);
+        SocketIOclient.socket = io(url);
         R.forEachObjIndexed(
             (callback: SocketFunction, eventName) => {
                 console.log(eventName + ':' + callback)
-                socket.on(eventName, callback);
+                SocketIOclient.socket.on(eventName, callback);
             }, callbacks);
     }
 }
