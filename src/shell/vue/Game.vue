@@ -175,6 +175,7 @@ import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import FirebaseAPI from "@/shell/firebase/FirebaseAPI";
 import { GameFromFirebase } from "@/shell/firebase/FirebaseTypes";
+import SocketIOapi from "@/shell/sockets/SocketIOapi";
 
 import GameStatus from "@components/GameStatus.vue";
 import PlayerDisplay from "@components/PlayerDisplay.vue";
@@ -293,6 +294,17 @@ export default Vue.extend({
                     console.log("gameState: ", gameState);
                 }
             });
+        },
+
+        initializeSockets(): void {
+            const vm = this;
+            SocketIOapi.init({
+                welcome: (message: string) => {
+                    console.log(message);
+                }
+            },
+                "http://localhost:3000"    
+            );
         },
 
         changePlayerName(): void {
