@@ -151,7 +151,7 @@
             <div class="mb-2">
                 <span class="text-sm text-grey-light">Event log</span>
                 <p class="text-transparent hover:text-grey-light">
-                    {{loggedEvents}}
+                    {{ {initialGameState, events: loggedEvents} }}
                 </p>
             </div>
             <div class="flex flex-col w-1/2">
@@ -191,7 +191,7 @@ import Player from "@/core/player/Player";
 import DefaultGameSetup from "@/shell/DefaultGameSetup";
 import EventBus from "@/shell/EventBus";
 import FirebaseAPI from "@/shell/firebase/FirebaseAPI";
-import { GameFromFirebase } from "@/shell/firebase/FirebaseTypes";
+import { GameFromFirebase, GameStoredInFirebase, SerializableGameState } from "@/shell/firebase/FirebaseTypes";
 import SocketIOclient from "@/shell/sockets/SocketIOclient";
 
 import GameStatus from "@components/GameStatus.vue";
@@ -303,22 +303,27 @@ export default Vue.extend({
             this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
             this.newEndPoint = JSON.stringify(this.ownedBoard.endPoint);
         },
+        
+        loadGame(gameToLoad: GameFromFirebase): void {
+            const initialGameState = gameToLoad.initialGameState;
+            const dispatchedEventsToLoad = gameToLoad.events;
+            
+            const listOfEvents = EventRunner.makeListOfEvents(dispatchedEventsToLoad);
+            const newState = EventRunner.runEvents(listOfEvents, initialGameState);
+            
+            this.initialGameState = initialGameState;
+            this.loggedEvents = dispatchedEventsToLoad;
+            this.gameState = newState;
+        },
 
         loadGameFromFirebase(): void {
             const vm = this;
             const gameLoader = async function() {
-                const elementLoadedFromFirebase = await FirebaseAPI.readFrom(vm.gameID);
-                if (elementLoadedFromFirebase === null) {
+                const gameLoadedFromFirebase = await FirebaseAPI.readFrom(vm.gameID);
+                if (gameLoadedFromFirebase === null) {
                     return;
                 }
-
-                const initialGameState = elementLoadedFromFirebase.initialGameState;
-                const eventsLoadedFromFirebase = elementLoadedFromFirebase.events;
-                const listOfEvents = EventRunner.makeListOfEvents(eventsLoadedFromFirebase);
-                const newState = EventRunner.runEvents(listOfEvents, initialGameState);
-                vm.initialGameState = initialGameState;
-                vm.loggedEvents = eventsLoadedFromFirebase;
-                vm.gameState = newState;
+                vm.loadGame(gameLoadedFromFirebase);
             };
             gameLoader();
         },
@@ -414,19 +419,9 @@ export default Vue.extend({
 
         importEvents(event: Event): void {
             const element = event.target as HTMLInputElement;
-            const eventListText = element.value;
-            const vm = this;
-
-            const dispatchedEvents: DispatchedEvent[] = JSON.parse(eventListText);
-            const listOfEvents = EventRunner.makeListOfEvents(dispatchedEvents);
-            const newState = EventRunner.runEvents(listOfEvents);
-            
-            vm.loggedEvents = [];
-            R.forEach((event: BaseEvent) => {
-                vm.eventBus.dispatchToAllListeners(event);
-            }, listOfEvents);
-
-            this.gameState = newState;
+            const gameToLoad: GameStoredInFirebase = JSON.parse(element.value);
+            const loadableGame = FirebaseAPI.makeObjectLoadable(gameToLoad);
+            this.loadGame(loadableGame);
         },
     }
 });
