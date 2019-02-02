@@ -8,7 +8,7 @@ import * as R from "ramda";
 export default class FirebaseAPI {
     private static EMPTY_ARRAY = "EMPTY_ARRAY";
 
-    private static makeObjectStorable(gameToStore: GameFromFirebase): GameStoredInFirebase {
+    public static makeObjectStorable(gameToStore: GameFromFirebase): GameStoredInFirebase {
         let gameState = gameToStore.initialGameState;
         let serialisablePlayers: SerializablePlayer[] = R.map(
             (player: Player) => ({

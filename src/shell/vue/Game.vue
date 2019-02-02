@@ -151,16 +151,16 @@
             <div class="mb-2">
                 <span class="text-sm text-grey-light">Event log</span>
                 <p class="text-transparent hover:text-grey-light">
-                    {{ {initialGameState, events: loggedEvents} }}
+                    {{ gameToImport }}
                 </p>
             </div>
             <div class="flex flex-col w-1/2">
-                <span class="text-sm text-grey-light">Import events</span>  
+                <span class="text-sm text-grey-light">Import game</span>  
                 <input 
                     type="text"
                     class="border border-transparent hover:border-grey-light text-transparent hover:text-grey p-1"
-                    placeholder="events JSON"
-                    @keyup.enter.prevent="importEvents"
+                    placeholder="game JSON"
+                    @keyup.enter.prevent="importGame"
                 >
             </div>
         </div>
@@ -258,6 +258,12 @@ export default Vue.extend({
         },
         canChangeStartOrEndPoint(): boolean {
             return this.gameState!.status === Status.NotStarted;
+        },
+        gameToImport() : GameStoredInFirebase {
+            return FirebaseAPI.makeObjectStorable({
+                initialGameState: this.initialGameState!,
+                events: this.loggedEvents
+            });
         }
     },
     created() {
@@ -314,6 +320,13 @@ export default Vue.extend({
             this.initialGameState = initialGameState;
             this.loggedEvents = dispatchedEventsToLoad;
             this.gameState = newState;
+        },
+        
+        importGame(event: Event): void {
+            const element = event.target as HTMLInputElement;
+            const gameToLoad: GameStoredInFirebase = JSON.parse(element.value);
+            const loadableGame = FirebaseAPI.makeObjectLoadable(gameToLoad);
+            this.loadGame(loadableGame);
         },
 
         loadGameFromFirebase(): void {
@@ -417,12 +430,6 @@ export default Vue.extend({
             this.eventBus.dispatchToAllListeners(statusChangeEvent);
         },
 
-        importEvents(event: Event): void {
-            const element = event.target as HTMLInputElement;
-            const gameToLoad: GameStoredInFirebase = JSON.parse(element.value);
-            const loadableGame = FirebaseAPI.makeObjectLoadable(gameToLoad);
-            this.loadGame(loadableGame);
-        },
     }
 });
 </script>
