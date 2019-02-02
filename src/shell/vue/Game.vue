@@ -239,8 +239,11 @@ export default Vue.extend({
         };
     },
     watch: {
-        playerID() {
-            this.newPlayerName = this.player.name;
+        playerID: {
+            immediate: true,
+            handler() {
+                this.newPlayerName = this.player.name;
+            }
         }
     },
     computed: {
@@ -266,7 +269,7 @@ export default Vue.extend({
             console.log(`${dispatchedEvent.type}: `, dispatchedEvent.data);
             vm.socket.emit("commandEvent", dispatchedEvent);
         };
-        this.eventBus.addListenerToMultipleEvents(["CommandEvent"], commandEventLogger);
+        this.eventBus.addListenerToMultipleEvents(["CommandEvent", "InputEvent"], commandEventLogger);
         
         const dispatchedEventListener: EventCallback = (dispatchedEvent: DispatchedEvent): void => {
             const event = EventRunner.makeEventFromDispatchedEvent(dispatchedEvent);
@@ -282,38 +285,50 @@ export default Vue.extend({
     mounted() {
         this.registerCommandListeners();
     },
-    methods: {
-        registerCommandListeners(): void {
-            const vm = this;
-            const KEYS_TO_COMMANDS: { [index: string]: Command } = {
-                ArrowUp: Command.MoveUp,
-                ArrowDown: Command.MoveDown,
-                ArrowLeft: Command.MoveLeft,
-                ArrowRight: Command.MoveRight
-            };
+    methods: {        
+        startNewGame(): void {
+            const setup = new DefaultGameSetup();
+            const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint(), setup.getPlayerIDs(), setup.getBoardIDs()];
 
-            const playerDisplay = document.getElementById("playerDisplay")!;
-            playerDisplay.addEventListener("keydown", (event) => {
-                if (! R.contains(event.code, R.keys(KEYS_TO_COMMANDS))) {
+            const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
+            const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
+            this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
+            this.initialGameState = JSON.parse(JSON.stringify(this.gameState));
+            this.loggedEvents = [];
+
+            this.eventBus.dispatchToAllListeners(initialSetupEvent);
+
+            this.playerID = R.values(this.gameState.players)[0].id;
+
+            this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
+            this.newEndPoint = JSON.stringify(this.ownedBoard.endPoint);
+        },
+
+        loadGameFromFirebase(): void {
+            const vm = this;
+            const gameLoader = async function() {
+                const elementLoadedFromFirebase = await FirebaseAPI.readFrom(vm.gameID);
+                if (elementLoadedFromFirebase === null) {
                     return;
                 }
-                event.preventDefault();
 
-                const gameState = vm.gameState!;
-                const player = gameState.players[this.playerID!];
+                const initialGameState = elementLoadedFromFirebase.initialGameState;
+                const eventsLoadedFromFirebase = elementLoadedFromFirebase.events;
+                const listOfEvents = EventRunner.makeListOfEvents(eventsLoadedFromFirebase);
+                const newState = EventRunner.runEvents(listOfEvents, initialGameState);
+                vm.initialGameState = initialGameState;
+                vm.loggedEvents = eventsLoadedFromFirebase;
+                vm.gameState = newState;
+            };
+            gameLoader();
+        },
 
-                if (KEYS_TO_COMMANDS.hasOwnProperty(event.code)) {
-                    const inputEventData: InputEventData = {
-                        command: KEYS_TO_COMMANDS[event.code],
-                        player
-                    };
-
-                    const inputEvent = new InputEvent(inputEventData);
-                    this.gameState = inputEvent.handle(gameState);
-                    this.eventBus.dispatchToAllListeners(inputEvent);
-                    console.log("gameState: ", gameState);
-                }
-            });
+        saveGameToFirebase(): void {
+            const gameFromFirebase: GameFromFirebase = {
+                initialGameState: this.initialGameState!,
+                events: this.loggedEvents
+            };
+            FirebaseAPI.writeTo(this.gameID, gameFromFirebase);
         },
 
         initializeSockets(): void {
@@ -331,6 +346,42 @@ export default Vue.extend({
             },
                 "http://localhost:3000"    
             );
+        },
+        
+        registerCommandListeners(): void {
+            const vm = this;
+            const KEYS_TO_COMMANDS: { [index: string]: Command } = {
+                ArrowUp: Command.MoveUp,
+                ArrowDown: Command.MoveDown,
+                ArrowLeft: Command.MoveLeft,
+                ArrowRight: Command.MoveRight
+            };
+
+            const playerDisplay = document.getElementById("playerDisplay")!;
+            playerDisplay.addEventListener("keydown", (event) => {
+                console.log(KEYS_TO_COMMANDS);
+                console.log(event);
+                if (! R.contains(event.code, R.keys(KEYS_TO_COMMANDS))) {
+                    return;
+                }
+                event.preventDefault();
+
+                const gameState = vm.gameState!;
+                const player = gameState.players[this.playerID!];
+
+                if (KEYS_TO_COMMANDS.hasOwnProperty(event.code)) {
+                    const inputEventData: InputEventData = {
+                        command: KEYS_TO_COMMANDS[event.code],
+                        player
+                    };
+
+                    const inputEvent = new InputEvent(inputEventData);
+                    this.gameState = inputEvent.handle(gameState);
+                    this.eventBus.dispatchToAllListeners(inputEvent);
+                    console.log("inputEvent: ", inputEvent);
+                    console.log("gameState: ", gameState);
+                }
+            });
         },
 
         changePlayerName(): void {
@@ -377,50 +428,6 @@ export default Vue.extend({
 
             this.gameState = newState;
         },
-
-        startNewGame(): void {
-            const setup = new DefaultGameSetup();
-            const [initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs] = [setup.getInitialPlayerName(), setup.getSize(), setup.getStartPoint(), setup.getEndPoint(), setup.getPlayerIDs(), setup.getBoardIDs()];
-
-            const initialGameSetupData = {initialPlayerName, size, startPoint, endPoint, playerIDs, boardIDs};
-            const initialSetupEvent = new InitialSetupEvent(initialGameSetupData);
-            this.gameState = initialSetupEvent.handle(GameStateFactory.createGameState());
-            this.initialGameState = JSON.parse(JSON.stringify(this.gameState));
-
-            this.eventBus.dispatchToAllListeners(initialSetupEvent);
-
-            this.playerID = R.values(this.gameState.players)[0].id;
-
-            this.newStartPoint = JSON.stringify(this.ownedBoard.startPoint);
-            this.newEndPoint = JSON.stringify(this.ownedBoard.endPoint);
-        },
-
-        loadGameFromFirebase(): void {
-            const vm = this;
-            const gameLoader = async function() {
-                const elementLoadedFromFirebase = await FirebaseAPI.readFrom(vm.gameID);
-                if (elementLoadedFromFirebase === null) {
-                    return;
-                }
-
-                const initialGameState = elementLoadedFromFirebase.initialGameState;
-                const eventsLoadedFromFirebase = elementLoadedFromFirebase.events;
-                const listOfEvents = EventRunner.makeListOfEvents(eventsLoadedFromFirebase);
-                const newState = EventRunner.runEvents(listOfEvents, initialGameState);
-                vm.initialGameState = initialGameState;
-                vm.loggedEvents = eventsLoadedFromFirebase;
-                vm.gameState = newState;
-            };
-            gameLoader();
-        },
-
-        saveGameToFirebase(): void {
-            const gameFromFirebase: GameFromFirebase = {
-                initialGameState: this.initialGameState!,
-                events: this.loggedEvents
-            };
-            FirebaseAPI.writeTo(this.gameID, gameFromFirebase);
-        }
     }
 });
 </script>

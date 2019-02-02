@@ -18,10 +18,15 @@ export default class GameState {
         
         // if one status is placingWalls and one playing, gs status is placing walls
         // maybe? if one status is playing and one finished, gs status is playing
-
+        
+        const atLeastOnePlacingWalls = R.filter(R.equals(Status.PlacingWalls), boardStatuses).length >= 1;
+        const atLeastOnePlaying = R.filter(R.equals(Status.Playing), boardStatuses).length >= 1;
+        const allPlacingWallsOrPlaying = R.all(R.either(R.equals(Status.PlacingWalls), R.equals(Status.Playing)))(boardStatuses);
         if (R.contains(Status.NotStarted, boardStatuses)) {
             this.status = Status.NotStarted;
         } else if (R.all(R.equals(Status.PlacingWalls), boardStatuses)) {
+            this.status = Status.PlacingWalls;
+        } else if (allPlacingWallsOrPlaying && atLeastOnePlacingWalls && atLeastOnePlaying) {
             this.status = Status.PlacingWalls;
         } else if (R.all(R.equals(Status.Playing), boardStatuses)) {
             this.status = Status.Playing;

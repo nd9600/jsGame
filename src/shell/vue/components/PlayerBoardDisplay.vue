@@ -35,6 +35,7 @@ import * as R from "ramda";
 import { BoardPosition, Place, Status } from '@/core/@typings/BoardTypes';
 import GameState from '@/core/GameState';
 import Board from '@/core/board/Board';
+import PlayerBoard from '@/core/player/PlayerBoard';
 import ToggleWallEvent from "@/core/events/Command/ToggleWallEvent";
 
 export default Vue.extend({
@@ -57,6 +58,9 @@ export default Vue.extend({
     computed: {
         board(): Board {
             return this.gameState.boards[this.board_id];
+        },
+        playerBoard(): PlayerBoard {
+            return this.gameState.playerBoards[this.player_id][this.board_id];
         }
     },
     methods: {
@@ -68,6 +72,9 @@ export default Vue.extend({
         },
         isWall(x: number, y: number): boolean {
             return R.equals(Place.Wall, this.board.getPosition({x, y}));
+        },
+        isCharacterPosition(x: number, y: number): boolean {
+            return R.equals(this.playerBoard.characterPosition, {x, y});
         },
         getClassesForPosition(x: number, y: number) {
             let classObject = {};
@@ -81,7 +88,12 @@ export default Vue.extend({
                     "bg-green": true,
                     "hover:bg-green-dark": true
                 });
-            } else if (this.isWall(x, y)) {
+            } else if (this.isCharacterPosition(x, y)) {
+                classObject = R.merge(classObject, {
+                    "bg-yellow": true,
+                    "hover:bg-yellow-dark": true
+                });
+            }  else if (this.isWall(x, y)) {
                 classObject = R.merge(classObject, {
                     "bg-red": true,
                     "hover:bg-red-dark": true
@@ -97,9 +109,9 @@ export default Vue.extend({
             return classObject;
         },
         toggleWall(x: number, y: number): void {
-            //if (this.gameState.status !== Status.PlacingWalls) {
-            //    return;
-            //}
+            if (this.gameState.status !== Status.PlacingWalls) {
+                return;
+            }
             const position: BoardPosition = {x, y};
             const toggleWallEvent = new ToggleWallEvent({boardID: this.board_id, positionToToggle: position});
 

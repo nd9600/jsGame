@@ -5,6 +5,7 @@ const server = io.listen(PORT);
 
 console.log(`listening on port ${PORT}`);
 
+// need to dispatch to a room for each game
 server.on("connection", function(socket) {
   console.log("user connected");
   
