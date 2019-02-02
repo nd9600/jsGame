@@ -149,7 +149,7 @@
         </div>
         <div class="flex flex-col">
             <div class="mb-2">
-                <span class="text-sm text-grey-light">Event log</span>
+                <span class="text-sm text-grey-light">Game log</span>
                 <p class="text-transparent hover:text-grey-light">
                     {{ gameToImport }}
                 </p>
