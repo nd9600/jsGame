@@ -12,9 +12,16 @@ describe("GameStateCreation", () => {
         expect(gameState.status).toEqual(Status.NotStarted);
     });
 
-    it("creates_PlacingWall_status", () => {
+    it("creates_PlacingWalls_status", () => {
         const board = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.PlacingWalls);
         const gameState = GameStateFactory.createGameState({boards: [board, board]});
+        expect(gameState.status).toEqual(Status.PlacingWalls);
+    });
+
+    it("creates PlayingWalls status when one board is PlacingWalls and one is Playing", () => {
+        const board1 = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.PlacingWalls);
+        const board2 = new Board(Board.idCounter++, -1, [[]], pos, pos, Status.Playing);
+        const gameState = GameStateFactory.createGameState({boards: [board1, board2]});
         expect(gameState.status).toEqual(Status.PlacingWalls);
     });
 
@@ -49,9 +56,11 @@ describe("GameStateCreation", () => {
     });
 
     it("gets current info", () => {
+        Player.idCounter = 0;
+        Board.idCounter = 0;
         const wantedString = `Status: NotStarted
 
-Board #7
+Board #0
 Status: NotStarted
 Start point: {\"x\":0,\"y\":0}
 End point: {\"x\":1,\"y\":1}
@@ -60,9 +69,9 @@ Board:
 0
 
 #####
-Player #4, , 0 points
+Player #0, , 0 points
 
-Player #4, Board #7
+Player #0, Board #0
 Character position: {\"x\":0,\"y\":0}
 Board Status: Playing
 
