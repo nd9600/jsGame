@@ -13,7 +13,7 @@
         <div>
             <template v-if="canPlayGame">
                 <game 
-                    :player-id="playerID"
+                    :player-id="Number(playerID)"
                     :game-state="gameState"
                     :game-to-import="gameToImport"
                 />
@@ -56,6 +56,17 @@
                             class="inline w-1/3 border border-grey-dark my-2 p-2"
                             type="text"
                             v-model="gameID"
+                        >
+
+                        <input 
+                            class="inline w-1/3 border border-r-0 border-grey-dark my-2 p-2"
+                            type="text"
+                            value="player ID: "
+                            disabled="disabled"
+                        ><input 
+                            class="inline w-1/3 border border-grey-dark my-2 p-2"
+                            type="text"
+                            v-model="playerID"
                         >
                     </div>
 

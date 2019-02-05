@@ -33,7 +33,7 @@ const game = new Vue({
         gameID: string,
         initialGameState: GameState | null;
         gameState: GameState | null;
-        playerID: number ;
+        playerID: number;
         eventBus: EventBus;
         loggedEvents: DispatchedEvent[];
         socket: SocketIOClient.Socket | null;

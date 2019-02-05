@@ -1,6 +1,7 @@
 <template>
-    <div class="max-w-full">
-        <div class="flex flex-col" style="height: 40vh;">
+    <div class="max-w-full mt-8">
+        <p>{{ boardText }}</p>
+        <div class="flex flex-col mt-2" style="height: 40vh;">
             <div
                 class="flex flex-row flex-grow"
                 v-for="(row, y) in board.boardData"
@@ -17,7 +18,10 @@
             </div>
         </div>
 
-        <p class="whitespace-pre-line font-sans text-left">
+        <p
+            v-if="false"
+            class="whitespace-pre-line font-sans text-left"
+        >
             {{ board.getCurrentInfo() }}
         </p>
     </div>
@@ -59,6 +63,11 @@ export default Vue.extend({
         },
         isPlacingWalls(): boolean {
             return this.gameState.status === 'PlacingWalls';
+        },
+        boardText(): string {
+            return this.board.creatorID === this.player_id
+                ? "Your board"
+                : "Opponent's board";
         }
     },
     methods: {
