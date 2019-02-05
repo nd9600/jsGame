@@ -1,4 +1,4 @@
-import { BoardPosition, Place, twoNumbers } from "@/core/@typings/BoardTypes";
+import { BoardPosition, Place, twoNumbers, Status } from "@/core/@typings/BoardTypes";
 import { Command } from "@/core/@typings/EventDataTypes";
 import { DispatchedEvent } from "@/core/@typings/EventTypes";
 import { PlayerBoardStatus } from "@/core/@typings/PlayerTypes";
@@ -41,6 +41,8 @@ describe("EventApplication", () => {
                     boardIDs: [board0.id, board1.id]
                 }
             },
+            { type: "StatusChangeEvent", data: {boardID: board0.id, newStatus: Status.Playing} },
+            { type: "StatusChangeEvent", data: {boardID: board1.id, newStatus: Status.Playing} },
             { type: "InputEvent", data: {command: Command.MoveDown, player: player0} },
             { type: "InputEvent", data: {command: Command.MoveRight, player: player0} }
         ];
@@ -50,7 +52,7 @@ describe("EventApplication", () => {
 
         const finalPlayerBoard = finalState.getPlayerBoard(player0.id, board0.id);
         const wantedPlayerBoard =  new PlayerBoard(player0.id, board0.id, {x: 3, y: 3}, PlayerBoardStatus.Solved);
-        expect(wantedPlayerBoard).toEqual(finalPlayerBoard);
+        expect(finalPlayerBoard).toEqual(wantedPlayerBoard);
     });
 
     it("applies_a_list_of_events_with_an_initial_gameState", () => {
@@ -70,6 +72,7 @@ describe("EventApplication", () => {
         );
         const initialState = GameStateFactory.createGameState({players: [player0], boards: [initialBoard]});
         const listOfEventObjects: DispatchedEvent[] = [
+            { type: "StatusChangeEvent", data: {boardID: initialBoard.id, newStatus: Status.Playing} },
             { type: "InputEvent", data: {command: Command.MoveDown, player: player0} },
             { type: "InputEvent", data: {command: Command.MoveRight, player: player0} }
         ];
@@ -78,6 +81,6 @@ describe("EventApplication", () => {
         const finalState = EventRunner.runEvents(listOfEvents, initialState);
         const finalPlayerBoard = finalState.getPlayerBoard(player0.id, initialBoard.id);
         const wantedPlayerBoard = new PlayerBoard(player0.id, initialBoard.id, {x: 3, y: 3}, PlayerBoardStatus.Solved);
-        expect(wantedPlayerBoard).toEqual(finalPlayerBoard);
+        expect(finalPlayerBoard).toEqual(wantedPlayerBoard);
     });
 });
