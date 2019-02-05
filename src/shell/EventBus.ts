@@ -1,16 +1,14 @@
-import { DispatchedEvent, DispatchedEventNameTypes, EventCallback } from "@/core/@typings/EventTypes";
+import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
 import Event from "@/core/events/Event.ts";
 import * as R from "ramda";
 
 export default class EventBus {
-    private unCaughtEvents: DispatchedEvent[] = [];
-
     private listeners: { 
         [key: string]: EventCallback[] 
     } = {
         default: [
             (dispatchedEvent: DispatchedEvent) => { 
-                this.unCaughtEvents = R.append(dispatchedEvent, this.unCaughtEvents);
+                return;
              }
         ]
     };
@@ -52,8 +50,6 @@ export default class EventBus {
                 listener(dispatchedEvent);
             };
             R.forEach(callListener, eventsListOfListeners);
-        } else {
-            this.unCaughtEvents = R.append(dispatchedEvent, this.unCaughtEvents);
         }
     }
 
@@ -63,10 +59,6 @@ export default class EventBus {
 
     public getListeners() {
         return this.listeners;
-    }
-
-    public getUncaughtEvents() {
-        return this.unCaughtEvents;
     }
 
     public dispatchToAllListeners(event: Event): void {
