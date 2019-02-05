@@ -23,11 +23,13 @@ interface SerializableGameState {
 }
 
 interface GameStoredInFirebase {
+    gameID: string;
     initialGameState: SerializableGameState;
     events: DispatchedEvent[] | string; // string if array is empty, since firebase doesn't store empty arrays
 }
 
 interface GameFromFirebase {
+    gameID: string;
     initialGameState: GameState;
     events: DispatchedEvent[];
 }

@@ -60,6 +60,7 @@ const game = new Vue({
         },
         gameToImport() : GameStoredInFirebase {
             return FirebaseAPI.makeObjectStorable({
+                gameID: this.gameID,
                 initialGameState: this.initialGameState!,
                 events: (this.loggedEvents as DispatchedEvent[])
             });
@@ -108,6 +109,7 @@ const game = new Vue({
             const listOfEvents = EventRunner.makeListOfEvents(dispatchedEventsToLoad);
             const newState = EventRunner.runEvents(listOfEvents, initialGameState);
             
+            this.gameID = gameToLoad.gameID;
             this.initialGameState = initialGameState;
             this.loggedEvents = dispatchedEventsToLoad;
             this.gameState = newState;
@@ -139,6 +141,7 @@ const game = new Vue({
 
         saveGameToFirebase(): void {
             const gameFromFirebase: GameFromFirebase = {
+                gameID: this.gameID,
                 initialGameState: this.initialGameState!,
                 events: this.loggedEvents
             };

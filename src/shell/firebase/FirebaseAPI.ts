@@ -31,6 +31,7 @@ export default class FirebaseAPI {
         );
 
         let gameStoredInFirebase: GameStoredInFirebase = {
+            gameID: gameToStore.gameID,
             initialGameState: {
                 players: serialisablePlayers,
                 boards: serializableBoards,
@@ -55,11 +56,13 @@ export default class FirebaseAPI {
         let initialGameState = GameStateFactory.createGameState({players, boards});
         if (typeof gameStoredInFirebase.events === "string") {
             return {
+                gameID: gameStoredInFirebase.gameID,
                 initialGameState,
                 events: []
             }
         }
         return {
+            gameID: gameStoredInFirebase.gameID,
             initialGameState,
             events: gameStoredInFirebase.events
         };
