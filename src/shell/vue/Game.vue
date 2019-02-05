@@ -233,8 +233,6 @@ export default Vue.extend({
 
                     const inputEvent = new InputEvent(inputEventData);
                     this.eventBus.dispatchToAllListeners(inputEvent);
-                    console.log("inputEvent: ", inputEvent);
-                    console.log("gameState: ", gameState);
                 }
             });
         },
