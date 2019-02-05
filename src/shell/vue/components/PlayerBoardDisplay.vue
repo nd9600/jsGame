@@ -8,16 +8,11 @@
             >
                 <div
                     class="flex flex-col flex-grow border border-grey-light"
-                    :class="{'cursor-pointer': gameState.status === 'PlacingWalls'}"
+                     :class="getClassesForPosition(x, y)"
                     v-for="(position, x) in row"
                     :key="x"
+                    @click="toggleWall(x, y)"
                 >
-                    <span
-                        class="h-full w-full"
-                        :class="getClassesForPosition(x, y)"
-                        @click="toggleWall(x, y)"
-                    >
-                    </span>
                 </div>
             </div>
         </div>
@@ -61,6 +56,9 @@ export default Vue.extend({
         },
         playerBoard(): PlayerBoard {
             return this.gameState.playerBoards[this.player_id][this.board_id];
+        },
+        isPlacingWalls(): boolean {
+            return this.gameState.status === 'PlacingWalls';
         }
     },
     methods: {
@@ -77,7 +75,9 @@ export default Vue.extend({
             return R.equals(this.playerBoard.characterPosition, {x, y});
         },
         getClassesForPosition(x: number, y: number) {
-            let classObject = {};
+            let classObject = {
+                'cursor-pointer': this.isPlacingWalls
+            };
             if (this.isStartPoint(x, y)) {
                 classObject = R.merge(classObject, {
                     "bg-blue": true,
