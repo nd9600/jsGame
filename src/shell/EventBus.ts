@@ -1,4 +1,4 @@
-import { DispatchedEvent, EventCallback } from "@/core/@typings/EventTypes";
+import { DispatchedEvent, EventCallback, DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import Event from "@/core/events/Event.ts";
 import * as R from "ramda";
 
@@ -13,7 +13,7 @@ export default class EventBus {
         ]
     };
 
-    public addListener(eventName: string, callback: EventCallback): void {
+    public addListener(eventName: DispatchedEventNameTypes, callback: EventCallback): void {
         let newListOfListeners: EventCallback[];
         if (R.has(eventName, this.listeners)) {
             const eventsListOfListeners: EventCallback[] = this.listeners[eventName];
@@ -29,7 +29,7 @@ export default class EventBus {
      * @param event the name of the event
      * @param callback the callback function to remove
      */
-    public removeListener(event: string, callback: EventCallback): void {
+    public removeListener(event: DispatchedEventNameTypes, callback: EventCallback): void {
         let newListOfListeners: EventCallback[];
         if (R.has(event, this.listeners)) {
             const eventsListOfListeners: EventCallback[] = this.listeners[event];
@@ -43,7 +43,7 @@ export default class EventBus {
         this.listeners = R.assoc(event, newListOfListeners, this.listeners);
     }
 
-    private dispatch(eventType: string, dispatchedEvent: DispatchedEvent): void {
+    private dispatch(eventType: DispatchedEventNameTypes, dispatchedEvent: DispatchedEvent): void {
         if (R.has(eventType, this.listeners)) {
             const eventsListOfListeners: EventCallback[] = this.listeners[eventType];
             const callListener = (listener: EventCallback) => {
@@ -66,14 +66,14 @@ export default class EventBus {
         
         // we need to cast originalEventType to the any-type so TS doesn't complain
         R.forEach(
-            (type: string) => {
+            (type: DispatchedEventNameTypes) => {
                 this.dispatch(type, {type: originalEventType as any, data: event.data});
             },
         event.types);
     }
 
-    public addListenerToMultipleEvents(eventNames: string[], callback: EventCallback): void {
-        const addIndividualListener = (eventName: string) => {
+    public addListenerToMultipleEvents(eventNames: DispatchedEventNameTypes[], callback: EventCallback): void {
+        const addIndividualListener = (eventName: DispatchedEventNameTypes) => {
             this.addListener(eventName, callback);
         };
         R.forEach(addIndividualListener, eventNames);

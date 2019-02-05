@@ -7,16 +7,16 @@ interface SocketCallbacks {
     [eventName: string]: SocketFunction
 }
 
-export default class SocketIOclient {
-    private static socket: any;
+export default class MySocketIOclient {
+    private static socket: SocketIOClient.Socket;
     
-    public static init(callbacks: SocketCallbacks, url = "http://localhost"): void {
-        SocketIOclient.socket = io(url);
+    public static init(callbacks: SocketCallbacks, url = "http://localhost"): SocketIOClient.Socket {
+        MySocketIOclient.socket = io(url);
         R.forEachObjIndexed(
             (callback: SocketFunction, eventName) => {
                 console.log(eventName)
-                SocketIOclient.socket.on(eventName, callback);
+                MySocketIOclient.socket.on(eventName, callback);
             }, callbacks);
-        return SocketIOclient.socket;
+        return MySocketIOclient.socket;
     }
 }

@@ -1,7 +1,6 @@
 import { PlayerNameChangeEventData } from "@/core/@typings/EventDataTypes";
 import { DispatchedEventNameTypes } from "@/core/@typings/EventTypes";
 import CommandEvent from "@/core/events/Command/CommandEvent";
-import Event from "@/core/events/Event";
 import GameState from "@/core/GameState";
 import PlayerBuilder from "@/core/player/PlayerBuilder";
 import * as R from "ramda";

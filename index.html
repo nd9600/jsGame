@@ -8,27 +8,104 @@
     <link rel="stylesheet" href="static/css/master.css" type="text/css">
 </head>
 
-<body>
-    <div class="cubeContainer" >
-        <svg class="neckerCube neckerCube--1" height="140px" width="140px" viewBox="0 0 140 140">
-            <rect x="0" y="40" width="100" height="100" fill="none" stroke="#000000" />
-            <rect x="40" y="0" width="100" height="100" fill="none" stroke="#000000" />
-            <path d="M 0 40 l 40 -40" fill="none" stroke="#000000" />
-            <path d="M 100 40 l 40 -40" fill="none" stroke="#000000" />
-            <path d="M 100 140 l 40 -40" fill="none" stroke="#000000" />
-            <path d="M 0 140 l 40 -40" fill="none" stroke="#000000" />
-        </svg>
-        <svg class="neckerCube neckerCube--2" height="140px" width="140px" viewBox="0 0 140 140">
-            <rect x="40" y="40" width="100" height="100" fill="none" stroke="#000000"/>
-            <rect x="0" y="0" width="100" height="100" fill="none" stroke="#000000"/>
-            <path d="M 40 40 l -40 -40" fill="none" stroke="#000000"/>
-            <path d="M 140 40 l -40 -40" fill="none" stroke="#000000" />
-            <path d="M 140 140 l -40 -40" fill="none" stroke="#000000" />
-            <path d="M 40 140 l -40 -40" fill="none" stroke="#000000" />
-        </svg>
+<body>    
+    <div id="app">
+        <div>
+            <template v-if="canPlayGame">
+                <game 
+                    :player-id="playerID"
+                    :game-state="gameState"
+                    :game-to-import="gameToImport"
+                />
+            </template>
+            <section 
+                v-else
+                class="ml-8"
+            >
+                <div class="cubeContainer" >
+                    <svg class="neckerCube neckerCube--1" height="140px" width="140px" viewBox="0 0 140 140">
+                        <rect x="0" y="40" width="100" height="100" fill="none" stroke="#000000" />
+                        <rect x="40" y="0" width="100" height="100" fill="none" stroke="#000000" />
+                        <path d="M 0 40 l 40 -40" fill="none" stroke="#000000" />
+                        <path d="M 100 40 l 40 -40" fill="none" stroke="#000000" />
+                        <path d="M 100 140 l 40 -40" fill="none" stroke="#000000" />
+                        <path d="M 0 140 l 40 -40" fill="none" stroke="#000000" />
+                    </svg>
+                    <svg class="neckerCube neckerCube--2" height="140px" width="140px" viewBox="0 0 140 140">
+                        <rect x="40" y="40" width="100" height="100" fill="none" stroke="#000000"/>
+                        <rect x="0" y="0" width="100" height="100" fill="none" stroke="#000000"/>
+                        <path d="M 40 40 l -40 -40" fill="none" stroke="#000000"/>
+                        <path d="M 140 40 l -40 -40" fill="none" stroke="#000000" />
+                        <path d="M 140 140 l -40 -40" fill="none" stroke="#000000" />
+                        <path d="M 40 140 l -40 -40" fill="none" stroke="#000000" />
+                    </svg>
+                </div>
+                <p>loading..</p>
+            </section>
+
+            <div class="flex flex-col m-8">
+                <div class="h-1 w-full border-t border-grey-light my-2"></div>
+                <div class="flex flex-col w-1/3">
+                    <div>
+                        <input 
+                            class="inline w-1/3 border border-r-0 border-grey-dark my-2 p-2"
+                            type="text"
+                            value="game ID: "
+                            disabled="disabled"
+                        ><input 
+                            class="inline w-1/3 border border-grey-dark my-2 p-2"
+                            type="text"
+                            v-model="gameID"
+                        >
+                    </div>
+
+                    <button
+                        class="bg-red hover:bg-red-dark text-white font-bold my-2 py-2 px-4 rounded"
+                        type="submit" 
+                        @click="saveGameToFirebase"
+                        :disabled="gameID === ''"
+                        :class="{
+                            'opacity-50': gameID === '',
+                            'cursor-not-allowed': gameID === ''
+                        }"
+                    >
+                        Save game
+                    </button>
+
+                    <button
+                        class="bg-red hover:bg-red-dark text-white font-bold py-2 px-4 rounded"
+                        type="submit" 
+                        @click="loadGameFromFirebase"
+                        :disabled="gameID === ''"
+                        :class="{
+                            'opacity-50': gameID === '',
+                            'cursor-not-allowed': gameID === ''
+                        }"
+                    >
+                        Load game
+                    </button>
+                </div>
+
+                <div class="w-2/3 mt-4">
+                    <div class="mb-2">
+                        <span class="text-sm text-grey-light">Game log</span>
+                        <p class="text-transparent text-xs hover:text-grey-light">
+                            {{ gameToImport }}
+                        </p>
+                    </div>
+                    <div class="flex flex-col w-1/2">
+                        <span class="text-sm text-grey-light">Import game</span>  
+                        <input 
+                            type="text"
+                            class="border border-transparent hover:border-grey-light text-transparent hover:text-grey p-1"
+                            placeholder="game JSON"
+                            @keyup.enter.prevent="importGame"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div id="app"></div>
 
     <script type="text/javascript" src="static/js/game.js"></script>
 </body>

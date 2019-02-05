@@ -41,6 +41,7 @@ export default class FirebaseAPI {
     }
 
     public static makeObjectLoadable(gameStoredInFirebase: GameStoredInFirebase): GameFromFirebase {
+        console.log(gameStoredInFirebase);
         let serializedGameState = gameStoredInFirebase.initialGameState;
         let players: Player[] = R.map(
             (player: SerializablePlayer) => new Player(player.id, player.name, player.score),
